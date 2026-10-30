@@ -109,13 +109,14 @@ interface FlowProps {
   perEdge: number
   /** Indices of highlighted nodes. One = selected module, several = a workflow route. */
   routeRef?: MutableRefObject<number[]>
+  activeRef?: MutableRefObject<number>
   reveal?: MutableRefObject<number>
   speed?: number
   hotColor?: string
 }
 
 /** Data paths from the core to every node, plus particles travelling along them. */
-export function Flow({ nodes, perEdge, routeRef, reveal, speed = 1, hotColor = '#bfe8ff' }: FlowProps) {
+export function Flow({ nodes, perEdge, routeRef, activeRef, reveal, speed = 1, hotColor = '#bfe8ff' }: FlowProps) {
   const E = nodes.length
   const N = E * perEdge
   const lineMat = useRef<THREE.LineBasicMaterial>(null!)
@@ -144,7 +145,7 @@ export function Flow({ nodes, perEdge, routeRef, reveal, speed = 1, hotColor = '
   useFrame((s) => {
     const t = s.clock.elapsedTime
     const o = reveal ? reveal.current : 1
-    const route = routeRef ? routeRef.current : []
+    const route = routeRef ? routeRef.current : (activeRef && activeRef.current >= 0 ? [activeRef.current] : [])
     const chain = route.length > 1
     const lp = lineGeo.attributes.position.array as Float32Array
     const hp = hotGeo.attributes.position.array as Float32Array
