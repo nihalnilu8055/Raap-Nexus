@@ -1,40 +1,34 @@
-import Navbar from '../components/Navbar'
-import HeroSection from '../components/HeroSection'
-import InteractiveAgentDemo from '../components/InteractiveAgentDemo'
-import RadialApplicationSuite from '../components/RadialApplicationSuite'
-import PinnedWorkflow from '../components/PinnedWorkflow'
-import SovereigntyPipeline from '../components/SovereigntyPipeline'
-import FinalCta from '../components/FinalCta'
-import Footer from '../components/Footer'
+import SiteNav from '../components/layout/SiteNav'
+import SiteFooter from '../components/layout/SiteFooter'
+import Bridge from '../components/ui/Bridge'
+import Hero from '../sections/Hero'
+import Platform from '../sections/Platform'
+import Services from '../sections/Services'
+import FinIntel from '../sections/FinIntel'
+import AuditSection from '../sections/AuditSection'
+import AiFinance from '../sections/AiFinance'
+import Deployment from '../sections/Deployment'
+import FinalCta from '../sections/FinalCta'
 
+/** Story: hero → dashboard → four services → financial intelligence → audit & verification → AI → CTA. */
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col selection:bg-blue-100 selection:text-blue-900 w-full overflow-x-hidden">
-      {/* Top Floating Sticky Navigation with Large Sharp Logo */}
-      <Navbar />
-
-      <main className="flex-1 w-full">
-        {/* 1. Hero Section: Full-Width, 3D Floating ERP Perspective, Staggered Typography, Dual CTAs */}
-        <HeroSection />
-
-        {/* 2. Reference A: Interactive Demo Workbench with 4 Agents, Live Execution, and Generated Ledger */}
-        <InteractiveAgentDemo />
-
-        {/* 3. Reference B: Application Suite Radial Constellation with SVG Orbit & Staggered Modules */}
-        <RadialApplicationSuite />
-
-        {/* 4. Pinned Scroll Storytelling with GSAP ScrollTrigger */}
-        <PinnedWorkflow />
-
-        {/* 5. Reference C: Multi-LLM & Data Sovereignty 3-Node Architecture Pipeline */}
-        <SovereigntyPipeline />
-
-        {/* 6. Final Executive Demonstration Booking */}
+    <div className="w-full overflow-x-clip bg-[#040a1c] text-slate-900">
+      <a href="#platform" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
+      <SiteNav />
+      <main>
+        <Hero />
+        <Platform />
+        <Services />
+        <Bridge from="#e8f0ff" to="#040a1c" />
+        <FinIntel />
+        <AuditSection />
+        <Bridge from="#031018" to="#050824" stroke="#8b7bff" />
+        <AiFinance />
+        <Deployment />
         <FinalCta />
       </main>
-
-      {/* Clean Full-Width Minimal Footer */}
-      <Footer />
+      <SiteFooter />
     </div>
   )
 }

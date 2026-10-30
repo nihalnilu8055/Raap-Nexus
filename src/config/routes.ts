@@ -3,6 +3,9 @@
  * All marketing CTAs, sandbox launchers, and navigation anchors point here.
  */
 
+/** Single official ERP destination used by every marketing CTA. */
+export const ERP_URL = 'https://raap-nexus-new.vercel.app/erp/dashboard.html'
+
 export const ROUTES = {
   HOME: '/',
   // Primary standalone authentic ERP dashboard:

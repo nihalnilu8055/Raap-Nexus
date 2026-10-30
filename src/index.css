@@ -224,3 +224,22 @@
 .animate-float {
   animation: floatSubtle 6s ease-in-out infinite;
 }
+
+/* ---- Premium redesign: shared motion + 3D helpers ---- */
+h1,h2,h3 { font-family: 'Manrope', 'Inter', system-ui, sans-serif; }
+@keyframes orb0 { to { transform: rotateX(60deg) rotateZ(360deg); } }
+@keyframes orb1 { to { transform: rotateX(75deg) rotateY(0deg) rotateZ(-360deg); } }
+@keyframes orb2 { to { transform: rotateX(90deg) rotateZ(360deg); } }
+@keyframes flowdash { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.flow { stroke-dasharray: 0.12 0.88; animation: flowdash 1.4s linear infinite; transition: opacity .4s; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+@keyframes svcdot { from { left: 0; opacity: 1; } to { left: 100%; opacity: 0; } }
+
+@keyframes scanY{0%{top:-30%}100%{top:100%}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes keyPulse{0%,70%,100%{opacity:.55}80%{opacity:1}}
+@keyframes ringPing{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+@keyframes svcprog{from{transform:scaleX(0)}to{transform:scaleX(1)}}

@@ -10,9 +10,10 @@ export default function Logo({ className = '', size = 'md' }: LogoProps) {
 
   // Calibrated dimensions for cropped 4.07:1 aspect ratio logo
   const sizeClasses = {
-    sm: 'h-8 sm:h-9',
-    md: 'h-10 sm:h-11 md:h-12',
-    lg: 'h-12 sm:h-14 md:h-16',
+    // The asset is 171x42 px: rendering at its native height keeps it as sharp as possible, aspect ratio untouched.
+    sm: 'h-[42px]',
+    md: 'h-[42px]',
+    lg: 'h-14',
   }
 
   return (
@@ -20,8 +21,8 @@ export default function Logo({ className = '', size = 'md' }: LogoProps) {
       {!imgError ? (
         <img
           src="/assets/logo.png"
-          alt="RaapNexus - Autonomous Enterprise ERP"
-          className={`${sizeClasses[size]} w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] drop-shadow-xs`}
+          alt="RaapNexus" width={171} height={42}
+          className={`${sizeClasses[size]} w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] `}
           style={{ imageRendering: 'auto' }}
           onError={() => setImgError(true)}
         />

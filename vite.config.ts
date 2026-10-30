@@ -16,6 +16,7 @@ export default defineConfig({
           charts: ['recharts'],
           motion: ['framer-motion'],
           gsap: ['gsap'],
+          three: ['three', '@react-three/fiber'],
         },
       },
     },
