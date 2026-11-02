@@ -243,3 +243,24 @@ h1,h2,h3 { font-family: 'Manrope', 'Inter', system-ui, sans-serif; }
 @keyframes keyPulse{0%,70%,100%{opacity:.55}80%{opacity:1}}
 @keyframes ringPing{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.2);opacity:0}}
 @keyframes svcprog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ---- International: RTL + scripts ---- */
+@keyframes erpPulse { 0% { transform: scale(1); opacity: .55 } 100% { transform: scale(2.3); opacity: 0 } }
+html[lang='ar'] body, html[lang='ar'] button, html[lang='ar'] input { font-family: 'Noto Sans Arabic', 'Manrope', 'Inter', system-ui, sans-serif; }
+html[lang='ar'] .font-display { font-family: 'Noto Sans Arabic', 'Manrope', sans-serif; }
+html[lang='hi'] body, html[lang='hi'] button { font-family: 'Noto Sans Devanagari', 'Inter', system-ui, sans-serif; }
+html[lang='hi'] .font-display { font-family: 'Noto Sans Devanagari', 'Manrope', sans-serif; }
+/* cursive/joined scripts must not be letter-spaced or force-uppercased; tighten display line-height for tall glyphs */
+html[lang='ar'] *, html[lang='hi'] * { letter-spacing: 0 !important; }
+html[lang='ar'] .uppercase, html[lang='hi'] .uppercase { text-transform: none; }
+html[lang='ar'] h1, html[lang='ar'] h2, html[lang='hi'] h1, html[lang='hi'] h2 { line-height: 1.2; }
+[dir='rtl'] svg text { direction: ltr; }
+
+
+@keyframes hvFloat { 0%,100% { transform: translate3d(0,0,0) rotateY(-3deg) } 50% { transform: translate3d(0,-10px,0) rotateY(3deg) } }
+@keyframes hvPulse { 0%,100% { filter: drop-shadow(0 0 14px rgba(70,140,255,.45)) } 50% { filter: drop-shadow(0 0 30px rgba(110,110,255,.8)) } }
+@keyframes hvSweep { 0%,55% { transform: translateX(0) skewX(-18deg); opacity: 0 } 65% { opacity: 1 } 100% { transform: translateX(520%) skewX(-18deg); opacity: 0 } }
+@keyframes hvDriftA { 0%,100% { transform: translate3d(-2px,1px,0) } 50% { transform: translate3d(2px,-2px,0) } }
+@keyframes hvDriftB { 0%,100% { transform: translate3d(2px,-1px,0) } 50% { transform: translate3d(-2px,2px,0) } }
+@keyframes hvDriftC { 0%,100% { transform: translate3d(-8px,4px,0) } 50% { transform: translate3d(8px,-6px,0) } }
+@keyframes hvShadow { 0%,100% { transform: scaleX(1); opacity: .55 } 50% { transform: scaleX(.88); opacity: .35 } }

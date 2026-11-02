@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { EASE } from '../../lib/motion'
+import { useI18n } from '../../i18n'
 
 /** Four distinct animated SVG scenes, one per service. Remounted (via key) on selection so each replays. */
 type P = { reduced: boolean }
@@ -10,6 +11,7 @@ const Dot = ({ d, dur = 2.4, begin = 0, c = '#fff' }: { d: string; dur?: number;
 )
 
 export function TaxScene({ reduced }: P) {
+  const { t, money } = useI18n()
   const paths = ['M232 138 C 330 138, 330 150, 420 150', 'M232 196 C 330 196, 330 196, 420 196', 'M232 254 C 330 254, 330 242, 420 242']
   const widths = [110, 80, 130, 96, 120, 70]
   return (
@@ -22,7 +24,7 @@ export function TaxScene({ reduced }: P) {
         <rect x="40" y="54" width="192" height="256" rx="14" fill="#f8fafc" />
         <rect x="40" y="54" width="192" height="42" rx="14" fill="#fde68a" />
         <rect x="40" y="82" width="192" height="14" fill="#fde68a" />
-        <text x="58" y="81" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="13" fill="#92400e">VAT RETURN</text>
+        <text x="58" y="81" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="13" fill="#92400e">{t('scene.vatReturn')}</text>
         {widths.map((w, i) => (
           <g key={i}>
             <motion.rect x="58" y={118 + i * 30} height="9" rx="4.5" fill={i === 1 || i === 4 ? '#f59e0b' : '#cbd5e1'} initial={reduced ? false : { width: 0 }} animate={{ width: w }} transition={{ duration: 0.7, delay: 0.5 + i * 0.12, ease: EASE }} />
@@ -35,13 +37,13 @@ export function TaxScene({ reduced }: P) {
       <motion.g initial={reduced ? false : { opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.3, ease: EASE }}>
         <rect x="420" y="44" width="190" height="266" rx="20" fill="#0b1230" stroke="#f59e0b" strokeOpacity=".7" />
         <rect x="436" y="60" width="158" height="62" rx="10" fill="#131f52" />
-        <text x="448" y="80" fontSize="10" fontFamily="Inter, sans-serif" fill="#fcd34d" letterSpacing="1.5">NET VAT</text>
-        <motion.text x="448" y="108" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="24" fill="#fff" initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}>AED 0.15M</motion.text>
+        <text x="448" y="80" fontSize="10" fontFamily="Inter, sans-serif" fill="#fcd34d" letterSpacing="1.5">{t('scene.netVat')}</text>
+        <motion.text x="448" y="108" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="24" fill="#fff" initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}>{money(0.15e6, { compact: true })}</motion.text>
         {Array.from({ length: 12 }, (_, i) => (
           <rect key={i} x={438 + (i % 3) * 54} y={140 + Math.floor(i / 3) * 40} width="46" height="30" rx="8" fill={i === 11 ? '#f59e0b' : '#1b2a6b'} style={reduced ? undefined : { animation: `keyPulse 3s ${i * 0.18}s ease-in-out infinite` }} />
         ))}
       </motion.g>
-      {[{ y: 334, w: 300, t: 'Output VAT  AED 0.76M', c: 'url(#tx-bar)' }, { y: 354, w: 240, t: 'Input VAT  AED 0.61M', c: '#60a5fa' }].map((b, i) => (
+      {[{ y: 334, w: 300, t: t('services.kpi.outputVat') + '  ' + money(0.76e6, { compact: true }), c: 'url(#tx-bar)' }, { y: 354, w: 240, t: t('services.kpi.inputVat') + '  ' + money(0.61e6, { compact: true }), c: '#60a5fa' }].map((b, i) => (
         <g key={b.t}>
           <motion.rect x="40" y={b.y} height="10" rx="5" fill={b.c} initial={reduced ? false : { width: 0 }} animate={{ width: b.w }} transition={{ duration: 1.1, delay: 1.2 + i * 0.2, ease: EASE }} />
           <text x={b.w + 54} y={b.y + 9} fontSize="12" fontFamily="Inter, sans-serif" fill="#cbd5e1">{b.t}</text>
@@ -53,10 +55,11 @@ export function TaxScene({ reduced }: P) {
 
 const ROWS: { c: string; dash?: boolean }[] = [{ c: '#34d399' }, { c: '#34d399' }, { c: '#60a5fa' }, { c: '#fbbf24', dash: true }, { c: '#34d399' }]
 export function AuditScene({ reduced }: P) {
+  const { t } = useI18n()
   return (
     <svg viewBox="0 0 640 380" className="h-full w-full" role="img" aria-label="Ledger entries matched to bank records">
-      <text x="40" y="38" fontSize="11" letterSpacing="2" fontFamily="Inter, sans-serif" fill="#6ee7b7">LEDGER</text>
-      <text x="600" y="38" textAnchor="end" fontSize="11" letterSpacing="2" fontFamily="Inter, sans-serif" fill="#6ee7b7">BANK</text>
+      <text x="40" y="38" fontSize="11" letterSpacing="2" fontFamily="Inter, sans-serif" fill="#6ee7b7">{t('scene.ledger')}</text>
+      <text x="600" y="38" textAnchor="end" fontSize="11" letterSpacing="2" fontFamily="Inter, sans-serif" fill="#6ee7b7">{t('scene.bank')}</text>
       {ROWS.map((r, i) => {
         const y = 54 + i * 62, d = `M196 ${y + 24} C 290 ${y + 24}, 350 ${y + 24}, 444 ${y + 24}`
         return (
@@ -93,6 +96,7 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
 const REV = [96, 112, 104, 138, 128, 162, 150, 186, 210]
 const EXP = [74, 82, 80, 94, 92, 104, 100, 118, 126]
 export function AnalysisScene({ reduced }: P) {
+  const { t } = useI18n()
   const [hi, setHi] = useState<number | null>(null)
   const base = 318, x0 = 52, step = 60
   const cash = REV.map((r, i) => [x0 + 20 + i * step, 120 - (r - EXP[i]) * 0.42 - i * 3] as const)
@@ -123,17 +127,18 @@ export function AnalysisScene({ reduced }: P) {
       <motion.path d={smooth} fill="none" stroke="#22d3ee" strokeWidth="3" strokeLinecap="round" {...draw(1.6, 0.5, reduced)} />
       {cash.map(([x, y], i) => <motion.circle key={i} cx={x} cy={y} r={hi === i ? 6 : 3.5} fill="#fff" stroke="#22d3ee" strokeWidth="2" initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 + i * 0.12 }} />)}
       <g fontSize="11" fontFamily="Inter, sans-serif" fill="#cbd5e1">
-        <rect x="46" y="22" width="10" height="10" rx="3" fill="#38bdf8" /><text x="62" y="31">Revenue</text>
-        <rect x="126" y="22" width="10" height="10" rx="3" fill="#818cf8" /><text x="142" y="31">Expenses</text>
-        <rect x="216" y="22" width="10" height="10" rx="5" fill="#22d3ee" /><text x="232" y="31">Cash flow</text>
+        <rect x="46" y="22" width="10" height="10" rx="3" fill="#38bdf8" /><text x="62" y="31">{t('scene.revenue')}</text>
+        <rect x="126" y="22" width="10" height="10" rx="3" fill="#818cf8" /><text x="142" y="31">{t('scene.expenses')}</text>
+        <rect x="216" y="22" width="10" height="10" rx="5" fill="#22d3ee" /><text x="232" y="31">{t('scene.cashflow')}</text>
       </g>
     </svg>
   )
 }
 
 export function BusinessScene({ reduced }: P) {
+  const { t, fmtNum } = useI18n()
   const C = 2 * Math.PI * 64, curve = 'M270 300 C 340 290, 380 250, 430 210 S 540 120, 604 70'
-  const nodes = [{ x: 380, y: 96, t: 'Sales', c: '#c4b5fd' }, { x: 300, y: 196, t: 'Cost', c: '#f9a8d4' }, { x: 470, y: 300, t: 'Cash', c: '#67e8f9' }]
+  const nodes = [{ x: 380, y: 96, t: t('scene.sales'), c: '#c4b5fd' }, { x: 300, y: 196, t: t('scene.cost'), c: '#f9a8d4' }, { x: 470, y: 300, t: t('scene.cash'), c: '#67e8f9' }]
   return (
     <svg viewBox="0 0 640 380" className="h-full w-full" role="img" aria-label="Margin gauge, growth curve and connected business metrics">
       <defs>
@@ -145,8 +150,8 @@ export function BusinessScene({ reduced }: P) {
       <motion.g initial={reduced ? false : { opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} style={{ transformOrigin: '150px 190px' }}>
         <circle cx="150" cy="190" r="64" fill="none" stroke="#2a2f6b" strokeWidth="14" />
         <motion.circle cx="150" cy="190" r="64" fill="none" stroke="url(#bz-g)" strokeWidth="14" strokeLinecap="round" strokeDasharray={C} transform="rotate(-90 150 190)" initial={reduced ? false : { strokeDashoffset: C }} animate={{ strokeDashoffset: C * (1 - 0.447) }} transition={{ duration: 1.6, delay: 0.3, ease: EASE }} />
-        <text x="150" y="190" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="30" fill="#fff">44.7%</text>
-        <text x="150" y="212" textAnchor="middle" fontSize="11" fontFamily="Inter, sans-serif" fill="#c4b5fd">Gross margin</text>
+        <text x="150" y="190" textAnchor="middle" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="30" fill="#fff">{fmtNum(44.7, 1)}%</text>
+        <text x="150" y="212" textAnchor="middle" fontSize="11" fontFamily="Inter, sans-serif" fill="#c4b5fd">{t('scene.grossMargin')}</text>
       </motion.g>
       {nodes.map((n, i) => {
         const d = `M150 190 L${n.x} ${n.y}`
@@ -163,8 +168,8 @@ export function BusinessScene({ reduced }: P) {
       })}
       <g>
         <circle cx="604" cy="70" r="7" fill="#fff" /><circle cx="604" cy="70" r="7" fill="none" stroke="#f9a8d4" strokeWidth="2" style={reduced ? undefined : { transformOrigin: '604px 70px', animation: 'ringPing 2s ease-out infinite' }} />
-        <text x="596" y="50" textAnchor="end" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="20" fill="#fff">+14.1%</text>
-        <text x="596" y="66" textAnchor="end" fontSize="11" fontFamily="Inter, sans-serif" fill="#e9d5ff">Sales growth</text>
+        <text x="596" y="50" textAnchor="end" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="20" fill="#fff">+{fmtNum(14.1, 1)}%</text>
+        <text x="596" y="66" textAnchor="end" fontSize="11" fontFamily="Inter, sans-serif" fill="#e9d5ff">{t('scene.salesGrowth')}</text>
       </g>
     </svg>
   )

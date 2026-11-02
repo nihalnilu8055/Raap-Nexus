@@ -1,15 +1,27 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { BadgeCheck, FlaskConical, MessageSquareText, Server, Shuffle } from 'lucide-react'
+import { BadgeCheck, ChevronRight, FlaskConical, MessageSquareText, Server, Shuffle } from 'lucide-react'
+import Fallback3D from '../components/ui/Fallback3D'
+import { useNearView } from '../components/ui/useNearView'
+import { Boundary, isMobile, webglSupported } from '../lib/webgl'
+import { Reveal } from '../components/ui/Reveal'
+import { ScrollTrigger } from '../lib/motion'
+import { useI18n } from '../i18n'
 import { AI_NODES, USE_CASES } from '../data/aiModels'
+const Engine = lazy(() => import('../three/finance/EngineScene'))
 import { EASE } from '../lib/motion'
 
 const SHOTS = ['balance', 'pnl', 'trial', 'expenses', 'dashboard', 'anomalies']
-const CX = 260, CY = 215, R = 160
-const POS = AI_NODES.map((_, i) => { const a = (i / AI_NODES.length) * Math.PI * 2 - Math.PI / 2; return { x: CX + Math.cos(a) * R * 1.12, y: CY + Math.sin(a) * R * 0.92 } })
-/** Axelor-inspired model selection, adapted to financial intelligence. */
+const FLOW_C = ['#0ea5e9', '#7c6bff', '#10b981']
+/** AI section: a 3D Intelligence Engine (data → processing → insights) with provider selection as a secondary area. */
 export default function AiFinance() {
+  const { t, tr } = useI18n()
   const reduced = !!useReducedMotion()
+  const { ref: stageRef, near, inView } = useNearView<HTMLDivElement>()
+  const progressRef = useRef(0.5)
+  const [webgl] = useState(webglSupported)
+  const [mobile] = useState(isMobile)
+  const [phase, setPhase] = useState(0)
   const [sel, setSel] = useState(0)
   const [uc, setUc] = useState(0)
   const touched = useRef(false)
@@ -21,6 +33,11 @@ export default function AiFinance() {
     const io = new IntersectionObserver(([e]) => { vis.current = e.isIntersecting })
     if (wrap.current) io.observe(wrap.current)
     return () => io.disconnect()
+  }, [])
+  useEffect(() => {
+    if (!wrap.current) return
+    const st = ScrollTrigger.create({ trigger: wrap.current, start: 'top bottom', end: 'bottom top', onUpdate: (x) => { progressRef.current = x.progress } })
+    return () => st.kill()
   }, [])
   useEffect(() => {
     if (reduced) return
@@ -38,34 +55,34 @@ export default function AiFinance() {
         <div>
           <motion.h2 id="ai-h" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE }}
             className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-            Financial intelligence. <span className="text-violet-300">Powered by AI.</span>
+            {t('ai.h1')} <span className="text-violet-300">{t('ai.h2')}</span>
           </motion.h2>
-          <p className="mt-4 text-lg text-slate-200">Flexible AI models. Smarter financial insights. Greater control.</p>
-          <p className="mt-3 max-w-md text-slate-400">Ask your financial data anything.</p>
+          <Reveal delay={0.1}><p className="mt-4 text-lg text-slate-200">{t('ai.sub')}</p></Reveal>
+          <Reveal delay={0.18}><p className="mt-3 max-w-md text-slate-400">{t('ai.lead')}</p></Reveal>
           <ul className="mt-6 space-y-3">
             {[
-              { Icon: MessageSquareText, t: 'Ask in plain language', s: 'Live via MCP', live: true },
-              { Icon: Shuffle, t: 'Flexible model connectivity', s: 'Planned', live: false },
-              { Icon: Server, t: 'Deployment choice', s: 'Planned', live: false },
-            ].map(({ Icon, t, s, live }) => (
-              <li key={t} className="flex items-center gap-3">
+              { Icon: MessageSquareText, live: true },
+              { Icon: Shuffle, live: false },
+              { Icon: Server, live: false },
+            ].map(({ Icon, live }, i) => (
+              <Reveal as="li" variant="left" delay={0.1 * i} key={i} className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/[0.06] text-violet-200 ring-1 ring-white/10"><Icon size={18} aria-hidden /></span>
-                <span className="font-display font-bold text-white">{t}</span>
-                <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${live ? 'bg-emerald-400/15 text-emerald-300' : 'bg-indigo-400/15 text-indigo-200'}`}>{s}</span>
-              </li>
+                <span className="font-display font-bold text-white">{t(`ai.benefits.${i}.t`)}</span>
+                <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${live ? 'bg-emerald-400/15 text-emerald-300' : 'bg-indigo-400/15 text-indigo-200'}`}>{t(`ai.benefits.${i}.s`)}</span>
+              </Reveal>
             ))}
           </ul>
           <div className="mt-7">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Finance use cases</p>
-            <div className="flex flex-wrap gap-2" role="group" aria-label="Use cases">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{t('ai.useCasesLabel')}</p>
+            <div className="flex flex-wrap gap-2" role="group" aria-label={t('ai.useCasesLabel')}>
               {USE_CASES.map((u, i) => (
                 <button key={u.id} type="button" aria-pressed={uc === i} onClick={() => setUc(i)}
-                  className={`rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 ${uc === i ? 'border-violet-300 bg-violet-400/20 text-white' : 'border-white/12 text-slate-300 hover:text-white'}`}>{u.label}</button>
+                  className={`rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 ${uc === i ? 'border-violet-300 bg-violet-400/20 text-white' : 'border-white/12 text-slate-300 hover:text-white'}`}>{t(`ai.useCases.${i}.label`)}</button>
               ))}
             </div>
             <AnimatePresence mode="wait">
               <motion.p key={uc} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="mt-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-slate-200" aria-live="polite">
-                <span className="text-violet-300">“</span>{USE_CASES[uc].prompt}<span className="text-violet-300">”</span>
+                <span className="text-violet-300">“</span>{t(`ai.useCases.${uc}.prompt`)}<span className="text-violet-300">”</span>
               </motion.p>
             </AnimatePresence>
             <div className="relative mt-4 overflow-hidden rounded-2xl border border-white/10 bg-[#0b1233] shadow-[0_30px_60px_-30px_rgba(99,88,255,.6)]">
@@ -75,62 +92,72 @@ export default function AiFinance() {
               </AnimatePresence>
               {!reduced && <span aria-hidden className="absolute inset-x-0 h-16 bg-gradient-to-b from-transparent via-violet-300/35 to-transparent" style={{ animation: 'scanY 3.2s ease-in-out infinite' }} />}
               <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#050824]/70 to-transparent" />
-              <motion.p key={`i${uc}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }} className="absolute bottom-3 left-4 flex items-center gap-2 text-sm font-bold text-white">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-violet-300" />{USE_CASES[uc].label}
+              <motion.p key={`i${uc}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }} className="absolute bottom-3 start-4 flex items-center gap-2 text-sm font-bold text-white">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-violet-300" />{t(`ai.useCases.${uc}.label`)}
               </motion.p>
             </div>
           </div>
         </div>
 
-        {/* RIGHT: model selection */}
-        <div>
-          <div className="relative mx-auto w-full max-w-[560px]">
-            <svg viewBox="0 0 520 430" className="w-full" aria-hidden>
-              <defs>
-                <radialGradient id="aicore" cx="38%" cy="32%" r="75%"><stop offset="0" stopColor="#ece9ff" /><stop offset=".45" stopColor="#7a6bff" /><stop offset="1" stopColor="#2a2a9a" /></radialGradient>
-                <linearGradient id="hotpath" gradientUnits="userSpaceOnUse" x1={CX} y1={CY} x2={POS[sel].x} y2={POS[sel].y}><stop offset="0" stopColor="#c4b5fd" /><stop offset="1" stopColor={ok ? '#34d399' : '#818cf8'} /></linearGradient>
-              </defs>
-              {[70, 105].map((r, i) => <circle key={r} cx={CX} cy={CY} r={r} fill="none" stroke="#8b7bff" strokeOpacity={0.18 - i * 0.05} strokeDasharray="3 7" style={{ transformOrigin: `${CX}px ${CY}px`, animation: reduced ? undefined : `spinSlow ${i ? 50 : 34}s linear infinite ${i ? 'reverse' : ''}` }} />)}
-              {POS.map((p, i) => <line key={i} x1={CX} y1={CY} x2={p.x} y2={p.y} stroke="#6d5cff" strokeOpacity={i === sel ? 0 : 0.28} strokeDasharray="4 6" />)}
-              <motion.line key={sel} x1={CX} y1={CY} x2={POS[sel].x} y2={POS[sel].y} stroke="url(#hotpath)" strokeWidth="2.5" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.7, ease: EASE }} />
-              {!reduced && [0, 0.7, 1.4].map((b) => (
-                <circle key={`${sel}${b}`} r="4" fill="#fff" style={{ filter: 'drop-shadow(0 0 6px #b8aaff)' }}><animateMotion dur="2.1s" begin={`${b}s`} repeatCount="indefinite" path={`M${CX} ${CY} L${POS[sel].x} ${POS[sel].y}`} /></circle>
+        {/* RIGHT: the AI Intelligence Engine + secondary provider selection */}
+        <Reveal variant="right" className="min-w-0">
+          <div ref={stageRef} className="relative mx-auto w-full max-w-[680px]">
+            <div role="img" aria-label={t('ai.engineAria')} className="relative h-[330px] w-full sm:h-[430px] lg:h-[480px]">
+              {webgl && near ? (
+                <Boundary fallback={<Fallback3D className="h-full w-full" />}>
+                  <Suspense fallback={<Fallback3D className="h-full w-full opacity-40" />}>
+                    <Engine progressRef={progressRef} onPhase={setPhase} reduced={reduced} mobile={mobile} active={inView} />
+                  </Suspense>
+                </Boundary>
+              ) : <Fallback3D className="h-full w-full opacity-70" />}
+            </div>
+            <ol className="mx-auto -mt-2 flex w-fit max-w-full items-center gap-1 rounded-full border border-white/10 bg-white/[0.05] p-1.5 backdrop-blur-xl" aria-label={t('ai.engineAria')}>
+              {tr<string[]>('ai.flow').map((f, i) => (
+                <li key={i} className="flex items-center gap-1">
+                  <span className={`rounded-full px-3 py-1.5 font-display text-[11px] font-bold transition-all duration-500 sm:px-4 sm:text-sm ${phase === i ? 'text-white shadow-lg' : 'text-slate-400'}`}
+                    style={phase === i ? { background: FLOW_C[i], boxShadow: `0 6px 24px -8px ${FLOW_C[i]}` } : undefined}>{f}</span>
+                  {i < 2 && <ChevronRight size={14} className="text-slate-500 rtl:rotate-180" aria-hidden />}
+                </li>
               ))}
-              <circle cx={CX} cy={CY} r="58" fill="#6d5cff" opacity=".18" />
-              <circle cx={CX} cy={CY} r="44" fill="url(#aicore)" />
-              <text x={CX} y={CY + 4} textAnchor="middle" fill="#fff" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="13">RaapNexus</text>
-              <text x={CX} y={CY + 19} textAnchor="middle" fill="#e0dcff" fontFamily="Manrope, sans-serif" fontWeight="700" fontSize="11">AI core</text>
-            </svg>
-            {AI_NODES.map((a, i) => (
-              <button key={a.id} type="button" onClick={() => pick(i)} onFocus={() => pick(i)} aria-pressed={sel === i} aria-label={`${a.name}, ${a.status === 'verified' ? 'live' : 'planned'}`}
-                className="group absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none" style={{ left: `${(POS[i].x / 520) * 100}%`, top: `${(POS[i].y / 430) * 100}%` }}>
-                <span className="flex flex-col items-center gap-1.5" style={reduced ? undefined : { animation: `floatY ${5 + (i % 3)}s ease-in-out ${i * -0.9}s infinite` }}>
-                  <span className={`grid h-12 w-12 place-items-center rounded-full bg-white/95 ring-1 transition-all duration-300 sm:h-14 sm:w-14 group-focus-visible:ring-2 group-focus-visible:ring-violet-300 ${sel === i ? 'scale-110 ring-white' : 'ring-white/40 group-hover:scale-110'}`}
-                    style={{ boxShadow: sel === i ? `0 0 38px -2px ${a.color}, 0 10px 30px -10px rgba(0,0,0,.6)` : `0 0 22px -8px ${a.color}, 0 8px 20px -10px rgba(0,0,0,.6)` }}>
-                    {a.logo ? <img src={a.logo} alt="" width={28} height={28} loading="lazy" draggable={false} className="h-6 w-6 object-contain sm:h-7 sm:w-7" /> : <a.Icon size={22} strokeWidth={1.8} className="text-indigo-500" aria-hidden />}
-                  </span>
-                  <span className={`text-[11px] font-bold sm:text-xs ${sel === i ? 'text-white' : 'text-slate-400 group-hover:text-white'}`}>{a.short}</span>
-                </span>
-                <span role="tooltip" className="pointer-events-none absolute -top-9 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-full border border-white/15 bg-[#0b1233]/95 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 sm:block">{a.name}</span>
-              </button>
-            ))}
+            </ol>
           </div>
 
-          <div className="mt-2 rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl sm:p-6" aria-live="polite">
+          {/* provider selection: refined, secondary */}
+          <p className="mt-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{t('ai.providers')}</p>
+          <div className="mt-3 flex flex-wrap justify-center gap-2" role="group" aria-label={t('ai.providers')}>
+            {AI_NODES.map((a, i) => {
+              const nm = a.id === 'local' || a.id === 'custom' ? t(`ai.models.${a.id}.name`) : a.name
+              const sh = a.id === 'custom' ? t('ai.models.custom.short') : a.short
+              return (
+                <Reveal key={a.id} variant="scale" delay={0.05 * i}>
+                <button type="button" onClick={() => pick(i)} onFocus={() => pick(i)} aria-pressed={sel === i} aria-label={`${nm}, ${a.status === 'verified' ? t('ai.live') : t('ai.planned')}`}
+                  className={`group flex items-center gap-2 rounded-full border hover:-translate-y-0.5 hover:scale-[1.04] py-1.5 ps-1.5 pe-3.5 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 ${sel === i ? 'border-white/40 bg-white/10' : 'border-white/10 bg-white/[0.03] hover:bg-white/[0.07]'}`}
+                  style={sel === i ? { boxShadow: `0 0 26px -8px ${a.color}` } : undefined}>
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/95">
+                    {a.logo ? <img src={a.logo} alt="" width={20} height={20} loading="lazy" draggable={false} className="h-5 w-5 object-contain" /> : <a.Icon size={16} strokeWidth={1.8} className="text-indigo-500" aria-hidden />}
+                  </span>
+                  <span className={`text-xs font-bold sm:text-sm ${sel === i ? 'text-white' : 'text-slate-300'}`}>{sh}</span>
+                </button>
+                </Reveal>
+              )
+            })}
+          </div>
+
+          <div className="mt-4 rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl sm:p-6" aria-live="polite">
             <AnimatePresence mode="wait">
               <motion.div key={n.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35, ease: EASE }}>
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Active model</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{t('ai.active')}</p>
                   <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${ok ? 'bg-emerald-400/15 text-emerald-300' : 'bg-indigo-400/15 text-indigo-200'}`}>
-                    {ok ? <BadgeCheck size={13} aria-hidden /> : <FlaskConical size={13} aria-hidden />}{ok ? 'Live' : 'Planned'} · {n.statusLabel}
+                    {ok ? <BadgeCheck size={13} aria-hidden /> : <FlaskConical size={13} aria-hidden />}{ok ? t('ai.live') : t('ai.planned')} · {t(`ai.models.${n.id}.status`)}
                   </span>
                 </div>
-                <h3 className="mt-2 font-display text-2xl font-extrabold text-white">{n.name}</h3>
-                <p className="mt-1 text-slate-300">{n.blurb}</p>
+                <h3 className="mt-2 font-display text-2xl font-extrabold text-white">{n.id === 'local' || n.id === 'custom' ? t(`ai.models.${n.id}.name`) : n.name}</h3>
+                <p className="mt-1 text-slate-300">{t(`ai.models.${n.id}.blurb`)}</p>
               </motion.div>
             </AnimatePresence>
           </div>
-        </div>
+        </Reveal>
       </div>
 
     </section>

@@ -1,29 +1,48 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import Logo from '../Logo'
 import CtaButton from '../ui/CtaButton'
 import { EASE } from '../../lib/motion'
+import { useI18n } from '../../i18n'
+import { CurrencySelector, LanguageSelector } from './Selectors'
 
 const LINKS = [
-  { label: 'Platform', id: 'platform', also: [] as string[] },
-  { label: 'Financial Services', id: 'services', also: ['intelligence', 'audit'] },
-  { label: 'AI Intelligence', id: 'ai', also: [] as string[] },
-  { label: 'About', id: 'about', also: [] as string[] },
+  { label: 'nav.platform', id: 'platform', also: [] as string[] },
+  { label: 'nav.services', id: 'services', also: ['intelligence', 'audit'] },
+  { label: 'nav.ai', id: 'ai', also: [] as string[] },
+  { label: 'nav.about', id: 'about', also: [] as string[] },
 ]
 
 export default function SiteNav() {
+  const { t, lang } = useI18n()
+  const loc = useLocation()
+  const homePath = `/${lang}`
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [current, setCurrent] = useState('')
   const toggle = useRef<HTMLButtonElement>(null)
 
+  // single rAF-throttled scroll handler: compact state with hysteresis (like the reference, the bar never hides)
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
+    let raf = 0
+    const run = () => { const y = Math.max(0, window.scrollY); setScrolled((s) => (s ? y > 16 : y > 56)) }
+    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(run) }
+    run()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('scroll', onScroll) }
   }, [])
+  // a route change (e.g. logo from another language path) always starts at the top
+  useEffect(() => { if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }) }, [loc.pathname])
+  const goHome = (e: React.MouseEvent) => {
+    setOpen(false)
+    if (loc.pathname.replace(/\/+$/, '') === homePath) {
+      e.preventDefault()
+      if (window.location.hash) history.replaceState(null, '', homePath)
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
+    }
+  }
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -49,45 +68,47 @@ export default function SiteNav() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:px-5 sm:pt-4">
+    <header className={`fixed inset-x-0 top-0 z-50 flex justify-center px-3 transition-[padding] duration-500 ease-[cubic-bezier(.22,1,.36,1)] sm:px-5 ${scrolled ? 'pt-2 sm:pt-3' : 'pt-3 sm:pt-5'}`}>
       <motion.nav
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-        aria-label="Primary"
-        className={`relative flex w-full max-w-[1040px] items-center justify-between rounded-full border px-3 py-1 pl-4 sm:pl-5 backdrop-blur-xl transition-all duration-500 ${scrolled ? 'border-slate-200/80 bg-white/[.98] shadow-[0_10px_40px_-12px_rgba(15,23,42,.35)]' : 'border-white/30 bg-white/[.98] shadow-[0_10px_40px_-18px_rgba(15,23,42,.5)]'}`}
+        aria-label={t('nav.primary')}
+        className={`relative flex w-full items-center justify-between rounded-full border px-3 ps-4 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] sm:ps-5 ${scrolled ? 'max-w-[1120px] border-white/70 bg-white/85 py-0 shadow-[0_18px_50px_-16px_rgba(15,23,42,.5)] backdrop-saturate-150' : 'max-w-[1240px] border-white/30 bg-white/[.98] py-1 shadow-[0_10px_40px_-18px_rgba(15,23,42,.5)]'}`}
       >
-        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue" aria-label="RaapNexus home">
-          <Logo size="sm" />
-        </a>
-        <ul className="hidden items-center gap-1 lg:flex">
+        <Link to={homePath} onClick={goHome} className="rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue" aria-label={t('nav.home')}>
+          <span className={`block origin-left transition-transform duration-500 rtl:origin-right ${scrolled ? 'scale-[.86]' : 'scale-100'}`}><Logo size="sm" /></span>
+        </Link>
+        <ul className="hidden items-center gap-0 xl:flex">
           {LINKS.map((l) => (
             <li key={l.id}>
               <a href={`#${l.id}`} onClick={go(l.id)} aria-current={current === l.id ? 'true' : undefined}
-                className={`relative rounded-full px-4 py-2 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-electric-blue' : 'text-slate-600 hover:text-slate-900'}`}>
-                {l.label}
+                className={`relative rounded-full px-3 py-2 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-electric-blue' : 'text-slate-600 hover:bg-slate-900/[0.05] hover:text-slate-900'}`}>
+                {t(l.label)}
                 {current === l.id && <motion.span layoutId="navdot" className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-electric-blue" />}
               </a>
             </li>
           ))}
         </ul>
         <div className="flex items-center gap-2">
-          <div className="hidden lg:block"><CtaButton label="Explore Platform" variant="blue" small /></div>
-          <button ref={toggle} type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? 'Close menu' : 'Open menu'}
-            className="grid h-10 w-10 place-items-center rounded-full text-slate-800 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue lg:hidden">
+          <div className="hidden items-center gap-1 md:flex"><LanguageSelector /><CurrencySelector /></div>
+          <div className="hidden xl:block"><CtaButton label={t('nav.cta')} variant="blue" small /></div>
+          <button ref={toggle} type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? t('nav.menuClose') : t('nav.menuOpen')}
+            className="grid h-10 w-10 place-items-center rounded-full text-slate-800 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue xl:hidden">
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
         <AnimatePresence>
           {open && (
             <motion.div id="mobile-menu" initial={{ opacity: 0, y: -8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: 0.98 }} transition={{ duration: 0.25, ease: EASE }}
-              className="absolute inset-x-0 top-[calc(100%+10px)] rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-2xl backdrop-blur-xl lg:hidden">
+              className="absolute inset-x-0 top-[calc(100%+10px)] rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-2xl backdrop-blur-xl xl:hidden">
               <ul className="flex flex-col">
                 {LINKS.map((l) => (
-                  <li key={l.id}><a href={`#${l.id}`} onClick={go(l.id)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{l.label}</a></li>
+                  <li key={l.id}><a href={`#${l.id}`} onClick={go(l.id)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t(l.label)}</a></li>
                 ))}
               </ul>
-              <div className="mt-2 px-1 pb-1"><CtaButton label="Explore Platform" variant="blue" /></div>
+              <div className="mt-2 grid grid-cols-2 gap-2 px-1 md:hidden"><LanguageSelector full /><CurrencySelector full /></div>
+              <div className="mt-2 px-1 pb-1"><CtaButton label={t('nav.cta')} variant="blue" /></div>
             </motion.div>
           )}
         </AnimatePresence>

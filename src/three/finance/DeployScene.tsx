@@ -9,7 +9,7 @@ import { canvasTexture, ease, clamp01, rr } from './tex'
  * focusRef: 0 = overview, 1 = cloud, 2 = private, 3 = local. The camera glides between them.
  * A visual concept only; it does not describe what RaapNexus supports today.
  */
-export interface DeployProps { focusRef: MutableRefObject<number>; onPick: (i: number) => void; reduced: boolean; mobile: boolean; active: boolean }
+export interface DeployProps { focusRef: MutableRefObject<number>; camRef?: MutableRefObject<number>; entryRef?: MutableRefObject<number>; onPick: (i: number) => void; reduced: boolean; mobile: boolean; active: boolean }
 
 const CLOUD = '#38bdf8', PRIV = '#34d399', LOCAL = '#fbbf24'
 const COLS = [CLOUD, PRIV, LOCAL]
@@ -152,7 +152,7 @@ function LocalEnv({ hot, reduced }: { hot: MutableRefObject<number>; reduced: bo
   )
 }
 
-function Stage({ focusRef, onPick, reduced, mobile }: Omit<DeployProps, 'active'>) {
+function Stage({ focusRef, camRef, entryRef, onPick, reduced, mobile }: Omit<DeployProps, 'active'>) {
   const { camera, gl } = useThree()
   const spr = useMemo(() => sprite(), [])
   const blob = useMemo(() => blobTex(), [])
@@ -173,15 +173,19 @@ function Stage({ focusRef, onPick, reduced, mobile }: Omit<DeployProps, 'active'
     const t = s.clock.elapsedTime
     intro.current = Math.min(3, intro.current + dt * 0.6)
     const f = focusRef.current, k = ease(clamp01(intro.current * 0.9))
+    const cfNow = Math.max(0, Math.min(3, camRef ? camRef.current : f)) // scroll-driven focus: 0 intro, 1 cloud, 2 private, 3 local
     core.current.scale.setScalar(0.4 + 0.6 * k * (mobile ? 0.85 : 1)); core.current.position.y = reduced ? 0 : Math.sin(t * 0.7) * 0.08
     const pp = pg.attributes.position.array as Float32Array
     for (let i = 0; i < 3; i++) {
-      const on = f === i + 1 || hover.current === i
-      hot.current[i] += ((on ? 1 : 0) - hot.current[i]) * Math.min(1, dt * 4)
+      // emphasis follows the scroll-driven focus continuously: the active environment lights up, the others recede
+      const w = Math.max(0, 1 - Math.abs(cfNow - (i + 1)))
+      const target = Math.max(w, hover.current === i ? 1 : 0)
+      hot.current[i] += (target - hot.current[i]) * Math.min(1, dt * 5)
+      const recede = 1 - 0.12 * (1 - w) * Math.min(1, cfNow)
       const e = envs.current[i]
       if (e) {
         const vis = ease(clamp01(intro.current * 0.9 - 0.5 - i * 0.35))
-        e.scale.setScalar((0.55 + 0.45 * vis) * (1 + hot.current[i] * 0.06) * (mobile ? 0.9 : 1)); e.visible = vis > 0.01
+        e.scale.setScalar((0.55 + 0.45 * vis) * (1 + hot.current[i] * 0.14) * recede * (mobile ? 0.9 : 1)); e.visible = vis > 0.01
         e.position.copy(ANCHOR[i]); e.position.y += reduced ? 0 : Math.sin(t * 0.6 + i * 2) * 0.1
         e.rotation.y = (i === 0 ? 0.35 : i === 1 ? -0.4 : 0) + (reduced ? 0 : Math.sin(t * 0.3 + i) * 0.05)
       }
@@ -193,10 +197,20 @@ function Stage({ focusRef, onPick, reduced, mobile }: Omit<DeployProps, 'active'
       }
     }
     pg.attributes.position.needsUpdate = true
-    const c = CAM[f] ?? CAM[0], zoff = mobile ? 3.5 : 0
+    // pull the camera back on wide/short stages so every platform stays inside the frame
+    const asp = s.size.width / Math.max(1, s.size.height)
+    // continuous camera: follows the scroll-driven focus value between two neighbouring poses
+    const cf = Math.max(0, Math.min(3, camRef ? camRef.current : f)), i0 = Math.min(2, Math.floor(cf)), uu = cf - i0, u = uu * uu * (3 - 2 * uu)
+    const A = CAM[i0], B = CAM[i0 + 1]
+    const mix = (a: number[], b: number[]) => a.map((v, k) => v + (b[k] - v) * u)
+    const c = { p: mix(A.p, B.p), l: mix(A.l, B.l) }
+    const zoff = (mobile ? 3.5 : 0) + Math.max(0, 1.6 - asp) * 4 + Math.min(5, Math.max(0, (asp - 1.7) * 1.2)) + Math.min(1, cf) * 3.2
     camera.position.x += (c.p[0] - camera.position.x) * 0.045 + (reduced ? 0 : s.pointer.x * 0.01)
     camera.position.y += (c.p[1] - camera.position.y) * 0.045
-    camera.position.z += (c.p[2] + zoff - camera.position.z) * 0.045
+    // approach: the camera starts further back and higher, then travels in as the stage rises into view
+    const en = 1 - (entryRef ? entryRef.current : 1)
+    camera.position.y += (c.p[1] + en * 1.6 - camera.position.y) * 0.045 - (c.p[1] - camera.position.y) * 0.045
+    camera.position.z += (c.p[2] + zoff + en * 6 - camera.position.z) * 0.045
     look.current.x += (c.l[0] - look.current.x) * 0.05; look.current.y += (c.l[1] - look.current.y) * 0.05; look.current.z += (c.l[2] - look.current.z) * 0.05
     camera.lookAt(look.current)
   })

@@ -6,7 +6,8 @@ export function useNearView<T extends HTMLElement>(margin = '700px 0px') {
   const [near, setNear] = useState(false)
   const [inView, setInView] = useState(false)
   useEffect(() => {
-    const el = ref.current!
+    const el = ref.current
+    if (!el) return
     const a = new IntersectionObserver(([e]) => e.isIntersecting && setNear(true), { rootMargin: margin })
     const b = new IntersectionObserver(([e]) => setInView(e.isIntersecting))
     a.observe(el); b.observe(el)

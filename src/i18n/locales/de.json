@@ -1,0 +1,294 @@
+{
+ "meta": {
+  "title": "RaapNexus | Plattform für Finanzintelligenz und Prüfung",
+  "description": "RaapNexus ist eine Finanzplattform für Steuerprüfung, Finanzprüfung, Finanzanalyse und Geschäftsanalyse – mit KI-gestützten Erkenntnissen zu Ihren ERP-Daten.",
+  "keywords": "Software für Finanzprüfung, Steuerprüfung, Plattform für Finanzanalyse, Geschäftsanalyse, KI-gestützte Finanzanalyse, Finanzintelligenz, ERP-Integration",
+  "og": "Klarere Finanzeinblicke. Sicherere Geschäftsentscheidungen.",
+  "siteName": "RaapNexus"
+ },
+ "nav": {
+  "platform": "Plattform",
+  "services": "Finanzdienstleistungen",
+  "ai": "KI-Intelligenz",
+  "about": "Über uns",
+  "cta": "Plattform entdecken",
+  "menuOpen": "Menü öffnen",
+  "menuClose": "Menü schließen",
+  "home": "RaapNexus Startseite",
+  "language": "Sprache",
+  "currency": "Währung",
+  "skip": "Zum Inhalt springen",
+  "primary": "Hauptnavigation"
+ },
+ "hero": {
+  "eyebrow": "RaapNexus",
+  "l1": "Die ultimative",
+  "l2": "Finanzplattform.",
+  "sub": "Klarere Finanzeinblicke. Sicherere Geschäftsentscheidungen.",
+  "cta": "RaapNexus entdecken",
+  "revenue": "Umsatz seit Jahresbeginn",
+  "growth": "Umsatzwachstum",
+  "margin": "Bruttomarge",
+  "label": "RaapNexus, die ultimative Finanzplattform",
+  "visualAlt": "RaapNexus im Zentrum verbundener ERP-Systeme: SAP, Oracle, Sage, NetSuite, Odoo, Microsoft Dynamics 365, Workday, Unit4, Infor, Epicor, Focus ERP, Tally, QuickBooks, Zoho Books, IFS und Acumatica"
+ },
+ "platform": {
+  "eyebrow": "Das RaapNexus-Finanz-Dashboard",
+  "h1": "Finanzintelligenz,",
+  "h2": "vereint.",
+  "tabs": [
+   "Management-Übersicht",
+   "GuV",
+   "Bilanz",
+   "Summen- und Saldenliste",
+   "Cashflow",
+   "Warnsignale"
+  ],
+  "revenue": "Umsatz seit Jahresbeginn",
+  "growth": "Umsatzwachstum",
+  "notes": [
+   "Summen- und Saldenliste geprüft",
+   "Mahnbericht bereit",
+   "Hauptbuch zum Monatsende ausgeglichen"
+  ],
+  "viewsLabel": "ERP-Ansichten",
+  "pan": "Vorschau des ERP-Dashboards, seitlich scrollen"
+ },
+ "services": {
+  "h1": "Vier Services.",
+  "h2": "Eine Plattform.",
+  "tablist": "Finanzdienstleistungen",
+  "items": [
+   {
+    "name": "Steuerprüfung",
+    "line": "Steuerdaten, USt und Meldungen in einer Ansicht.",
+    "cta": "Steuerprüfung entdecken"
+   },
+   {
+    "name": "Finanzprüfung",
+    "line": "Jede Buchung nachvollziehbar vom Hauptbuch bis zur Bank.",
+    "cta": "Prüfung entdecken"
+   },
+   {
+    "name": "Finanzanalyse",
+    "line": "Erlöse, Kosten und Cashflow auf einen Blick.",
+    "cta": "Analyse entdecken"
+   },
+   {
+    "name": "Geschäftsanalyse",
+    "line": "Wachstum und Marge, verknüpft mit Ihren Entscheidungen.",
+    "cta": "Leistung entdecken"
+   }
+  ],
+  "kpi": {
+   "outputVat": "Umsatzsteuer",
+   "inputVat": "Vorsteuer",
+   "flagged": "Positionen in Prüfung",
+   "balanced": "Ausgeglichene Monate",
+   "revenue": "Umsatz seit Jahresbeginn",
+   "cash": "Kasse und Bank",
+   "growth": "Umsatzwachstum",
+   "margin": "Bruttomarge"
+  }
+ },
+ "scene": {
+  "vatReturn": "UST-ERKLÄRUNG",
+  "netVat": "NETTO-UST",
+  "ledger": "HAUPTBUCH",
+  "bank": "BANK",
+  "revenue": "Erlöse",
+  "expenses": "Aufwand",
+  "cashflow": "Cashflow",
+  "grossMargin": "Bruttomarge",
+  "salesGrowth": "Umsatzwachstum",
+  "sales": "Umsatz",
+  "cost": "Kosten",
+  "cash": "Liquidität"
+ },
+ "intel": {
+  "eyebrow": "Finanz- und Geschäftsanalyse",
+  "h1": "Sehen Sie, wie sich",
+  "h2": "Zahlen bewegen.",
+  "aria": "Finanzkennzahl",
+  "tabs": [
+   {
+    "label": "Erlöse",
+    "text": "Umsatzentwicklung im Zeitverlauf."
+   },
+   {
+    "label": "Aufwand",
+    "text": "Wo sich die Kostenbasis verändert."
+   },
+   {
+    "label": "Cashflow",
+    "text": "Zu- und Abflüsse von Liquidität, Monat für Monat."
+   },
+   {
+    "label": "Bilanz",
+    "text": "Aktiva im Verhältnis zu Verbindlichkeiten und Eigenkapital."
+   }
+  ]
+ },
+ "audit": {
+  "h1": "Steuer- und",
+  "h2": "Finanzprüfung",
+  "sub": "Klarheit, Genauigkeit und Intelligenz hinter jedem Finanzdatensatz.",
+  "views": [
+   "Steuerliche Prüfung",
+   "Finanzprüfung"
+  ],
+  "legend": [
+   "Verifiziert",
+   "Abgestimmt",
+   "In Prüfung",
+   "Handlungsbedarf"
+  ],
+  "viewsAria": "Prüfungsansicht",
+  "statesAria": "Datensatzstatus"
+ },
+ "ai": {
+  "h1": "Finanzintelligenz.",
+  "h2": "Angetrieben von KI.",
+  "sub": "Flexible KI-Modelle. Klarere Einblicke. Mehr Kontrolle.",
+  "lead": "Stellen Sie Ihren Finanzdaten beliebige Fragen.",
+  "benefits": [
+   {
+    "t": "Fragen in natürlicher Sprache",
+    "s": "Live über MCP"
+   },
+   {
+    "t": "Flexible Modellanbindung",
+    "s": "Geplant"
+   },
+   {
+    "t": "Freie Wahl des Betriebs",
+    "s": "Geplant"
+   }
+  ],
+  "useCasesLabel": "Finanzielle Anwendungsfälle",
+  "useCases": [
+   {
+    "label": "Steuerdokumente analysieren",
+    "prompt": "Fasse unsere Umsatzsteuerposition für dieses Quartal zusammen."
+   },
+   {
+    "label": "Finanzberichte analysieren",
+    "prompt": "Erkläre die wichtigsten Treiber des Gewinns in diesem Monat."
+   },
+   {
+    "label": "Transaktionen prüfen",
+    "prompt": "Liste Transaktionen über 50.000 AED ohne passende Buchung auf."
+   },
+   {
+    "label": "Kostenmuster analysieren",
+    "prompt": "Welche Aufwandskonten haben sich gegenüber dem Vorquartal am stärksten verändert?"
+   },
+   {
+    "label": "Geschäftsentwicklung",
+    "prompt": "Wie verhält sich das Umsatzwachstum in diesem Jahr zur Marge?"
+   },
+   {
+    "label": "Anomalien erkennen",
+    "prompt": "Markiere ungewöhnliche Ausschläge in den monatlichen Hauptbuchsalden."
+   }
+  ],
+  "flow": [
+   "Finanzdaten",
+   "KI-Verarbeitung",
+   "Finanzielle Erkenntnisse"
+  ],
+  "engineAria": "3D-Engine für Finanzintelligenz, die Finanzdaten in Erkenntnisse verwandelt",
+  "providers": "Modellanbieter",
+  "active": "Aktives Modell",
+  "live": "Live",
+  "planned": "Geplant",
+  "models": {
+   "claude": {
+    "blurb": "Befragen Sie Ihre Finanzdaten in natürlicher Sprache.",
+    "status": "Über MCP verbunden"
+   },
+   "openai": {
+    "blurb": "Option für ein gehostetes Modell.",
+    "status": "Demnächst"
+   },
+   "gemini": {
+    "blurb": "Option für ein gehostetes Modell.",
+    "status": "Demnächst"
+   },
+   "mistral": {
+    "blurb": "Option für ein gehostetes Modell.",
+    "status": "Demnächst"
+   },
+   "local": {
+    "name": "Ollama (lokale Modelle)",
+    "blurb": "Lokale Modelle auf Ihrer eigenen Hardware.",
+    "status": "Demnächst"
+   },
+   "custom": {
+    "name": "Individuelle Integration",
+    "short": "Individuell",
+    "blurb": "Bringen Sie Ihr eigenes Modell mit.",
+    "status": "Demnächst"
+   }
+  }
+ },
+ "deploy": {
+  "h1": "Wo das",
+  "h2": "Modell läuft",
+  "sub": "Flexibler KI-Betrieb. Mehr Kontrolle über Ihre Infrastruktur.",
+  "group": "Betriebsumgebung",
+  "stages": [
+   {
+    "label": "KI-Modell",
+    "line": "Ein Intelligenzkern, bereit zur Anbindung."
+   },
+   {
+    "label": "Cloud",
+    "line": "Modelle auf verwalteter Cloud-Infrastruktur betreiben."
+   },
+   {
+    "label": "Private Infrastruktur",
+    "line": "Dedizierte Server in einer Infrastruktur, die Sie kontrollieren."
+   },
+   {
+    "label": "Lokaler Betrieb",
+    "line": "Modelle laufen direkt auf Ihren eigenen Rechnern."
+   }
+  ]
+ },
+ "cta": {
+  "h1": "Bringen Sie Ihre Finanzen auf",
+  "h2": "eine Plattform.",
+  "button": "RaapNexus entdecken"
+ },
+ "footer": {
+  "desc": "Die ultimative Finanzplattform.",
+  "explore": "Entdecken",
+  "services": "Services",
+  "erp": "ERP",
+  "servicesAria": "Finanzdienstleistungen",
+  "rights": "Alle Rechte vorbehalten."
+ },
+ "prefs": {
+  "langSuggest": "Möchten Sie RaapNexus auf {lang} ansehen?",
+  "switch": "Sprache wechseln",
+  "keep": "Aktuelle Sprache beibehalten",
+  "dismiss": "Schließen",
+  "curSuggest": "Beträge in {cur} anzeigen?",
+  "use": "{code} verwenden",
+  "keepCur": "{code} beibehalten",
+  "region": "Sprache und Währung",
+  "noRates": "Live-Kurse nicht verfügbar. Beispielzahlen werden in AED angezeigt.",
+  "ratesBy": "Kurse von ExchangeRate-API"
+ },
+ "seo": {
+  "h1": "RaapNexus: die ultimative Finanzplattform",
+  "p": "Steuerprüfung, Finanzprüfung, Finanzanalyse und Geschäftsanalyse in einer intelligenten Plattform – mit KI-gestützten Erkenntnissen zu Ihren ERP-Finanzdaten.",
+  "list": [
+   "Steuerprüfung",
+   "Finanzprüfung",
+   "Finanzanalyse",
+   "Geschäftsanalyse"
+  ]
+ }
+}

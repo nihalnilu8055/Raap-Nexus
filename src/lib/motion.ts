@@ -9,6 +9,6 @@ export const GSAP_EASE = 'expo.out'
 export const DUR = { fast: 0.25, base: 0.6, slow: 1.1 }
 
 /** Shared, mutable scroll state read by WebGL frame loops (no React re-renders). */
-export const scrollState = { hero: 0 }
+export const scrollState = { hero: 0, px: 0, py: 0 }
 
 export { gsap, ScrollTrigger }

@@ -2,8 +2,10 @@ import { useLayoutEffect, useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import CtaButton from '../components/ui/CtaButton'
 import { EASE, gsap } from '../lib/motion'
+import { useI18n } from '../i18n'
 
 export default function FinalCta() {
+  const { t } = useI18n()
   const root = useRef<HTMLElement>(null)
   const reduced = !!useReducedMotion()
   useLayoutEffect(() => {
@@ -25,10 +27,10 @@ export default function FinalCta() {
       </svg>
       <div className="relative">
         <motion.h2 id="cta-h" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: EASE }} className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-6xl">
-          Bring your finances into <span className="bg-gradient-to-r from-sky-200 to-blue-500 bg-clip-text text-transparent">one platform.</span>
+          {t('cta.h1')} <span className="bg-gradient-to-r from-sky-200 to-blue-500 bg-clip-text text-transparent">{t('cta.h2')}</span>
         </motion.h2>
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: EASE, delay: 0.15 }} className="mt-9">
-          <CtaButton label="Explore RaapNexus" />
+          <CtaButton label={t('cta.button')} />
         </motion.div>
       </div>
     </section>

@@ -1,3 +1,4 @@
+import { Reveal } from '../components/ui/Reveal'
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Calculator, ShieldCheck } from 'lucide-react'
@@ -5,14 +6,16 @@ import Fallback3D from '../components/ui/Fallback3D'
 import { useNearView } from '../components/ui/useNearView'
 import { Boundary, isMobile, webglSupported } from '../lib/webgl'
 import { EASE, ScrollTrigger } from '../lib/motion'
+import { useI18n } from '../i18n'
 import type { AuditMode } from '../three/finance/AuditIntelScene'
 
 const Scene = lazy(() => import('../three/finance/AuditIntelScene'))
-const VIEWS = [{ m: 0 as AuditMode, label: 'Tax review', Icon: Calculator }, { m: 1 as AuditMode, label: 'Financial audit', Icon: ShieldCheck }]
-const LEGEND = [['Verified', '#34d399'], ['Reconciled', '#60a5fa'], ['Under review', '#fbbf24'], ['Attention required', '#f87171']] as const
+const VIEWS = [{ m: 0 as AuditMode, Icon: Calculator }, { m: 1 as AuditMode, Icon: ShieldCheck }]
+const LEGEND = ['#34d399', '#60a5fa', '#fbbf24', '#f87171']
 
 /** Tax & Financial Auditing: a 3D audit workspace with two views (tax review / financial audit). */
 export default function AuditSection() {
+  const { t } = useI18n()
   const { ref, near, inView } = useNearView<HTMLDivElement>()
   const modeRef = useRef<AuditMode>(0)
   const progressRef = useRef(0.4)
@@ -36,14 +39,15 @@ export default function AuditSection() {
         <div className="text-center">
           <motion.h2 id="au-h" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE }}
             className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
-            Tax &amp; <span className="bg-gradient-to-r from-emerald-300 to-sky-300 bg-clip-text text-transparent">Financial Auditing</span>
+            {t('audit.h1')} <span className="bg-gradient-to-r from-emerald-300 to-sky-300 bg-clip-text text-transparent">{t('audit.h2')}</span>
           </motion.h2>
           <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: EASE, delay: 0.12 }} className="mx-auto mt-4 max-w-xl text-lg text-slate-300">
-            Clarity, accuracy, and intelligence behind every financial record.
+            {t('audit.sub')}
           </motion.p>
         </div>
 
-        <div ref={ref} className="relative -mx-4 mt-4 h-[460px] sm:-mx-8 sm:h-[600px] lg:h-[700px]">
+        <Reveal variant="depth" className="-mx-4 sm:-mx-8">
+        <div ref={ref} className="relative mt-4 h-[460px] sm:-mx-8 sm:h-[600px] lg:h-[700px]">
           {webgl && near ? (
             <Boundary fallback={<Fallback3D className="h-full w-full" />}>
               <Suspense fallback={<Fallback3D className="h-full w-full opacity-40" />}>
@@ -51,21 +55,22 @@ export default function AuditSection() {
               </Suspense>
             </Boundary>
           ) : <Fallback3D className="h-full w-full opacity-60" />}
-          <div role="group" aria-label="Audit view" className="absolute inset-x-0 bottom-2 mx-auto flex w-fit gap-1 rounded-full border border-white/15 bg-[#06162a]/80 p-1.5 shadow-xl">
+          <div role="group" aria-label={t('audit.viewsAria')} className="absolute inset-x-0 bottom-2 mx-auto flex w-fit gap-1 rounded-full border border-white/15 bg-[#06162a]/80 p-1.5 shadow-xl">
             {VIEWS.map((v) => (
               <button key={v.m} type="button" aria-pressed={mode === v.m} onClick={() => pick(v.m)}
                 className={`relative flex items-center gap-2 rounded-full px-4 py-2 font-display text-sm font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:px-5 ${mode === v.m ? 'text-white' : 'text-slate-400 hover:text-white'}`}>
                 {mode === v.m && <motion.span layoutId="au-pill" transition={{ duration: 0.4, ease: EASE }} className="absolute inset-0 rounded-full bg-emerald-500/30 ring-1 ring-emerald-300/60" />}
-                <v.Icon size={16} className="relative" aria-hidden /><span className="relative">{v.label}</span>
+                <v.Icon size={16} className="relative" aria-hidden /><span className="relative">{t(`audit.views.${v.m}`)}</span>
               </button>
             ))}
           </div>
         </div>
-        <ul className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2" aria-label="Record states">
-          {LEGEND.map(([l, c]) => (
-            <li key={l} className="flex items-center gap-2 text-sm text-slate-300"><span className="h-2.5 w-2.5 rounded-full" style={{ background: c, boxShadow: `0 0 10px ${c}` }} />{l}</li>
+        </Reveal>
+        <Reveal delay={0.1}><ul className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2" aria-label={t('audit.statesAria')}>
+          {LEGEND.map((c, i) => (
+            <li key={c} className="flex items-center gap-2 text-sm text-slate-300"><span className="h-2.5 w-2.5 rounded-full" style={{ background: c, boxShadow: `0 0 10px ${c}` }} />{t(`audit.legend.${i}`)}</li>
           ))}
-        </ul>
+        </ul></Reveal>
       </div>
     </section>
   )

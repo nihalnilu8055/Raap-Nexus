@@ -1,0 +1,294 @@
+{
+ "meta": {
+  "title": "RaapNexus | Financial Intelligence & Auditing Platform",
+  "description": "RaapNexus is a finance platform for tax auditing, financial auditing, financial analysis and business analysis, with AI-assisted insight on your ERP data.",
+  "keywords": "financial auditing software, tax auditing, financial analysis platform, business analysis, AI financial analysis, financial intelligence, ERP integration",
+  "og": "Smarter financial insights. Confident business decisions.",
+  "siteName": "RaapNexus"
+ },
+ "nav": {
+  "platform": "Platform",
+  "services": "Financial Services",
+  "ai": "AI Intelligence",
+  "about": "About",
+  "cta": "Explore Platform",
+  "menuOpen": "Open menu",
+  "menuClose": "Close menu",
+  "home": "RaapNexus home",
+  "language": "Language",
+  "currency": "Currency",
+  "skip": "Skip to content",
+  "primary": "Primary"
+ },
+ "hero": {
+  "eyebrow": "RaapNexus",
+  "l1": "The Ultimate",
+  "l2": "Finance Platform.",
+  "sub": "Smarter financial insights. Confident business decisions.",
+  "cta": "Explore RaapNexus",
+  "revenue": "Revenue YTD",
+  "growth": "Sales growth",
+  "margin": "Gross margin",
+  "label": "RaapNexus, the ultimate finance platform",
+  "visualAlt": "RaapNexus at the centre of connected ERP systems: SAP, Oracle, Sage, NetSuite, Odoo, Microsoft Dynamics 365, Workday, Unit4, Infor, Epicor, Focus ERP, Tally, QuickBooks, Zoho Books, IFS and Acumatica"
+ },
+ "platform": {
+  "eyebrow": "The RaapNexus finance dashboard",
+  "h1": "Complete financial",
+  "h2": "intelligence.",
+  "tabs": [
+   "Executive",
+   "Profit & loss",
+   "Balance sheet",
+   "Trial balance",
+   "Cash flow",
+   "Red flags"
+  ],
+  "revenue": "Revenue YTD",
+  "growth": "Sales growth",
+  "notes": [
+   "Trial balance verified",
+   "Collections report ready",
+   "Month-end ledger balanced"
+  ],
+  "viewsLabel": "ERP views",
+  "pan": "ERP dashboard preview, scroll sideways to pan"
+ },
+ "services": {
+  "h1": "Four services.",
+  "h2": "One platform.",
+  "tablist": "Financial services",
+  "items": [
+   {
+    "name": "Tax Auditing",
+    "line": "Tax data, VAT and returns in one view.",
+    "cta": "Explore tax auditing"
+   },
+   {
+    "name": "Financial Auditing",
+    "line": "Every entry traced from ledger to bank.",
+    "cta": "Explore auditing"
+   },
+   {
+    "name": "Financial Analysis",
+    "line": "Revenue, expenses and cash flow, clearly.",
+    "cta": "Explore analysis"
+   },
+   {
+    "name": "Business Analysis",
+    "line": "Growth and margin, connected to decisions.",
+    "cta": "Explore performance"
+   }
+  ],
+  "kpi": {
+   "outputVat": "Output VAT",
+   "inputVat": "Input VAT",
+   "flagged": "Items flagged for review",
+   "balanced": "Months balanced",
+   "revenue": "Revenue YTD",
+   "cash": "Cash & bank",
+   "growth": "Sales growth",
+   "margin": "Gross margin"
+  }
+ },
+ "scene": {
+  "vatReturn": "VAT RETURN",
+  "netVat": "NET VAT",
+  "ledger": "LEDGER",
+  "bank": "BANK",
+  "revenue": "Revenue",
+  "expenses": "Expenses",
+  "cashflow": "Cash flow",
+  "grossMargin": "Gross margin",
+  "salesGrowth": "Sales growth",
+  "sales": "Sales",
+  "cost": "Cost",
+  "cash": "Cash"
+ },
+ "intel": {
+  "eyebrow": "Financial & Business Analysis",
+  "h1": "See the numbers",
+  "h2": "move.",
+  "aria": "Financial metric",
+  "tabs": [
+   {
+    "label": "Revenue",
+    "text": "Revenue trend across the period."
+   },
+   {
+    "label": "Expenses",
+    "text": "Where the cost base is moving."
+   },
+   {
+    "label": "Cash flow",
+    "text": "Cash in and out, month by month."
+   },
+   {
+    "label": "Balance sheet",
+    "text": "Assets against liabilities and equity."
+   }
+  ]
+ },
+ "audit": {
+  "h1": "Tax &",
+  "h2": "Financial Auditing",
+  "sub": "Clarity, accuracy, and intelligence behind every financial record.",
+  "views": [
+   "Tax review",
+   "Financial audit"
+  ],
+  "legend": [
+   "Verified",
+   "Reconciled",
+   "Under review",
+   "Attention required"
+  ],
+  "viewsAria": "Audit view",
+  "statesAria": "Record states"
+ },
+ "ai": {
+  "h1": "Financial intelligence.",
+  "h2": "Powered by AI.",
+  "sub": "Flexible AI models. Smarter financial insights. Greater control.",
+  "lead": "Ask your financial data anything.",
+  "benefits": [
+   {
+    "t": "Ask in plain language",
+    "s": "Live via MCP"
+   },
+   {
+    "t": "Flexible model connectivity",
+    "s": "Planned"
+   },
+   {
+    "t": "Deployment choice",
+    "s": "Planned"
+   }
+  ],
+  "useCasesLabel": "Finance use cases",
+  "useCases": [
+   {
+    "label": "Tax document analysis",
+    "prompt": "Summarise our VAT position for this quarter."
+   },
+   {
+    "label": "Financial report analysis",
+    "prompt": "Explain the main drivers of this month's profit."
+   },
+   {
+    "label": "Transaction review",
+    "prompt": "List transactions above AED 50,000 with no matching entry."
+   },
+   {
+    "label": "Expense pattern analysis",
+    "prompt": "Which expense accounts changed most versus last quarter?"
+   },
+   {
+    "label": "Business performance",
+    "prompt": "How did sales growth compare with margin this year?"
+   },
+   {
+    "label": "Anomaly identification",
+    "prompt": "Flag one-off swings in monthly ledger balances."
+   }
+  ],
+  "flow": [
+   "Financial data",
+   "AI processing",
+   "Financial insights"
+  ],
+  "engineAria": "3D financial intelligence engine turning financial data into insights",
+  "providers": "Model providers",
+  "active": "Active model",
+  "live": "Live",
+  "planned": "Planned",
+  "models": {
+   "claude": {
+    "blurb": "Ask your financial data in plain language.",
+    "status": "Connected via MCP"
+   },
+   "openai": {
+    "blurb": "Hosted model option.",
+    "status": "Coming soon"
+   },
+   "gemini": {
+    "blurb": "Hosted model option.",
+    "status": "Coming soon"
+   },
+   "mistral": {
+    "blurb": "Hosted model option.",
+    "status": "Coming soon"
+   },
+   "local": {
+    "name": "Ollama (local models)",
+    "blurb": "Local models on your own hardware.",
+    "status": "Coming soon"
+   },
+   "custom": {
+    "name": "Custom integration",
+    "short": "Custom",
+    "blurb": "Bring your own model.",
+    "status": "Coming soon"
+   }
+  }
+ },
+ "deploy": {
+  "h1": "Where the",
+  "h2": "Model Runs",
+  "sub": "Flexible AI deployment. Greater control over your infrastructure.",
+  "group": "Deployment environment",
+  "stages": [
+   {
+    "label": "AI Model",
+    "line": "One intelligence core, ready to connect."
+   },
+   {
+    "label": "Cloud",
+    "line": "Run models on managed cloud infrastructure."
+   },
+   {
+    "label": "Private Infrastructure",
+    "line": "Dedicated servers inside infrastructure you control."
+   },
+   {
+    "label": "Local Deployment",
+    "line": "Models running directly on your own machines."
+   }
+  ]
+ },
+ "cta": {
+  "h1": "Bring your finances into",
+  "h2": "one platform.",
+  "button": "Explore RaapNexus"
+ },
+ "footer": {
+  "desc": "The Ultimate Finance Platform.",
+  "explore": "Explore",
+  "services": "Services",
+  "erp": "ERP",
+  "servicesAria": "Financial services",
+  "rights": "All rights reserved."
+ },
+ "prefs": {
+  "langSuggest": "Would you like to view RaapNexus in {lang}?",
+  "switch": "Switch language",
+  "keep": "Keep current language",
+  "dismiss": "Dismiss",
+  "curSuggest": "Show amounts in {cur}?",
+  "use": "Use {code}",
+  "keepCur": "Keep {code}",
+  "region": "Language and currency",
+  "noRates": "Live rates unavailable. Sample figures are shown in AED.",
+  "ratesBy": "Rates by ExchangeRate-API"
+ },
+ "seo": {
+  "h1": "RaapNexus: The Ultimate Finance Platform",
+  "p": "Tax auditing, financial auditing, financial analysis and business analysis in one intelligent platform, with AI-assisted insight on your ERP financial data.",
+  "list": [
+   "Tax Auditing",
+   "Financial Auditing",
+   "Financial Analysis",
+   "Business Analysis"
+  ]
+ }
+}

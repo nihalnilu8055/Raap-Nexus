@@ -19,7 +19,7 @@ export default function CtaButton({ label, variant = 'light', small = false, ico
       className={`group relative inline-flex items-center overflow-hidden rounded-full font-display font-bold transition-[box-shadow,background-color,filter] duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${small ? 'gap-2 py-1.5 pl-1.5 pr-3.5 text-sm' : 'gap-3 py-2 pl-2 pr-6 text-base'} ${s.btn}`}>
       <span className={`relative z-10 grid place-items-center rounded-full transition-transform duration-300 group-hover:scale-105 group-hover:rotate-[-6deg] ${small ? 'h-7 w-7' : 'h-9 w-9'} ${s.chip}`}><Icon size={small ? 15 : 18} strokeWidth={2} aria-hidden /></span>
       <span className="relative z-10">{label}</span>
-      <ArrowUpRight size={small ? 14 : 16} className="relative z-10 opacity-60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
+      <ArrowUpRight size={small ? 14 : 16} className="rtl:-scale-x-100 relative z-10 opacity-60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
       <span aria-hidden className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100" />
     </motion.a>
   )

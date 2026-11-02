@@ -4,11 +4,8 @@ import { Bot, Brain, Gem, HardDrive, Plug, Wind, type LucideIcon } from 'lucide-
  * Integration status is conservative and verified against the project:
  * VERIFIED = working today. RaapNexus exposes the ERP through an MCP (Model Context Protocol) connector
  *            and Anthropic Claude is connected to it.
- * CONCEPT  = shown as a possibility only. This codebase contains no provider configuration or API code,
- *            so nothing here is presented as operational. Neutral icons are used (no vendor logos).
- * To promote a concept, set `status: 'verified'` once it is genuinely integrated.
+ * CONCEPT  = shown as a possibility only; nothing here is presented as operational.
  */
-export type Env = 'cloud' | 'private' | 'local' | 'custom'
 export interface AiNode {
   id: string
   name: string
@@ -16,10 +13,9 @@ export interface AiNode {
   status: 'verified' | 'concept'
   statusLabel: string
   blurb: string
-  env: Env
+  env: 'cloud' | 'private' | 'local' | 'custom'
   Icon: LucideIcon
   color: string
-  /** Official brand mark (SVG in /public/assets/providers). Omitted when no official mark applies. */
   logo?: string
 }
 

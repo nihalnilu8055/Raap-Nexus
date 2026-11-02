@@ -9,12 +9,15 @@ import AuditSection from '../sections/AuditSection'
 import AiFinance from '../sections/AiFinance'
 import Deployment from '../sections/Deployment'
 import FinalCta from '../sections/FinalCta'
+import { SuggestionToast } from '../components/layout/Selectors'
+import { useI18n } from '../i18n'
 
 /** Story: hero → dashboard → four services → financial intelligence → audit & verification → AI → CTA. */
 export default function Home() {
+  const { t } = useI18n()
   return (
     <div className="w-full overflow-x-clip bg-[#040a1c] text-slate-900">
-      <a href="#platform" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
+      <a href="#platform" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2">{t('nav.skip')}</a>
       <SiteNav />
       <main>
         <Hero />
@@ -29,6 +32,7 @@ export default function Home() {
         <FinalCta />
       </main>
       <SiteFooter />
+      <SuggestionToast />
     </div>
   )
 }
