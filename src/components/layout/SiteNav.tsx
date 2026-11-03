@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import Logo from '../Logo'
+import { Mail } from 'lucide-react'
 import CtaButton from '../ui/CtaButton'
+import { openContact } from '../../lib/contact'
 import { EASE } from '../../lib/motion'
 import { useI18n } from '../../i18n'
-import { CurrencySelector, LanguageSelector } from './Selectors'
+import { LanguageSelector } from './Selectors'
 
 const LINKS = [
   { label: 'nav.platform', id: 'platform', also: [] as string[] },
@@ -18,6 +20,7 @@ const LINKS = [
 export default function SiteNav() {
   const { t, lang } = useI18n()
   const loc = useLocation()
+  const nav = useNavigate()
   const homePath = `/${lang}`
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
@@ -63,7 +66,9 @@ export default function SiteNav() {
   const go = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault()
     setOpen(false)
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const el = document.getElementById(id)
+    if (!el) { nav(`/${lang}/#${id}`); return } // on another page (e.g. the demo library): go home, then to the section
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     history.replaceState(null, '', `#${id}`)
   }
 
@@ -83,7 +88,7 @@ export default function SiteNav() {
           {LINKS.map((l) => (
             <li key={l.id}>
               <a href={`#${l.id}`} onClick={go(l.id)} aria-current={current === l.id ? 'true' : undefined}
-                className={`relative rounded-full px-3 py-2 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-electric-blue' : 'text-slate-600 hover:bg-slate-900/[0.05] hover:text-slate-900'}`}>
+                className={`relative rounded-full px-3 py-2 transition-[background-color,color,transform] duration-200 hover:bg-electric-blue/10 active:scale-95 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-electric-blue' : 'text-slate-600 hover:bg-slate-900/[0.05] hover:text-slate-900'}`}>
                 {t(l.label)}
                 {current === l.id && <motion.span layoutId="navdot" className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-electric-blue" />}
               </a>
@@ -91,8 +96,8 @@ export default function SiteNav() {
           ))}
         </ul>
         <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-1 md:flex"><LanguageSelector /><CurrencySelector /></div>
-          <div className="hidden xl:block"><CtaButton label={t('nav.cta')} variant="blue" small /></div>
+          <div className="hidden items-center gap-1 md:flex"><LanguageSelector /></div>
+          <div className="hidden xl:block"><CtaButton label={t('nav.contact')} variant="blue" small icon={Mail} onClick={openContact} /></div>
           <button ref={toggle} type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? t('nav.menuClose') : t('nav.menuOpen')}
             className="grid h-10 w-10 place-items-center rounded-full text-slate-800 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue xl:hidden">
             {open ? <X size={20} /> : <Menu size={20} />}
@@ -107,8 +112,8 @@ export default function SiteNav() {
                   <li key={l.id}><a href={`#${l.id}`} onClick={go(l.id)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t(l.label)}</a></li>
                 ))}
               </ul>
-              <div className="mt-2 grid grid-cols-2 gap-2 px-1 md:hidden"><LanguageSelector full /><CurrencySelector full /></div>
-              <div className="mt-2 px-1 pb-1"><CtaButton label={t('nav.cta')} variant="blue" /></div>
+              <div className="mt-2 grid gap-2 px-1 md:hidden"><LanguageSelector full /></div>
+              <div className="mt-2 px-1 pb-1"><CtaButton label={t('nav.contact')} variant="blue" icon={Mail} onClick={() => { setOpen(false); openContact() }} /></div>
             </motion.div>
           )}
         </AnimatePresence>

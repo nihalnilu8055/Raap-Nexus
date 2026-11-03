@@ -90,7 +90,7 @@ export default function Platform() {
           <div data-depth="0.9" className="absolute start-2 top-10 z-20 hidden w-60 lg:block xl:-start-2">
             <div className="rounded-2xl border border-white/50 bg-white/70 p-4 shadow-[0_30px_60px_-20px_rgba(15,40,120,.45)] backdrop-blur-xl">
               <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">{t('platform.revenue')}</p>
-              <p className="mt-1 font-display text-3xl font-extrabold text-slate-900"><CountUp to={47.6} aedMillions /></p>
+              <p className="mt-1 font-display text-3xl font-extrabold text-slate-900"><CountUp to={47.6} millions /></p>
               <svg viewBox="0 0 200 70" className="mt-2 h-12 w-full" aria-hidden>
                 <path ref={spark} d={SPARK} fill="none" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" />
               </svg>

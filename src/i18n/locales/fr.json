@@ -1,294 +1,359 @@
 {
- "meta": {
-  "title": "RaapNexus | Plateforme d'intelligence financière et d'audit",
-  "description": "RaapNexus est une plateforme financière pour l'audit fiscal, l'audit financier, l'analyse financière et l'analyse d'activité, avec des analyses assistées par IA sur les données de votre ERP.",
-  "keywords": "logiciel d'audit financier, audit fiscal, plateforme d'analyse financière, analyse d'activité, analyse financière par IA, intelligence financière, intégration ERP",
-  "og": "Des analyses financières plus fines. Des décisions plus sûres.",
-  "siteName": "RaapNexus"
- },
- "nav": {
-  "platform": "Plateforme",
-  "services": "Services financiers",
-  "ai": "Intelligence IA",
-  "about": "À propos",
-  "cta": "Découvrir la plateforme",
-  "menuOpen": "Ouvrir le menu",
-  "menuClose": "Fermer le menu",
-  "home": "Accueil RaapNexus",
-  "language": "Langue",
-  "currency": "Devise",
-  "skip": "Aller au contenu",
-  "primary": "Navigation principale"
- },
- "hero": {
-  "eyebrow": "RaapNexus",
-  "l1": "La plateforme",
-  "l2": "financière ultime.",
-  "sub": "Des analyses financières plus fines. Des décisions plus sûres.",
-  "cta": "Découvrir RaapNexus",
-  "revenue": "CA cumulé",
-  "growth": "Croissance des ventes",
-  "margin": "Marge brute",
-  "label": "RaapNexus, la plateforme financière ultime",
-  "visualAlt": "RaapNexus au centre de systèmes ERP connectés : SAP, Oracle, Sage, NetSuite, Odoo, Microsoft Dynamics 365, Workday, Unit4, Infor, Epicor, Focus ERP, Tally, QuickBooks, Zoho Books, IFS et Acumatica"
- },
- "platform": {
-  "eyebrow": "Le tableau de bord financier RaapNexus",
-  "h1": "Une intelligence financière",
-  "h2": "complète.",
-  "tabs": [
-   "Synthèse",
-   "Résultat",
-   "Bilan",
-   "Balance générale",
-   "Trésorerie",
-   "Alertes"
-  ],
-  "revenue": "CA cumulé",
-  "growth": "Croissance des ventes",
-  "notes": [
-   "Balance générale vérifiée",
-   "Rapport de recouvrement prêt",
-   "Grand livre de fin de mois équilibré"
-  ],
-  "viewsLabel": "Vues ERP",
-  "pan": "Aperçu du tableau de bord ERP, faites défiler latéralement"
- },
- "services": {
-  "h1": "Quatre services.",
-  "h2": "Une seule plateforme.",
-  "tablist": "Services financiers",
-  "items": [
-   {
-    "name": "Audit fiscal",
-    "line": "Données fiscales, TVA et déclarations en une seule vue.",
-    "cta": "Découvrir l'audit fiscal"
-   },
-   {
-    "name": "Audit financier",
-    "line": "Chaque écriture tracée du grand livre à la banque.",
-    "cta": "Découvrir l'audit"
-   },
-   {
-    "name": "Analyse financière",
-    "line": "Revenus, charges et trésorerie, en toute clarté.",
-    "cta": "Découvrir l'analyse"
-   },
-   {
-    "name": "Analyse d'activité",
-    "line": "Croissance et marge, reliées à vos décisions.",
-    "cta": "Découvrir la performance"
-   }
-  ],
-  "kpi": {
-   "outputVat": "TVA collectée",
-   "inputVat": "TVA déductible",
-   "flagged": "Éléments à vérifier",
-   "balanced": "Mois équilibrés",
-   "revenue": "CA cumulé",
-   "cash": "Trésorerie et banque",
-   "growth": "Croissance des ventes",
-   "margin": "Marge brute"
+  "meta": {
+    "title": "RaapNexus | Audit fiscal, audit financier et analyse d'activité",
+    "description": "Découvrez RaapNexus, votre plateforme financière pour l'audit fiscal, l'audit financier, l'analyse financière et l'analyse d'activité. Prenez de meilleures décisions grâce à des analyses financières plus claires.",
+    "keywords": "logiciel d'audit financier, audit fiscal, plateforme d'analyse financière, analyse d'activité, analyse financière par IA, intelligence financière, intégration ERP",
+    "og": "Des analyses financières plus fines. Des décisions plus sûres.",
+    "siteName": "RaapNexus"
+  },
+  "nav": {
+    "platform": "Plateforme",
+    "services": "Services financiers",
+    "ai": "Intelligence IA",
+    "about": "À propos",
+    "cta": "Découvrir la plateforme",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu",
+    "home": "Accueil RaapNexus",
+    "language": "Langue",
+    "skip": "Aller au contenu",
+    "primary": "Navigation principale",
+    "contact": "Nous contacter"
+  },
+  "hero": {
+    "eyebrow": "RaapNexus",
+    "l1": "La plateforme",
+    "l2": "financière ultime.",
+    "sub": "Des analyses financières plus fines. Des décisions plus sûres.",
+    "cta": "Découvrir RaapNexus",
+    "revenue": "CA cumulé",
+    "growth": "Croissance des ventes",
+    "margin": "Marge brute",
+    "label": "RaapNexus, la plateforme financière ultime",
+    "visualAlt": "RaapNexus au centre de systèmes ERP connectés : SAP, Oracle, Sage, NetSuite, Odoo, Microsoft Dynamics 365, Workday, Unit4, Infor, Epicor, Focus ERP, Tally, QuickBooks, Zoho Books, IFS et Acumatica"
+  },
+  "platform": {
+    "eyebrow": "Le tableau de bord financier RaapNexus",
+    "h1": "Une intelligence financière",
+    "h2": "complète.",
+    "tabs": [
+      "Synthèse",
+      "Résultat",
+      "Bilan",
+      "Balance générale",
+      "Trésorerie",
+      "Alertes"
+    ],
+    "revenue": "CA cumulé",
+    "growth": "Croissance des ventes",
+    "notes": [
+      "Balance générale vérifiée",
+      "Rapport de recouvrement prêt",
+      "Grand livre de fin de mois équilibré"
+    ],
+    "viewsLabel": "Vues ERP",
+    "pan": "Aperçu du tableau de bord ERP, faites défiler latéralement"
+  },
+  "services": {
+    "h1": "Quatre services.",
+    "h2": "Une seule plateforme.",
+    "tablist": "Services financiers",
+    "items": [
+      {
+        "name": "Audit fiscal",
+        "line": "Données fiscales, TVA et déclarations en une seule vue.",
+        "cta": "Découvrir l'audit fiscal"
+      },
+      {
+        "name": "Audit financier",
+        "line": "Chaque écriture tracée du grand livre à la banque.",
+        "cta": "Découvrir l'audit"
+      },
+      {
+        "name": "Analyse financière",
+        "line": "Revenus, charges et trésorerie, en toute clarté.",
+        "cta": "Découvrir l'analyse"
+      },
+      {
+        "name": "Analyse d'activité",
+        "line": "Croissance et marge, reliées à vos décisions.",
+        "cta": "Découvrir la performance"
+      }
+    ],
+    "kpi": {
+      "outputVat": "TVA collectée",
+      "inputVat": "TVA déductible",
+      "flagged": "Éléments à vérifier",
+      "balanced": "Mois équilibrés",
+      "revenue": "CA cumulé",
+      "cash": "Trésorerie et banque",
+      "growth": "Croissance des ventes",
+      "margin": "Marge brute"
+    }
+  },
+  "scene": {
+    "vatReturn": "DÉCLARATION TVA",
+    "netVat": "TVA NETTE",
+    "ledger": "GRAND LIVRE",
+    "bank": "BANQUE",
+    "revenue": "Revenus",
+    "expenses": "Charges",
+    "cashflow": "Trésorerie",
+    "grossMargin": "Marge brute",
+    "salesGrowth": "Croissance des ventes",
+    "sales": "Ventes",
+    "cost": "Coûts",
+    "cash": "Trésorerie"
+  },
+  "intel": {
+    "eyebrow": "Analyse financière et d'activité",
+    "h1": "Voyez les chiffres",
+    "h2": "bouger.",
+    "aria": "Indicateur financier",
+    "tabs": [
+      {
+        "label": "Revenus",
+        "text": "Évolution du chiffre d'affaires sur la période."
+      },
+      {
+        "label": "Charges",
+        "text": "Où évolue la base de coûts."
+      },
+      {
+        "label": "Trésorerie",
+        "text": "Entrées et sorties de trésorerie, mois par mois."
+      },
+      {
+        "label": "Bilan",
+        "text": "Actifs face aux dettes et aux capitaux propres."
+      }
+    ]
+  },
+  "audit": {
+    "h1": "Audit fiscal et",
+    "h2": "financier",
+    "sub": "Clarté, précision et intelligence derrière chaque écriture financière.",
+    "views": [
+      "Revue fiscale",
+      "Audit financier"
+    ],
+    "legend": [
+      "Vérifié",
+      "Rapproché",
+      "En cours de revue",
+      "Attention requise"
+    ],
+    "viewsAria": "Vue d'audit",
+    "statesAria": "États des écritures"
+  },
+  "ai": {
+    "h1": "Intelligence financière.",
+    "h2": "Propulsée par l'IA.",
+    "sub": "Des modèles d'IA flexibles. Des analyses plus fines. Plus de maîtrise.",
+    "lead": "Posez vos questions à vos données financières.",
+    "benefits": [
+      {
+        "t": "Posez vos questions en langage naturel",
+        "s": "Actif via MCP"
+      },
+      {
+        "t": "Connexion flexible aux modèles",
+        "s": "Prévu"
+      },
+      {
+        "t": "Choix du déploiement",
+        "s": "Prévu"
+      }
+    ],
+    "useCasesLabel": "Cas d'usage financiers",
+    "useCases": [
+      {
+        "label": "Analyse de documents fiscaux",
+        "prompt": "Résume notre position de TVA pour ce trimestre."
+      },
+      {
+        "label": "Analyse de rapports financiers",
+        "prompt": "Explique les principaux moteurs du résultat de ce mois."
+      },
+      {
+        "label": "Revue des transactions",
+        "prompt": "Liste les transactions supérieures à 50 000 AED sans écriture correspondante."
+      },
+      {
+        "label": "Analyse des charges",
+        "prompt": "Quels comptes de charges ont le plus évolué par rapport au trimestre dernier ?"
+      },
+      {
+        "label": "Performance de l'activité",
+        "prompt": "Comment la croissance des ventes se compare-t-elle à la marge cette année ?"
+      },
+      {
+        "label": "Détection d'anomalies",
+        "prompt": "Signale les variations ponctuelles des soldes mensuels du grand livre."
+      }
+    ],
+    "flow": [
+      "Données financières",
+      "Traitement par l'IA",
+      "Analyses financières"
+    ],
+    "engineAria": "Moteur d'intelligence financière 3D transformant les données en analyses",
+    "providers": "Fournisseurs de modèles",
+    "active": "Modèle actif",
+    "live": "Actif",
+    "planned": "Prévu",
+    "models": {
+      "claude": {
+        "blurb": "Interrogez vos données financières en langage naturel.",
+        "status": "Connecté via MCP"
+      },
+      "openai": {
+        "blurb": "Option de modèle hébergé.",
+        "status": "Bientôt disponible"
+      },
+      "gemini": {
+        "blurb": "Option de modèle hébergé.",
+        "status": "Bientôt disponible"
+      },
+      "mistral": {
+        "blurb": "Option de modèle hébergé.",
+        "status": "Bientôt disponible"
+      },
+      "local": {
+        "name": "Ollama (modèles locaux)",
+        "blurb": "Modèles locaux sur votre propre matériel.",
+        "status": "Bientôt disponible"
+      },
+      "custom": {
+        "name": "Intégration sur mesure",
+        "short": "Sur mesure",
+        "blurb": "Apportez votre propre modèle.",
+        "status": "Bientôt disponible"
+      }
+    }
+  },
+  "deploy": {
+    "h1": "Où s'exécute",
+    "h2": "le modèle",
+    "sub": "Un déploiement d'IA flexible. Plus de maîtrise de votre infrastructure.",
+    "group": "Environnement de déploiement",
+    "stages": [
+      {
+        "label": "Modèle d'IA",
+        "line": "Un cœur d'intelligence, prêt à se connecter."
+      },
+      {
+        "label": "Cloud",
+        "line": "Exécutez les modèles sur une infrastructure cloud gérée."
+      },
+      {
+        "label": "Infrastructure privée",
+        "line": "Des serveurs dédiés dans une infrastructure que vous contrôlez."
+      },
+      {
+        "label": "Déploiement local",
+        "line": "Des modèles exécutés directement sur vos machines."
+      }
+    ]
+  },
+  "cta": {
+    "h1": "Réunissez vos finances sur",
+    "h2": "une seule plateforme.",
+    "button": "Découvrir RaapNexus"
+  },
+  "footer": {
+    "desc": "La plateforme financière ultime.",
+    "explore": "Explorer",
+    "services": "Services",
+    "erp": "ERP",
+    "servicesAria": "Services financiers",
+    "rights": "Tous droits réservés."
+  },
+  "seo": {
+    "h1": "RaapNexus : la plateforme financière ultime",
+    "p": "Audit fiscal, audit financier, analyse financière et analyse d'activité dans une seule plateforme intelligente, avec des analyses assistées par IA sur les données financières de votre ERP.",
+    "list": [
+      "Audit fiscal",
+      "Audit financier",
+      "Analyse financière",
+      "Analyse d'activité"
+    ]
+  },
+  "contact": {
+    "title": "Contacter RaapNexus",
+    "intro": "Parlez-nous de votre entreprise et de vos besoins. Nous vous répondrons par e-mail.",
+    "name": "Nom complet",
+    "company": "Nom de l'entreprise",
+    "email": "E-mail professionnel",
+    "phone": "Numéro de téléphone",
+    "country": "Pays",
+    "subject": "Objet",
+    "message": "Message",
+    "consent": "J'accepte que RaapNexus utilise ces informations pour répondre à ma demande.",
+    "optional": "facultatif",
+    "send": "Envoyer la demande",
+    "sending": "Envoi en cours…",
+    "close": "Fermer",
+    "successTitle": "Message envoyé",
+    "successBody": "Merci. Votre demande a bien été transmise et nous répondrons à l'adresse e-mail indiquée.",
+    "done": "Terminé",
+    "errorGeneric": "Nous n'avons pas pu envoyer votre message. Veuillez réessayer dans un instant.",
+    "errorUnavailable": "Le contact est momentanément indisponible. Veuillez réessayer plus tard.",
+    "errorRate": "Trop de messages. Veuillez patienter quelques minutes puis réessayer.",
+    "e": {
+      "name": "Saisissez votre nom complet.",
+      "email": "Saisissez une adresse e-mail valide.",
+      "phone": "Saisissez un numéro de téléphone valide.",
+      "subject": "Saisissez un objet (3 caractères minimum).",
+      "message": "Écrivez un message d'au moins 10 caractères.",
+      "consent": "Veuillez accepter pour continuer.",
+      "long": "Ce texte est trop long."
+    },
+    "chars": "{n} / {max}"
+  },
+  "videos": {
+    "heading": "Découvrez RaapNexus ERP en action",
+    "text": "Découvrez comment RaapNexus simplifie la gestion financière et les opérations de l'entreprise grâce à de vrais flux de travail ERP et à des démonstrations concrètes.",
+    "cta": "Explorer toutes les vidéos de démonstration",
+    "alt": "Aperçu de la vidéo : {title}",
+    "libTitle": "Bibliothèque de démos RaapNexus ERP",
+    "libText": "Explorez les démonstrations de RaapNexus ERP : gestion financière, comptabilité, ventes, achats, stocks et opérations de l'entreprise.",
+    "back": "Retour à l'accueil",
+    "crumb": "Vidéos de démo",
+    "search": "Rechercher une vidéo par titre",
+    "searchPlaceholder": "Rechercher par titre de vidéo",
+    "filter": "Filtrer par catégorie",
+    "all": "Toutes les vidéos",
+    "empty": "Aucune vidéo ne correspond à votre recherche.",
+    "emptyHint": "Essayez un autre titre ou choisissez une autre catégorie.",
+    "clear": "Effacer la recherche et les filtres",
+    "count": "{n} vidéo(s) sur {total}",
+    "meta": {
+      "title": "Vidéos de démo RaapNexus ERP | Découvrez les fonctionnalités ERP",
+      "description": "Regardez les démonstrations de RaapNexus ERP : finance, comptabilité, ventes, achats, stocks, reporting et gestion d'entreprise."
+    },
+    "cat": {
+      "finance": "Finance et comptabilité",
+      "sales": "Ventes",
+      "purchase": "Achats",
+      "inventory": "Stocks",
+      "hr": "RH et paie",
+      "reporting": "Reporting et analyses",
+      "business": "Gestion d'entreprise"
+    },
+    "play": "Lire la vidéo : {title}",
+    "expand": "Agrandir la vidéo",
+    "miniWindow": "Mini-fenêtre",
+    "closeExpanded": "Fermer la vue agrandie",
+    "returnToFrame": "Revenir au cadre vidéo",
+    "closeMini": "Fermer la mini-fenêtre",
+    "loading": "Chargement de la vidéo…",
+    "errTitle": "Cette vidéo n'a pas pu être chargée",
+    "errText": "Vérifiez votre connexion et réessayez.",
+    "retry": "Réessayer",
+    "playerTitle": "{title} – lecteur vidéo",
+    "inExpanded": "Lecture en vue agrandie",
+    "inMini": "Lecture dans la mini-fenêtre",
+    "frameLabel": "Démo RaapNexus ERP"
   }
- },
- "scene": {
-  "vatReturn": "DÉCLARATION TVA",
-  "netVat": "TVA NETTE",
-  "ledger": "GRAND LIVRE",
-  "bank": "BANQUE",
-  "revenue": "Revenus",
-  "expenses": "Charges",
-  "cashflow": "Trésorerie",
-  "grossMargin": "Marge brute",
-  "salesGrowth": "Croissance des ventes",
-  "sales": "Ventes",
-  "cost": "Coûts",
-  "cash": "Trésorerie"
- },
- "intel": {
-  "eyebrow": "Analyse financière et d'activité",
-  "h1": "Voyez les chiffres",
-  "h2": "bouger.",
-  "aria": "Indicateur financier",
-  "tabs": [
-   {
-    "label": "Revenus",
-    "text": "Évolution du chiffre d'affaires sur la période."
-   },
-   {
-    "label": "Charges",
-    "text": "Où évolue la base de coûts."
-   },
-   {
-    "label": "Trésorerie",
-    "text": "Entrées et sorties de trésorerie, mois par mois."
-   },
-   {
-    "label": "Bilan",
-    "text": "Actifs face aux dettes et aux capitaux propres."
-   }
-  ]
- },
- "audit": {
-  "h1": "Audit fiscal et",
-  "h2": "financier",
-  "sub": "Clarté, précision et intelligence derrière chaque écriture financière.",
-  "views": [
-   "Revue fiscale",
-   "Audit financier"
-  ],
-  "legend": [
-   "Vérifié",
-   "Rapproché",
-   "En cours de revue",
-   "Attention requise"
-  ],
-  "viewsAria": "Vue d'audit",
-  "statesAria": "États des écritures"
- },
- "ai": {
-  "h1": "Intelligence financière.",
-  "h2": "Propulsée par l'IA.",
-  "sub": "Des modèles d'IA flexibles. Des analyses plus fines. Plus de maîtrise.",
-  "lead": "Posez vos questions à vos données financières.",
-  "benefits": [
-   {
-    "t": "Posez vos questions en langage naturel",
-    "s": "Actif via MCP"
-   },
-   {
-    "t": "Connexion flexible aux modèles",
-    "s": "Prévu"
-   },
-   {
-    "t": "Choix du déploiement",
-    "s": "Prévu"
-   }
-  ],
-  "useCasesLabel": "Cas d'usage financiers",
-  "useCases": [
-   {
-    "label": "Analyse de documents fiscaux",
-    "prompt": "Résume notre position de TVA pour ce trimestre."
-   },
-   {
-    "label": "Analyse de rapports financiers",
-    "prompt": "Explique les principaux moteurs du résultat de ce mois."
-   },
-   {
-    "label": "Revue des transactions",
-    "prompt": "Liste les transactions supérieures à 50 000 AED sans écriture correspondante."
-   },
-   {
-    "label": "Analyse des charges",
-    "prompt": "Quels comptes de charges ont le plus évolué par rapport au trimestre dernier ?"
-   },
-   {
-    "label": "Performance de l'activité",
-    "prompt": "Comment la croissance des ventes se compare-t-elle à la marge cette année ?"
-   },
-   {
-    "label": "Détection d'anomalies",
-    "prompt": "Signale les variations ponctuelles des soldes mensuels du grand livre."
-   }
-  ],
-  "flow": [
-   "Données financières",
-   "Traitement par l'IA",
-   "Analyses financières"
-  ],
-  "engineAria": "Moteur d'intelligence financière 3D transformant les données en analyses",
-  "providers": "Fournisseurs de modèles",
-  "active": "Modèle actif",
-  "live": "Actif",
-  "planned": "Prévu",
-  "models": {
-   "claude": {
-    "blurb": "Interrogez vos données financières en langage naturel.",
-    "status": "Connecté via MCP"
-   },
-   "openai": {
-    "blurb": "Option de modèle hébergé.",
-    "status": "Bientôt disponible"
-   },
-   "gemini": {
-    "blurb": "Option de modèle hébergé.",
-    "status": "Bientôt disponible"
-   },
-   "mistral": {
-    "blurb": "Option de modèle hébergé.",
-    "status": "Bientôt disponible"
-   },
-   "local": {
-    "name": "Ollama (modèles locaux)",
-    "blurb": "Modèles locaux sur votre propre matériel.",
-    "status": "Bientôt disponible"
-   },
-   "custom": {
-    "name": "Intégration sur mesure",
-    "short": "Sur mesure",
-    "blurb": "Apportez votre propre modèle.",
-    "status": "Bientôt disponible"
-   }
-  }
- },
- "deploy": {
-  "h1": "Où s'exécute",
-  "h2": "le modèle",
-  "sub": "Un déploiement d'IA flexible. Plus de maîtrise de votre infrastructure.",
-  "group": "Environnement de déploiement",
-  "stages": [
-   {
-    "label": "Modèle d'IA",
-    "line": "Un cœur d'intelligence, prêt à se connecter."
-   },
-   {
-    "label": "Cloud",
-    "line": "Exécutez les modèles sur une infrastructure cloud gérée."
-   },
-   {
-    "label": "Infrastructure privée",
-    "line": "Des serveurs dédiés dans une infrastructure que vous contrôlez."
-   },
-   {
-    "label": "Déploiement local",
-    "line": "Des modèles exécutés directement sur vos machines."
-   }
-  ]
- },
- "cta": {
-  "h1": "Réunissez vos finances sur",
-  "h2": "une seule plateforme.",
-  "button": "Découvrir RaapNexus"
- },
- "footer": {
-  "desc": "La plateforme financière ultime.",
-  "explore": "Explorer",
-  "services": "Services",
-  "erp": "ERP",
-  "servicesAria": "Services financiers",
-  "rights": "Tous droits réservés."
- },
- "prefs": {
-  "langSuggest": "Souhaitez-vous consulter RaapNexus en {lang} ?",
-  "switch": "Changer de langue",
-  "keep": "Garder la langue actuelle",
-  "dismiss": "Fermer",
-  "curSuggest": "Afficher les montants en {cur} ?",
-  "use": "Utiliser {code}",
-  "keepCur": "Garder {code}",
-  "region": "Langue et devise",
-  "noRates": "Taux en direct indisponibles. Les chiffres d'exemple sont affichés en AED.",
-  "ratesBy": "Taux fournis par ExchangeRate-API"
- },
- "seo": {
-  "h1": "RaapNexus : la plateforme financière ultime",
-  "p": "Audit fiscal, audit financier, analyse financière et analyse d'activité dans une seule plateforme intelligente, avec des analyses assistées par IA sur les données financières de votre ERP.",
-  "list": [
-   "Audit fiscal",
-   "Audit financier",
-   "Analyse financière",
-   "Analyse d'activité"
-  ]
- }
 }

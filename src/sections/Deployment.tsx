@@ -85,7 +85,7 @@ export default function Deployment() {
         <div className={`${reduced ? 'relative h-[760px]' : 'sticky top-0 h-[100svh] min-h-[600px]'} flex flex-col overflow-hidden`}>
           <div className="relative flex min-h-0 flex-1 items-center justify-center pt-14">
             {/* visual box: sized per breakpoint (height targets 340-400 / 400-480 / 500-580 / 580-680 / 680-780 px) */}
-            <div className="relative h-[clamp(340px,calc(100svh-300px),400px)] w-full min-[390px]:h-[clamp(400px,calc(100svh-290px),480px)] md:h-[clamp(500px,calc(100svh-250px),580px)] lg:h-[clamp(580px,calc(100svh-190px),680px)] lg:w-[94%] min-[1440px]:h-[clamp(680px,calc(100svh-190px),780px)] min-[1440px]:w-[93%]">
+            <div data-cursor="visual" className="relative h-[clamp(340px,calc(100svh-300px),400px)] w-full min-[390px]:h-[clamp(400px,calc(100svh-290px),480px)] md:h-[clamp(500px,calc(100svh-250px),580px)] lg:h-[clamp(580px,calc(100svh-190px),680px)] lg:w-[94%] min-[1440px]:h-[clamp(680px,calc(100svh-190px),780px)] min-[1440px]:w-[93%]">
               {webgl && near ? (
                 <Boundary fallback={<Fallback3D className="h-full w-full" />}>
                   <Suspense fallback={<Fallback3D className="h-full w-full opacity-40" />}>

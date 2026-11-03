@@ -70,7 +70,7 @@ export default function Services() {
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.9fr_1fr] lg:gap-8 [perspective:1800px]">
           {/* featured stage */}
           <motion.div ref={stage} style={{ rotateX: rotX, scale: sc, y: ty, transformOrigin: '50% 100%' }} className="min-w-0 will-change-transform">
-            <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#070d2b] shadow-[0_60px_120px_-40px_rgba(10,25,90,.75)]">
+            <div data-spotlight className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#070d2b] shadow-[0_60px_120px_-40px_rgba(10,25,90,.75)]">
               <img src={`/assets/shots/${s.shot}.webp`} alt="" aria-hidden width={1440} height={900} loading="lazy" decoding="async" className="pointer-events-none absolute inset-0 h-full w-full object-cover object-left-top opacity-[.05] blur-[1px] mix-blend-screen" />
               <div aria-hidden className="absolute inset-0 transition-all duration-1000" style={{ background: `radial-gradient(ellipse 60% 50% at 75% 20%, ${m.glow}, transparent 70%), radial-gradient(ellipse 50% 40% at 10% 100%, rgba(37,99,235,.25), transparent 70%)` }} />
               <div className="relative p-5 sm:p-8">
@@ -97,7 +97,7 @@ export default function Services() {
                   {s.kpis.map((k) => (
                     <div key={s.id + k.key} className="rounded-2xl border border-white/10 bg-white/[.06] px-4 py-2.5">
                       <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{t(`services.kpi.${k.key}`)}</p>
-                      <p className="font-display text-xl font-extrabold text-white"><CountUp to={k.to} decimals={k.decimals} prefix={k.prefix} suffix={k.suffix} aedMillions={k.aed} /></p>
+                      <p className="font-display text-xl font-extrabold text-white"><CountUp to={k.to} decimals={k.decimals} prefix={k.prefix} suffix={k.suffix} millions={k.millions} /></p>
                     </div>
                   ))}
                 </div>

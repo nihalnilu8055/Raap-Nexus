@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, ChevronDown, Coins, Globe, X } from 'lucide-react'
-import { CURRENCIES, LANGS, langDef, tFor, useI18n, type Cur, type Lang } from '../../i18n'
+import { Check, ChevronDown, Globe } from 'lucide-react'
+import { LANGS, langDef, useI18n, type Lang } from '../../i18n'
 import { EASE } from '../../lib/motion'
 
 interface Opt { value: string; primary: string; secondary: string }
@@ -68,56 +68,4 @@ export function LanguageSelector({ tone, full }: { tone?: 'light' | 'dark'; full
   const { lang, setLang, t } = useI18n()
   return <Menu icon={Globe} label={t('nav.language')} current={lang} shortLabel={langDef(lang).native} tone={tone} full={full}
     options={LANGS.map((l) => ({ value: l.code, primary: l.native, secondary: l.english }))} onPick={(v) => setLang(v as Lang)} />
-}
-
-export function CurrencySelector({ tone, full }: { tone?: 'light' | 'dark'; full?: boolean }) {
-  const { currency, setCurrency, t, converted } = useI18n()
-  const footer = currency !== 'AED' && !converted ? t('prefs.noRates') : currency !== 'AED' ? <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener noreferrer" className="underline">{t('prefs.ratesBy')}</a> : undefined
-  return <Menu footer={footer} icon={Coins} label={t('nav.currency')} current={currency} shortLabel={currency} tone={tone} full={full}
-    options={CURRENCIES.map((c) => ({ value: c.code, primary: c.code, secondary: c.name }))} onPick={(v) => setCurrency(v as Cur)} />
-}
-
-/** Non-blocking suggestion toast. Language and currency suggestions are separate, independent and never repeat once dismissed. */
-export function SuggestionToast() {
-  const { suggest, resolveSuggest, t, currency } = useI18n()
-  const [ready, setReady] = useState(false)
-  useEffect(() => { const x = setTimeout(() => setReady(true), 2500); return () => clearTimeout(x) }, [])
-  const sl = suggest.lang, sc = suggest.cur
-  const show = ready && (sl || sc)
-  const btnP = 'rounded-full bg-electric-blue px-3.5 py-1.5 text-xs font-bold text-white hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300'
-  const btnS = 'rounded-full border border-slate-300 px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue'
-  return (
-    <AnimatePresence>
-      {show && (
-        <motion.div role="region" aria-label={t('prefs.region')} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 24 }} transition={{ duration: 0.4, ease: EASE }}
-          className="fixed bottom-4 end-4 z-[65] w-[calc(100vw-2rem)] max-w-sm space-y-3 rounded-2xl border border-slate-200 bg-white p-4 text-slate-800 shadow-2xl">
-          {sl && (
-            <div lang={sl}>
-              <div className="flex items-start justify-between gap-3">
-                <p className="text-sm font-semibold leading-snug" dir={langDef(sl).dir}>{tFor(sl, 'prefs.langSuggest', { lang: langDef(sl).native })}</p>
-                <button type="button" onClick={() => resolveSuggest('lang', 'dismiss')} aria-label={t('prefs.dismiss')} className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-slate-400 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"><X size={14} /></button>
-              </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <button type="button" className={btnP} onClick={() => resolveSuggest('lang', 'accept')}>{tFor(sl, 'prefs.switch')}</button>
-                <button type="button" className={btnS} onClick={() => resolveSuggest('lang', 'keep')}>{t('prefs.keep')}</button>
-              </div>
-            </div>
-          )}
-          {sc && (
-            <div className={sl ? 'border-t border-slate-100 pt-3' : ''}>
-              <div className="flex items-start justify-between gap-3">
-                <p className="text-sm font-semibold leading-snug">{t('prefs.curSuggest', { cur: sc })}</p>
-                {!sl && <button type="button" onClick={() => resolveSuggest('cur', 'dismiss')} aria-label={t('prefs.dismiss')} className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-slate-400 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"><X size={14} /></button>}
-              </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <button type="button" className={btnP} onClick={() => resolveSuggest('cur', 'accept')}>{t('prefs.use', { code: sc })}</button>
-                <button type="button" className={btnS} onClick={() => resolveSuggest('cur', 'keep')}>{t('prefs.keepCur', { code: currency })}</button>
-                {sl && <button type="button" className={btnS} onClick={() => resolveSuggest('cur', 'dismiss')}>{t('prefs.dismiss')}</button>}
-              </div>
-            </div>
-          )}
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
 }

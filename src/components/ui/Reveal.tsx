@@ -27,7 +27,7 @@ export function Reveal({ children, variant = 'rise', delay = 0, className = '', 
 }
 
 /** Pointer-driven 3D tilt with a soft light glare. Desktop pointers only; inert for touch and reduced motion. */
-export function Tilt({ children, className = '', max = 7, lift = 14 }: { children: ReactNode; className?: string; max?: number; lift?: number }) {
+export function Tilt({ children, className = '', max = 7, lift = 14, disabled = false }: { children: ReactNode; className?: string; max?: number; lift?: number; disabled?: boolean }) {
   const reduced = !!useReducedMotion()
   const ref = useRef<HTMLDivElement>(null)
   const x = useMotionValue(0), y = useMotionValue(0), h = useMotionValue(0)
@@ -35,9 +35,10 @@ export function Tilt({ children, className = '', max = 7, lift = 14 }: { childre
   const rY = useTransform(sx, [-1, 1], [-max, max]), rX = useTransform(sy, [-1, 1], [max, -max]), z = useTransform(sh, [0, 1], [0, lift])
   const gx = useTransform(sx, [-1, 1], ['10%', '90%']), gy = useTransform(sy, [-1, 1], ['10%', '90%'])
   const glare = useTransform([gx, gy, sh] as never, ([a, b, o]: (string | number)[]) => `radial-gradient(circle at ${a} ${b}, rgba(255,255,255,${0.16 * (o as number)}), transparent 55%)`)
+  useEffect(() => { if (disabled) { x.set(0); y.set(0); h.set(0) } }, [disabled, x, y, h])
   if (reduced) return <div className={className}>{children}</div>
   const move = (e: React.PointerEvent) => {
-    if (e.pointerType === 'touch' || !ref.current) return
+    if (disabled || e.pointerType === 'touch' || !ref.current) return
     const r = ref.current.getBoundingClientRect()
     x.set(((e.clientX - r.left) / r.width) * 2 - 1); y.set(((e.clientY - r.top) / r.height) * 2 - 1); h.set(1)
   }

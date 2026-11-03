@@ -1,9 +1,23 @@
 {
   "cleanUrls": false,
+  "redirects": [
+    { "source": "/hi", "destination": "/en/", "permanent": true },
+    { "source": "/hi/:path*", "destination": "/en/", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/((?!api/|assets/|erp/|ar/|de/|en/|es/|fr/|hi/)(?!.*\\.).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|assets/|erp/|ar/|de/|en/|es/|fr/)(?!.*\\.).*)", "destination": "/index.html" }
   ],
   "headers": [
-    { "source": "/(.*)", "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }] }
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    { "source": "/assets/(.*)\\.(js|css|woff2)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/assets/(.*)\\.(webp|png|svg|jpg)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] }
   ]
 }

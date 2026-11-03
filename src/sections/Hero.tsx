@@ -18,7 +18,11 @@ export default function Hero() {
   const reduced = !!useReducedMotion()
   const prog = useMotionValue(0)
   const { ref: depthRef, inView } = useNearView<HTMLDivElement>('0px')
-  const [depth] = useState(() => typeof window !== 'undefined' && webglSupported() && !isMobile())
+  const [depthOK] = useState(() => typeof window !== 'undefined' && webglSupported() && !isMobile())
+  // the WebGL depth stage is decorative: load it only after first paint is done so it never competes with the headline (LCP)
+  const [idle, setIdle] = useState(false)
+  useEffect(() => { const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }; const go = () => setIdle(true); if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 2500 }); else setTimeout(go, 1500) }, [])
+  const depth = depthOK && idle
   const [lite] = useState(() => typeof window !== 'undefined' && window.innerWidth < 1024)
   // one passive pointer listener feeds the 3D rig (normalised -1..1); no per-event React work
   useEffect(() => {
@@ -69,18 +73,18 @@ export default function Hero() {
             {WORDS.map((w, i) => (
               <span key={w} className="block overflow-hidden pb-[0.08em]">
                 <motion.span className={`block ${i === 1 ? 'bg-gradient-to-r from-sky-200 via-sky-400 to-blue-500 bg-clip-text text-transparent' : ''}`}
-                  initial={reduced ? false : { y: '110%' }} animate={{ y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.9 + i * 0.14 }}>
+                  initial={reduced ? false : { y: '110%' }} animate={{ y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.25 + i * 0.12 }}>
                   {w}
                 </motion.span>
               </span>
             ))}
           </h1>
-          <motion.p initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 1.5 }}
+          <motion.p initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.7 }}
             className="mt-5 max-w-md text-lg text-slate-300 sm:text-xl">
             {t('hero.sub')}
           </motion.p>
-          <motion.div initial={reduced ? false : { opacity: 0, y: 20, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.9, ease: EASE, delay: 1.7 }} className="mt-8">
-            <CtaButton label={t('hero.cta')} />
+          <motion.div initial={reduced ? false : { opacity: 0, y: 20, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.9, ease: EASE, delay: 0.85 }} className="mt-8 flex flex-wrap items-center gap-3">
+            <CtaButton label={t('nav.cta')} />
           </motion.div>
         </div>
 

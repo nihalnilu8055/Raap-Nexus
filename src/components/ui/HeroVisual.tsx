@@ -3,7 +3,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring, useTransform, type
 import Fallback3D from './Fallback3D'
 import { EASE } from '../../lib/motion'
 
-const SRC = '/assets/hero/one-hub-every-erp'
+const SRC = '/assets/hero/raapnexus-finance-platform-hero'
 // the hub core inside the transparent artwork (percent of the image box) - used to lift it forward as its own depth layer
 const CX = 50.3, CY = 48.4, CR = 11.8
 // three depth bands: core (lifted), inner ring + cyan nodes (mid), outer orbit + purple ERP pills (pushed back)
@@ -69,7 +69,7 @@ export default function HeroVisual({ alt, progress }: { alt: string; progress?: 
   const reset = () => { mx.set(0); my.set(0) }
 
   return (
-    <div role="img" aria-label={alt} onPointerMove={onMove} onPointerLeave={reset} style={{ perspectiveOrigin: `${CX}% ${CY}%` }} className="relative aspect-square w-full [perspective:1300px]">
+    <div role="img" data-cursor="visual" aria-label={alt} onPointerMove={onMove} onPointerLeave={reset} style={{ perspectiveOrigin: `${CX}% ${CY}%` }} className="relative aspect-square w-full [perspective:1300px]">
       {/* probe: if the artwork cannot load, fall back */}
       <img src={`${SRC}-600.webp`} alt="" width={1} height={1} className="pointer-events-none absolute h-px w-px opacity-0" onError={() => setFailed(true)} />
       <motion.div

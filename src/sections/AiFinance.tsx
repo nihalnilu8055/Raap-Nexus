@@ -102,7 +102,7 @@ export default function AiFinance() {
         {/* RIGHT: the AI Intelligence Engine + secondary provider selection */}
         <Reveal variant="right" className="min-w-0">
           <div ref={stageRef} className="relative mx-auto w-full max-w-[680px]">
-            <div role="img" aria-label={t('ai.engineAria')} className="relative h-[330px] w-full sm:h-[430px] lg:h-[480px]">
+            <div role="img" data-cursor="visual" aria-label={t('ai.engineAria')} className="relative h-[330px] w-full sm:h-[430px] lg:h-[480px]">
               {webgl && near ? (
                 <Boundary fallback={<Fallback3D className="h-full w-full" />}>
                   <Suspense fallback={<Fallback3D className="h-full w-full opacity-40" />}>
@@ -143,7 +143,7 @@ export default function AiFinance() {
             })}
           </div>
 
-          <div className="mt-4 rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl sm:p-6" aria-live="polite">
+          <div data-spotlight className="mt-4 rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl sm:p-6" aria-live="polite">
             <AnimatePresence mode="wait">
               <motion.div key={n.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35, ease: EASE }}>
                 <div className="flex flex-wrap items-center justify-between gap-2">

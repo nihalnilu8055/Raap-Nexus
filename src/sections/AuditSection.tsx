@@ -47,7 +47,7 @@ export default function AuditSection() {
         </div>
 
         <Reveal variant="depth" className="-mx-4 sm:-mx-8">
-        <div ref={ref} className="relative mt-4 h-[460px] sm:-mx-8 sm:h-[600px] lg:h-[700px]">
+        <div ref={ref} data-cursor="visual" className="relative mt-4 h-[460px] sm:-mx-8 sm:h-[600px] lg:h-[700px]">
           {webgl && near ? (
             <Boundary fallback={<Fallback3D className="h-full w-full" />}>
               <Suspense fallback={<Fallback3D className="h-full w-full opacity-40" />}>

@@ -120,7 +120,7 @@ export default function Footer() {
         {/* Bottom copyright and legal disclaimer */}
         <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div>
-            © {currentYear} RaapNexus. All rights reserved.
+            © {currentYear} RaapNexus. All rights reserved. <span className="text-slate-300">|</span> Designed &amp; Developed by Techlogica.
           </div>
           <div className="flex items-center gap-6 font-medium">
             <span>Enterprise Sovereign Standard</span>

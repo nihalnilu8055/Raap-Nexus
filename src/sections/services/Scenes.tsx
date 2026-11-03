@@ -11,7 +11,7 @@ const Dot = ({ d, dur = 2.4, begin = 0, c = '#fff' }: { d: string; dur?: number;
 )
 
 export function TaxScene({ reduced }: P) {
-  const { t, money } = useI18n()
+  const { t, fmtCompact } = useI18n()
   const paths = ['M232 138 C 330 138, 330 150, 420 150', 'M232 196 C 330 196, 330 196, 420 196', 'M232 254 C 330 254, 330 242, 420 242']
   const widths = [110, 80, 130, 96, 120, 70]
   return (
@@ -38,12 +38,12 @@ export function TaxScene({ reduced }: P) {
         <rect x="420" y="44" width="190" height="266" rx="20" fill="#0b1230" stroke="#f59e0b" strokeOpacity=".7" />
         <rect x="436" y="60" width="158" height="62" rx="10" fill="#131f52" />
         <text x="448" y="80" fontSize="10" fontFamily="Inter, sans-serif" fill="#fcd34d" letterSpacing="1.5">{t('scene.netVat')}</text>
-        <motion.text x="448" y="108" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="24" fill="#fff" initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}>{money(0.15e6, { compact: true })}</motion.text>
+        <motion.text x="448" y="108" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="24" fill="#fff" initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}>{fmtCompact(0.15e6)}</motion.text>
         {Array.from({ length: 12 }, (_, i) => (
           <rect key={i} x={438 + (i % 3) * 54} y={140 + Math.floor(i / 3) * 40} width="46" height="30" rx="8" fill={i === 11 ? '#f59e0b' : '#1b2a6b'} style={reduced ? undefined : { animation: `keyPulse 3s ${i * 0.18}s ease-in-out infinite` }} />
         ))}
       </motion.g>
-      {[{ y: 334, w: 300, t: t('services.kpi.outputVat') + '  ' + money(0.76e6, { compact: true }), c: 'url(#tx-bar)' }, { y: 354, w: 240, t: t('services.kpi.inputVat') + '  ' + money(0.61e6, { compact: true }), c: '#60a5fa' }].map((b, i) => (
+      {[{ y: 334, w: 300, t: t('services.kpi.outputVat') + '  ' + fmtCompact(0.76e6), c: 'url(#tx-bar)' }, { y: 354, w: 240, t: t('services.kpi.inputVat') + '  ' + fmtCompact(0.61e6), c: '#60a5fa' }].map((b, i) => (
         <g key={b.t}>
           <motion.rect x="40" y={b.y} height="10" rx="5" fill={b.c} initial={reduced ? false : { width: 0 }} animate={{ width: b.w }} transition={{ duration: 1.1, delay: 1.2 + i * 0.2, ease: EASE }} />
           <text x={b.w + 54} y={b.y + 9} fontSize="12" fontFamily="Inter, sans-serif" fill="#cbd5e1">{b.t}</text>

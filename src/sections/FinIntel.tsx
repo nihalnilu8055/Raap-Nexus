@@ -38,7 +38,7 @@ export default function FinIntel() {
           </motion.h2>
         </div>
         <Reveal variant="depth">
-        <div ref={ref} className="relative mt-6 h-[380px] sm:h-[480px] lg:h-[560px]">
+        <div ref={ref} data-cursor="visual" className="relative mt-6 h-[380px] sm:h-[480px] lg:h-[560px]">
           {webgl && near ? (
             <Boundary fallback={<Fallback3D className="h-full w-full" />}>
               <Suspense fallback={<Fallback3D className="h-full w-full opacity-40" />}>

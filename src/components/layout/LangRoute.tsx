@@ -3,6 +3,7 @@ import { I18nProvider, DEFAULT_LANG, isLang } from '../../i18n'
 import { browserLang } from '../../i18n/detect'
 import { store } from '../../i18n/storage'
 import Home from '../../pages/Home'
+import VideoLibrary from '../../pages/VideoLibrary'
 import NotFound from '../../pages/NotFound'
 
 export function RootRedirect() {
@@ -13,7 +14,8 @@ export function RootRedirect() {
 }
 
 export default function LangRoute() {
-  const { lang } = useParams()
+  const { lang, '*': rest = '' } = useParams()
+  if (lang === 'hi') return <Navigate to="/en/" replace /> // Hindi was retired; keep old links alive
   if (!isLang(lang)) return <NotFound />
-  return <I18nProvider lang={lang}><Home /></I18nProvider>
+  return <I18nProvider lang={lang}>{rest.replace(/\/+$/, '') === 'demo-videos' ? <VideoLibrary /> : <Home />}</I18nProvider>
 }

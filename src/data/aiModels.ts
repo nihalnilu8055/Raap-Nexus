@@ -20,7 +20,7 @@ export interface AiNode {
 }
 
 export const AI_NODES: AiNode[] = [
-  { id: 'claude', name: 'Anthropic Claude', short: 'Claude', status: 'verified', statusLabel: 'Connected via MCP', blurb: 'Ask your financial data in plain language.', env: 'cloud', Icon: Bot, color: '#D97757', logo: '/assets/providers/claude.svg' },
+  { id: 'claude', name: 'Anthropic Claude', short: 'Claude', status: 'verified', statusLabel: 'Connected via MCP', blurb: 'Ask your financial data in natural language.', env: 'cloud', Icon: Bot, color: '#D97757', logo: '/assets/providers/claude.svg' },
   { id: 'openai', name: 'OpenAI', short: 'OpenAI', status: 'concept', statusLabel: 'Coming soon', blurb: 'Hosted model option.', env: 'cloud', Icon: Brain, color: '#10A37F', logo: '/assets/providers/openai.svg' },
   { id: 'gemini', name: 'Google Gemini', short: 'Gemini', status: 'concept', statusLabel: 'Coming soon', blurb: 'Hosted model option.', env: 'cloud', Icon: Gem, color: '#4285F4', logo: '/assets/providers/gemini.svg' },
   { id: 'mistral', name: 'Mistral', short: 'Mistral', status: 'concept', statusLabel: 'Coming soon', blurb: 'Hosted model option.', env: 'cloud', Icon: Wind, color: '#FA520F', logo: '/assets/providers/mistral.svg' },

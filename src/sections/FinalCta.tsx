@@ -1,6 +1,8 @@
 import { useLayoutEffect, useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { Mail } from 'lucide-react'
 import CtaButton from '../components/ui/CtaButton'
+import { openContact } from '../lib/contact'
 import { EASE, gsap } from '../lib/motion'
 import { useI18n } from '../i18n'
 
@@ -30,7 +32,7 @@ export default function FinalCta() {
           {t('cta.h1')} <span className="bg-gradient-to-r from-sky-200 to-blue-500 bg-clip-text text-transparent">{t('cta.h2')}</span>
         </motion.h2>
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: EASE, delay: 0.15 }} className="mt-9">
-          <CtaButton label={t('cta.button')} />
+          <CtaButton label={t('nav.contact')} icon={Mail} onClick={openContact} />
         </motion.div>
       </div>
     </section>
