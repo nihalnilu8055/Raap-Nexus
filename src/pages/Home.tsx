@@ -4,6 +4,7 @@ import Bridge from '../components/ui/Bridge'
 import Hero from '../sections/Hero'
 import Platform from '../sections/Platform'
 import Services from '../sections/Services'
+import FlowCore from '../sections/FlowCore'
 import FinIntel from '../sections/FinIntel'
 import AuditSection from '../sections/AuditSection'
 import AiFinance from '../sections/AiFinance'
@@ -35,6 +36,7 @@ export default function Home() {
         <Platform />
         <Services />
         <Bridge from="#e8f0ff" to="#040a1c" />
+        <FlowCore />
         <FinIntel />
         <AuditSection />
         <Bridge from="#031018" to="#050824" stroke="#8b7bff" />

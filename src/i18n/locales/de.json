@@ -355,5 +355,65 @@
     "inExpanded": "Wiedergabe in vergrößerter Ansicht",
     "inMini": "Wiedergabe im Mini-Fenster",
     "frameLabel": "RaapNexus ERP-Demo"
+  },
+  "flow": {
+    "eyebrow": "Von Daten zu Entscheidungen",
+    "h1": "Jede Transaktion,",
+    "h2": "zur Erkenntnis gemacht.",
+    "sub": "Sehen Sie, wie Finanzdaten durch RaapNexus fließen und wie die umgebenden ERP-Module zusammenhängen.",
+    "tabFlow": "Datenfluss",
+    "tabModules": "ERP-Module",
+    "aria": "Ansicht",
+    "stagesAria": "Stufen des Datenflusses",
+    "modulesAria": "ERP-Module",
+    "note": "Illustratives Diagramm, keine Live-Ansicht des Systems.",
+    "stages": [
+      {
+        "label": "Transaktionen",
+        "text": "Rechnungen, Zahlungen und Buchungen kommen aus Ihrem ERP."
+      },
+      {
+        "label": "Finanzdaten",
+        "text": "Datensätze werden in einer einheitlichen Hauptbuchansicht geordnet."
+      },
+      {
+        "label": "Analyse",
+        "text": "Trends, Kennzahlen und Abweichungen werden für den Zeitraum berechnet."
+      },
+      {
+        "label": "Prüfung",
+        "text": "Buchungen werden geprüft und mit den Belegen abgeglichen."
+      },
+      {
+        "label": "Geschäftseinblicke",
+        "text": "Klare Erkenntnisse für sichere Entscheidungen."
+      }
+    ],
+    "modules": [
+      {
+        "label": "Finanzen",
+        "text": "Hauptbuch, Buchungen und Abschlüsse."
+      },
+      {
+        "label": "Vertrieb",
+        "text": "Angebote, Aufträge und Fakturierung."
+      },
+      {
+        "label": "Einkauf",
+        "text": "Bestellungen und Lieferantenrechnungen."
+      },
+      {
+        "label": "Lager",
+        "text": "Bestände, Bewegungen und Bewertung."
+      },
+      {
+        "label": "Personal & Lohn",
+        "text": "Mitarbeiterdaten und Lohnbuchungen."
+      },
+      {
+        "label": "Berichte & Analysen",
+        "text": "Berichte und Dashboards über alle Module."
+      }
+    ]
   }
 }

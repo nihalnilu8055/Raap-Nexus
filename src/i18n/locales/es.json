@@ -355,5 +355,65 @@
     "inExpanded": "Reproduciendo en vista ampliada",
     "inMini": "Reproduciendo en la ventana pequeña",
     "frameLabel": "Demo de RaapNexus ERP"
+  },
+  "flow": {
+    "eyebrow": "De los datos a las decisiones",
+    "h1": "Cada transacción,",
+    "h2": "convertida en información.",
+    "sub": "Descubra cómo circulan los datos financieros por RaapNexus y cómo se conectan los módulos ERP que lo rodean.",
+    "tabFlow": "Flujo de datos",
+    "tabModules": "Módulos ERP",
+    "aria": "Vista",
+    "stagesAria": "Etapas del flujo de datos",
+    "modulesAria": "Módulos ERP",
+    "note": "Diagrama ilustrativo, no una vista del sistema en vivo.",
+    "stages": [
+      {
+        "label": "Transacciones",
+        "text": "Facturas, pagos y asientos llegan desde su ERP."
+      },
+      {
+        "label": "Datos financieros",
+        "text": "Los registros se organizan en una vista contable coherente."
+      },
+      {
+        "label": "Análisis",
+        "text": "Se calculan tendencias, ratios y variaciones del periodo."
+      },
+      {
+        "label": "Auditoría",
+        "text": "Los asientos se revisan y verifican con los documentos de origen."
+      },
+      {
+        "label": "Información de negocio",
+        "text": "Conclusiones claras para decidir con confianza."
+      }
+    ],
+    "modules": [
+      {
+        "label": "Finanzas",
+        "text": "Libros contables, asientos y estados financieros."
+      },
+      {
+        "label": "Ventas",
+        "text": "Cotizaciones, pedidos y facturación."
+      },
+      {
+        "label": "Compras",
+        "text": "Órdenes de compra y facturas de proveedores."
+      },
+      {
+        "label": "Inventario",
+        "text": "Existencias, movimientos y valoración."
+      },
+      {
+        "label": "RR. HH. y nómina",
+        "text": "Fichas de empleados y asientos de nómina."
+      },
+      {
+        "label": "Informes y análisis",
+        "text": "Informes y paneles de todos los módulos."
+      }
+    ]
   }
 }

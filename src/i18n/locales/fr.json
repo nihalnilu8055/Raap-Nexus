@@ -355,5 +355,65 @@
     "inExpanded": "Lecture en vue agrandie",
     "inMini": "Lecture dans la mini-fenêtre",
     "frameLabel": "Démo RaapNexus ERP"
+  },
+  "flow": {
+    "eyebrow": "Des données aux décisions",
+    "h1": "Chaque transaction,",
+    "h2": "transformée en information.",
+    "sub": "Découvrez comment les données financières circulent dans RaapNexus et comment les modules ERP qui l’entourent sont reliés.",
+    "tabFlow": "Flux de données",
+    "tabModules": "Modules ERP",
+    "aria": "Vue",
+    "stagesAria": "Étapes du flux de données",
+    "modulesAria": "Modules ERP",
+    "note": "Schéma illustratif, pas une vue du système en direct.",
+    "stages": [
+      {
+        "label": "Transactions",
+        "text": "Factures, paiements et écritures arrivent depuis votre ERP."
+      },
+      {
+        "label": "Données financières",
+        "text": "Les enregistrements sont organisés dans une vue de grand livre cohérente."
+      },
+      {
+        "label": "Analyse",
+        "text": "Tendances, ratios et écarts sont calculés sur la période."
+      },
+      {
+        "label": "Audit",
+        "text": "Les écritures sont examinées et vérifiées par rapport aux pièces sources."
+      },
+      {
+        "label": "Informations métier",
+        "text": "Des constats clairs pour décider en confiance."
+      }
+    ],
+    "modules": [
+      {
+        "label": "Finance",
+        "text": "Grands livres, écritures et états financiers."
+      },
+      {
+        "label": "Ventes",
+        "text": "Devis, commandes et facturation."
+      },
+      {
+        "label": "Achats",
+        "text": "Commandes fournisseurs et factures d’achat."
+      },
+      {
+        "label": "Stocks",
+        "text": "Stocks, mouvements et valorisation."
+      },
+      {
+        "label": "RH et paie",
+        "text": "Dossiers employés et écritures de paie."
+      },
+      {
+        "label": "Reporting et analyses",
+        "text": "Rapports et tableaux de bord pour tous les modules."
+      }
+    ]
   }
 }

@@ -67,7 +67,7 @@ export default function VideoLibrary() {
               <AnimatePresence mode="popLayout" initial={false}>
                 {shown.map((v, i) => (
                   <motion.li key={v.id} layout={!reduced} initial={reduced ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={reduced ? undefined : { opacity: 0, scale: 0.96 }} transition={{ duration: 0.5, ease: EASE, delay: reduced ? 0 : Math.min(i, 7) * 0.06 }}>
-                    <VideoShowcase video={v} priority={i < 2} />
+                    <VideoShowcase video={v} priority={i < 2} level={2} />
                   </motion.li>
                 ))}
               </AnimatePresence>

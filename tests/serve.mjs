@@ -2,6 +2,7 @@
 // Mock provider mode can be switched at runtime: GET /__mock/fail, /__mock/ok, /__mock/sent
 import http from 'node:http'
 import { readFileSync, existsSync, statSync } from 'node:fs'
+import { gzipSync } from 'node:zlib'
 import { join, extname } from 'node:path'
 const dist = join(process.cwd(), 'dist'), port = +(process.argv[2] || 4180)
 const sent = []; let mode = 'ok'
@@ -25,5 +26,9 @@ http.createServer(async (req, res) => {
   let p = join(dist, decodeURIComponent(u.pathname))
   if (existsSync(p) && statSync(p).isDirectory()) p = join(p, 'index.html')
   if (!existsSync(p)) p = join(dist, 'index.html')
-  res.setHeader('content-type', T[extname(p)] || 'application/octet-stream'); res.end(readFileSync(p))
+  res.setHeader('content-type', T[extname(p)] || 'application/octet-stream')
+  const buf = readFileSync(p)
+  // compress text assets like Vercel does, so lab performance numbers are representative
+  if (/\.(js|css|html|svg|json|xml|txt)$/.test(p) && /\bgzip\b/.test(String(req.headers['accept-encoding'] || ''))) { res.setHeader('content-encoding', 'gzip'); res.setHeader('vary', 'accept-encoding'); return res.end(gzipSync(buf)) }
+  res.end(buf)
 }).listen(port, () => console.log('serving', port))

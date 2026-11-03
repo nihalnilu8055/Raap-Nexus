@@ -19,7 +19,7 @@ const ctl = 'grid h-8 w-8 place-items-center rounded-lg text-slate-300 transitio
  * shows the real video thumbnail, plays the video inline (lazy-mounted embed), and can expand or float as a mini window.
  * Only one video plays at a time.
  */
-export default function VideoShowcase({ video, float = false, floatDelay = 0, priority = false }: { video: DemoVideo; float?: boolean; floatDelay?: number; priority?: boolean }) {
+export default function VideoShowcase({ video, float = false, floatDelay = 0, priority = false, level = 3 }: { video: DemoVideo; float?: boolean; floatDelay?: number; priority?: boolean; level?: 2 | 3 }) {
   const { t } = useI18n()
   const reduced = !!useReducedMotion()
   const [playing, setPlaying] = useState(false)
@@ -30,6 +30,7 @@ export default function VideoShowcase({ video, float = false, floatDelay = 0, pr
   const expandBtn = useRef<HTMLButtonElement>(null)
   const miniBtn = useRef<HTMLButtonElement>(null)
   const cat = t(`videos.cat.${categorySlug(video.category)}`)
+  const Title = level === 2 ? 'h2' : 'h3' // keeps the heading outline unbroken: library cards sit directly under the page h1
 
   const onThumbError = () => setSrc((s) => (s === LOCAL_FALLBACK_THUMB ? s : s === fallbackThumbnailUrl(video) || !video.maxResThumbnail ? LOCAL_FALLBACK_THUMB : fallbackThumbnailUrl(video)))
   const onProgress = useCallback((s: number) => { time.current = s }, [])
@@ -116,7 +117,7 @@ export default function VideoShowcase({ video, float = false, floatDelay = 0, pr
           </div>
           <figcaption className="px-1 pt-5">
             <p className="font-display text-[11px] font-bold uppercase tracking-[0.18em] text-sky-300">{cat}</p>
-            <h3 className="mt-1.5 font-display text-lg font-bold leading-snug text-white sm:text-xl">{video.title}</h3>
+            <Title className="mt-1.5 font-display text-lg font-bold leading-snug text-white sm:text-xl">{video.title}</Title>
             <p className="mt-1.5 text-sm leading-relaxed text-slate-300">{video.description}</p>
           </figcaption>
         </figure>

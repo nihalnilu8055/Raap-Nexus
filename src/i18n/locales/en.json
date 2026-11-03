@@ -355,5 +355,65 @@
     "inExpanded": "Playing in expanded view",
     "inMini": "Playing in the mini window",
     "frameLabel": "RaapNexus ERP demo"
+  },
+  "flow": {
+    "eyebrow": "From data to decisions",
+    "h1": "Every transaction,",
+    "h2": "turned into insight.",
+    "sub": "See how financial data moves through RaapNexus, and how the ERP modules around it connect.",
+    "tabFlow": "Data flow",
+    "tabModules": "ERP modules",
+    "aria": "View",
+    "stagesAria": "Data flow stages",
+    "modulesAria": "ERP modules",
+    "note": "Illustrative diagram, not a live system view.",
+    "stages": [
+      {
+        "label": "Transactions",
+        "text": "Invoices, payments and journal entries arrive from your ERP."
+      },
+      {
+        "label": "Financial Data",
+        "text": "Records are organised into one consistent ledger view."
+      },
+      {
+        "label": "Analysis",
+        "text": "Trends, ratios and variances are calculated across the period."
+      },
+      {
+        "label": "Auditing",
+        "text": "Entries are reviewed and verified against source records."
+      },
+      {
+        "label": "Business Insights",
+        "text": "Clear findings for confident decisions."
+      }
+    ],
+    "modules": [
+      {
+        "label": "Finance",
+        "text": "Ledgers, journals and financial statements."
+      },
+      {
+        "label": "Sales",
+        "text": "Quotations, orders and invoicing."
+      },
+      {
+        "label": "Purchase",
+        "text": "Purchase orders and supplier bills."
+      },
+      {
+        "label": "Inventory",
+        "text": "Stock, movements and valuation."
+      },
+      {
+        "label": "HR & Payroll",
+        "text": "Employee records and payroll postings."
+      },
+      {
+        "label": "Reporting & Analytics",
+        "text": "Reports and dashboards across every module."
+      }
+    ]
   }
 }
