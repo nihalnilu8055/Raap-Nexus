@@ -30,7 +30,11 @@
     "growth": "Sales growth",
     "margin": "Gross margin",
     "label": "RaapNexus, the ultimate finance platform",
-    "visualAlt": "RaapNexus at the centre of connected ERP systems: SAP, Oracle, Sage, NetSuite, Odoo, Microsoft Dynamics 365, Workday, Unit4, Infor, Epicor, Focus ERP, Tally, QuickBooks, Zoho Books, IFS and Acumatica"
+    "visualAlt": "RaapNexus at the centre of connected ERP systems: SAP, Oracle, Sage, NetSuite, Odoo, Microsoft Dynamics 365, Workday, Unit4, Infor, Epicor, Focus ERP, Tally, QuickBooks, Zoho Books, IFS and Acumatica",
+    "orbit": {
+      "aria": "Open how RaapNexus works with {name}",
+      "tip": "{name} connects to RaapNexus through one finance layer. Select to see the platform."
+    }
   },
   "platform": {
     "eyebrow": "The RaapNexus finance dashboard",

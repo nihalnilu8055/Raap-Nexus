@@ -79,16 +79,16 @@ export default function SiteNav() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
         aria-label={t('nav.primary')}
-        className={`relative flex w-full items-center justify-between rounded-full border px-3 ps-4 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] sm:ps-5 ${scrolled ? 'max-w-[1120px] border-white/70 bg-white/85 py-0 shadow-[0_18px_50px_-16px_rgba(15,23,42,.5)] backdrop-saturate-150' : 'max-w-[1240px] border-white/30 bg-white/[.98] py-1 shadow-[0_10px_40px_-18px_rgba(15,23,42,.5)]'}`}
+        className={`relative flex w-full items-center justify-between rounded-full border px-3 ps-4 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] sm:ps-5 ${scrolled ? 'max-w-[1120px] border-white/10 bg-[#0a162e]/90 py-[3px] shadow-[0_18px_50px_-16px_rgba(0,0,0,.6)] backdrop-saturate-150' : 'max-w-[1240px] border-white/10 bg-[#0a162e]/[.97] py-1 shadow-[0_10px_40px_-18px_rgba(0,0,0,.6)]'}`}
       >
-        <Link to={homePath} onClick={goHome} className="rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue" aria-label={t('nav.home')}>
-          <span className={`block origin-left transition-transform duration-500 rtl:origin-right ${scrolled ? 'scale-[.86]' : 'scale-100'}`}><Logo size="sm" /></span>
+        <Link to={homePath} onClick={goHome} className="flex items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue" aria-label={t('nav.home')}>
+          <span className={`flex items-center origin-left transition-transform duration-500 rtl:origin-right ${scrolled ? 'scale-[.86]' : 'scale-100'}`}><Logo size="sm" surface="header" /></span>
         </Link>
         <ul className="hidden items-center gap-0 xl:flex">
           {LINKS.map((l) => (
             <li key={l.id}>
               <a href={`#${l.id}`} onClick={go(l.id)} aria-current={current === l.id ? 'true' : undefined}
-                className={`relative rounded-full px-3 py-2 transition-[background-color,color,transform] duration-200 hover:bg-electric-blue/10 active:scale-95 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-electric-blue' : 'text-slate-600 hover:bg-slate-900/[0.05] hover:text-slate-900'}`}>
+                className={`relative rounded-full px-3 py-2 transition-[background-color,color,transform] duration-200 hover:bg-electric-blue/10 active:scale-95 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-sky-300' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}>
                 {t(l.label)}
                 {current === l.id && <motion.span layoutId="navdot" className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-electric-blue" />}
               </a>
@@ -96,17 +96,17 @@ export default function SiteNav() {
           ))}
         </ul>
         <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-1 md:flex"><LanguageSelector /></div>
+          <div className="hidden items-center gap-1 md:flex"><LanguageSelector tone="dark" /></div>
           <div className="hidden xl:block"><CtaButton label={t('nav.contact')} variant="blue" small icon={Mail} onClick={openContact} /></div>
           <button ref={toggle} type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? t('nav.menuClose') : t('nav.menuOpen')}
-            className="grid h-10 w-10 place-items-center rounded-full text-slate-800 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue xl:hidden">
+            className="grid h-10 w-10 place-items-center rounded-full text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue xl:hidden">
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
         <AnimatePresence>
           {open && (
             <motion.div id="mobile-menu" initial={{ opacity: 0, y: -8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: 0.98 }} transition={{ duration: 0.25, ease: EASE }}
-              className="absolute inset-x-0 top-[calc(100%+10px)] rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-2xl backdrop-blur-xl xl:hidden">
+              className="absolute inset-x-0 top-[calc(100%+10px)] rounded-3xl border border-slate-200 bg-white p-3 shadow-2xl xl:hidden">
               <ul className="flex flex-col">
                 {LINKS.map((l) => (
                   <li key={l.id}><a href={`#${l.id}`} onClick={go(l.id)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t(l.label)}</a></li>

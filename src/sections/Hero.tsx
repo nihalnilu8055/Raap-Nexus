@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useReducedMotion } from 'framer-motion'
 import CtaButton from '../components/ui/CtaButton'
-import HeroVisual from '../components/ui/HeroVisual'
+import HeroOrbit from '../components/ui/HeroOrbit'
 import { useI18n } from '../i18n'
 import { useNearView } from '../components/ui/useNearView'
 import { Boundary, isMobile, webglSupported } from '../lib/webgl'
@@ -57,19 +57,19 @@ export default function Hero() {
 
         <div ref={canvasBox} className="absolute inset-0 will-change-transform">
           {/* artwork box: square, sized from the viewport so it never overlaps the copy on desktop and never gets cropped */}
-          <div className="absolute left-1/2 top-[11%] w-[min(100vw,60vh)] -translate-x-1/2 md:left-auto md:right-[-3vw] lg:right-[1.5vw] md:top-1/2 md:w-[min(46vw,82vh)] md:translate-x-0 md:-translate-y-[47%] lg:w-[min(51vw,90vh)] 2xl:right-[3vw] 2xl:w-[min(51vw,92vh)]">
+          <div className="absolute left-1/2 top-[11%] w-[min(100vw,60vh)] -translate-x-1/2 md:w-[min(86vw,52vh)] lg:left-auto lg:right-[1.5vw] lg:top-1/2 lg:w-[min(51vw,90vh)] lg:translate-x-0 lg:-translate-y-[47%] 2xl:right-[3vw] 2xl:w-[min(46vw,92vh)]">
             {depth && !reduced && (
               <div ref={depthRef} aria-hidden className="pointer-events-none absolute inset-[-22%]">
                 <Boundary fallback={null}><Suspense fallback={null}><DepthScene lite={lite} active={inView} /></Suspense></Boundary>
               </div>
             )}
-            <HeroVisual alt={t('hero.visualAlt')} progress={prog} />
+            <HeroOrbit alt={t('hero.visualAlt')} progress={prog} />
           </div>
         </div>
 
-        <div ref={content} className="relative z-10 mx-auto flex h-full max-w-[1320px] flex-col justify-end px-6 pb-14 pt-28 sm:px-10 md:justify-center md:pb-0">
+        <div ref={content} className="pointer-events-none relative z-10 mx-auto flex h-full max-w-[1320px] flex-col justify-end px-6 pb-14 pt-28 sm:px-10 lg:justify-center lg:pb-0">
           <p className="mb-4 hidden text-xs font-bold uppercase tracking-[0.3em] text-sky-300 sm:block">{t('hero.eyebrow')}</p>
-          <h1 className="font-display text-[clamp(2.3rem,5vw,4.6rem)] md:max-w-[640px] font-extrabold leading-[0.98] tracking-[-0.035em] text-white">
+          <h1 className="pointer-events-auto w-fit font-display text-[clamp(2.3rem,5vw,4.6rem)] md:max-w-[640px] font-extrabold leading-[0.98] tracking-[-0.035em] text-white">
             {WORDS.map((w, i) => (
               <span key={w} className="block overflow-hidden pb-[0.08em]">
                 <motion.span className={`block ${i === 1 ? 'bg-gradient-to-r from-sky-200 via-sky-400 to-blue-500 bg-clip-text text-transparent' : ''}`}
@@ -80,10 +80,10 @@ export default function Hero() {
             ))}
           </h1>
           <motion.p initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.7 }}
-            className="mt-5 max-w-md text-lg text-slate-300 sm:text-xl">
+            className="pointer-events-auto mt-5 w-fit max-w-md text-lg text-slate-300 sm:text-xl">
             {t('hero.sub')}
           </motion.p>
-          <motion.div initial={reduced ? false : { opacity: 0, y: 20, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.9, ease: EASE, delay: 0.85 }} className="mt-8 flex flex-wrap items-center gap-3">
+          <motion.div initial={reduced ? false : { opacity: 0, y: 20, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.9, ease: EASE, delay: 0.85 }} className="pointer-events-auto mt-8 flex w-fit flex-wrap items-center gap-3">
             <CtaButton label={t('nav.cta')} />
           </motion.div>
         </div>

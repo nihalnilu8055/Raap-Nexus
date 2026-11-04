@@ -30,7 +30,11 @@
     "growth": "نمو المبيعات",
     "margin": "هامش الربح الإجمالي",
     "label": "RaapNexus، المنصة المالية الأكثر تطورًا",
-    "visualAlt": "RaapNexus في مركز أنظمة ERP المتصلة: SAP وOracle وSage وNetSuite وOdoo وMicrosoft Dynamics 365 وWorkday وUnit4 وInfor وEpicor وFocus ERP وTally وQuickBooks وZoho Books وIFS وAcumatica"
+    "visualAlt": "RaapNexus في مركز أنظمة ERP المتصلة: SAP وOracle وSage وNetSuite وOdoo وMicrosoft Dynamics 365 وWorkday وUnit4 وInfor وEpicor وFocus ERP وTally وQuickBooks وZoho Books وIFS وAcumatica",
+    "orbit": {
+      "aria": "اعرض كيف يعمل RaapNexus مع {name}",
+      "tip": "يتصل {name} بـ RaapNexus عبر طبقة مالية واحدة. اختر لعرض المنصة."
+    }
   },
   "platform": {
     "eyebrow": "لوحة معلومات RaapNexus المالية",

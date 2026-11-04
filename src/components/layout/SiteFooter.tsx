@@ -47,7 +47,7 @@ export default function SiteFooter() {
       <div className="mx-auto max-w-[1200px]">
         <Reveal><div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="sm:col-span-2 lg:col-span-1">
-            <span className="inline-block rounded-full bg-white px-4 py-2"><Logo size="md" /></span>
+            <Logo size="md" surface="dark" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-slate-300">{t('footer.desc')}</p>
           </div>
           <nav aria-label={t('footer.explore')}>

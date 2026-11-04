@@ -62,7 +62,7 @@ function page(lang, kind = 'home') {
     <meta name="twitter:description" content="${esc(M.description)}" />
     <meta name="twitter:image" content="${OG_IMG}" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    ${isV ? '' : `<link rel="preload" as="image" type="image/webp" href="/assets/hero/raapnexus-finance-platform-hero-900.webp" imagesrcset="/assets/hero/raapnexus-finance-platform-hero-600.webp 600w, /assets/hero/raapnexus-finance-platform-hero-900.webp 900w, /assets/hero/raapnexus-finance-platform-hero-1600.webp 1600w" imagesizes="(min-width: 768px) 48vw, 100vw" fetchpriority="high" />`}
+    ${isV ? '' : `<link rel="preload" as="image" href="/assets/r-icon.png" fetchpriority="high" />`}
     ${fonts}
     <script type="application/ld+json" id="ld-json">${JSON.stringify(ld)}</script>`
   const bodyV = `<main style="min-height:100vh;background:#040a1c;color:#e2e8f0;font-family:system-ui,sans-serif;padding:96px 24px;max-width:860px;margin:0 auto">
