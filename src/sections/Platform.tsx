@@ -128,7 +128,7 @@ export default function Platform() {
               {/* below lg the screenshot is shown at a readable size and can be swiped sideways */}
               <div className="relative h-[400px] overflow-x-auto overflow-y-hidden bg-slate-50 lg:h-auto lg:overflow-hidden lg:aspect-[1440/900]" tabIndex={0} aria-label={t('platform.pan')}>
                 <AnimatePresence initial={false}>
-                  <motion.img key={cur.id} src={`/assets/shots/${cur.id}.webp`} alt={cur.alt} width={1440} height={900} decoding="async"
+                  <motion.img key={cur.id} src={`/assets/shots/${cur.id}.webp`} alt={cur.alt} width={1440} height={900} loading="lazy" decoding="async"
                     initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.9, ease: EASE }}
                     className="absolute start-0 top-0 h-auto w-[1000px] max-w-none select-none lg:w-full" draggable={false} />
                 </AnimatePresence>

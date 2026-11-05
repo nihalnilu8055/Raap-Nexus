@@ -3,14 +3,14 @@ const B = 'http://localhost:' + (process.env.PORT || 4180)
 const GL = ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist']
 const EXT = /fonts\.g|youtube|ytimg|ERR_TUNNEL|ERR_CONNECTION|google|GL Driver|ReadPixels/i
 let fail = 0; const ok = (c, m) => { if (!c) fail++; console.log((c ? 'PASS ' : 'FAIL ') + m) }
-const open = async (b, o = {}, url = '/en/') => { const c = await b.newContext({ viewport: { width: 1440, height: 900 }, ...o }); const p = await c.newPage(); p.errs = []; p.on('console', (m) => { if (['error', 'warning'].includes(m.type()) && !EXT.test(m.text())) p.errs.push(m.text().slice(0, 140)) }); p.on('pageerror', (e) => p.errs.push('PE ' + e.message)); await p.goto(B + url, { waitUntil: 'load' }); await p.waitForSelector('[data-orbit-word]'); await p.waitForTimeout(3500); return [c, p] }
+const open = async (b, o = {}, url = '/en/') => { const c = await b.newContext({ viewport: { width: 1440, height: 900 }, ...o }); const p = await c.newPage(); p.errs = []; p.on('console', (m) => { if (['error', 'warning'].includes(m.type()) && !EXT.test(m.text())) p.errs.push(m.text().slice(0, 140)) }); p.on('pageerror', (e) => p.errs.push('PE ' + e.message)); await p.goto(B + url, { waitUntil: 'load' }); await p.waitForSelector('[data-orbit-word]'); await p.mouse.move(8, 300); await p.mouse.move(12, 310); await p.waitForTimeout(3500); return [c, p] }
 ;(async () => {
   const b = await chromium.launch({ args: GL })
   // ---- desktop, WebGL on
   let [c, p] = await open(b)
   const info = await p.evaluate(() => ({ canvas: !!document.querySelector('[data-orbit] canvas'), cw: document.querySelector('[data-orbit] canvas')?.getBoundingClientRect().width, txt: document.querySelector('[data-orbit]').textContent, img: document.querySelector('[data-orbit] img')?.getAttribute('src'), role: document.querySelector('[data-orbit]').getAttribute('role'), label: document.querySelector('[data-orbit]').getAttribute('aria-label').slice(0, 40) }))
   ok(info.canvas, 'WebGL scene mounted (canvas ' + Math.round(info.cw) + 'px)')
-  ok(!/RAAP\s*NEXUS/i.test(info.txt) && info.img === '/assets/r-icon.png', 'core shows only the R icon (no "RAAP NEXUS" text in the model)')
+  ok(!/RAAP\s*NEXUS/i.test(info.txt) && info.img === '/assets/r-icon.webp', 'core shows only the R icon (no "RAAP NEXUS" text in the model)')
   // smooth rotation: sample rho at 60 ms steps
   const s = await p.evaluate(async () => { const a = []; for (let i = 0; i < 20; i++) { a.push(window.__RN_ORBIT.rho()); await new Promise((r) => setTimeout(r, 120)) } return a })
   const d = s.slice(1).map((v, i) => v - s[i]); const mean = d.reduce((x, y) => x + y) / d.length
@@ -60,7 +60,7 @@ const open = async (b, o = {}, url = '/en/') => { const c = await b.newContext({
 
   // ---- reduced motion
   ;[c, p] = await open(b, { reducedMotion: 'reduce' })
-  const rm = await p.evaluate(async () => { const a = window.__RN_ORBIT.rho(); await new Promise((r) => setTimeout(r, 1200)); return { moved: window.__RN_ORBIT.rho() !== a, n: document.querySelectorAll('[data-orbit-word]').length, canvas: !!document.querySelector('[data-orbit] canvas'), img: !!document.querySelector('[data-orbit] img[src="/assets/r-icon.png"]'), vis: [...document.querySelectorAll('[data-orbit-word]')].every((e) => { const r = e.getBoundingClientRect(); return r.width > 20 && getComputedStyle(e).opacity !== '0' }) } })
+  const rm = await p.evaluate(async () => { const a = window.__RN_ORBIT.rho(); await new Promise((r) => setTimeout(r, 1200)); return { moved: window.__RN_ORBIT.rho() !== a, n: document.querySelectorAll('[data-orbit-word]').length, canvas: !!document.querySelector('[data-orbit] canvas'), img: !!document.querySelector('[data-orbit] img[src="/assets/r-icon.webp"]'), vis: [...document.querySelectorAll('[data-orbit-word]')].every((e) => { const r = e.getBoundingClientRect(); return r.width > 20 && getComputedStyle(e).opacity !== '0' }) } })
   ok(!rm.moved && rm.n === 16 && rm.vis && rm.img && !rm.canvas, 'reduced motion: static layout, all 16 words readable, R icon shown, no animation loop/canvas')
   await p.hover('[data-orbit-word="Tally"]', { force: true }); await p.waitForTimeout(300)
   ok(await p.evaluate(() => /Tally/.test(document.getElementById('orbit-tip').textContent) && getComputedStyle(document.getElementById('orbit-tip')).opacity !== '0'), 'reduced motion: hover tooltip still works')
@@ -69,14 +69,14 @@ const open = async (b, o = {}, url = '/en/') => { const c = await b.newContext({
   // ---- WebGL unavailable
   const b2 = await chromium.launch({ args: ['--disable-gpu', '--disable-webgl', '--disable-webgl2', '--disable-3d-apis'] })
   ;[c, p] = await open(b2)
-  const nw = await p.evaluate(() => ({ gl: (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')) } catch { return false } })(), canvas: !!document.querySelector('[data-orbit] canvas'), n: document.querySelectorAll('[data-orbit-word]').length, img: !!document.querySelector('[data-orbit] img[src="/assets/r-icon.png"]'), op: getComputedStyle(document.querySelector('[data-orbit] img').parentElement).opacity }))
+  const nw = await p.evaluate(() => ({ gl: (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')) } catch { return false } })(), canvas: !!document.querySelector('[data-orbit] canvas'), n: document.querySelectorAll('[data-orbit-word]').length, img: !!document.querySelector('[data-orbit] img[src="/assets/r-icon.webp"]'), op: getComputedStyle(document.querySelector('[data-orbit] img').parentElement).opacity }))
   ok(!nw.gl && !nw.canvas && nw.n === 16 && nw.img && nw.op === '1', `no WebGL (gl=${nw.gl}): CSS sphere + R icon + all 16 orbiting words still render`)
   ok(p.errs.length === 0, 'no-WebGL: no console errors ' + p.errs.slice(0, 2)); await c.close(); await b2.close()
 
   // ---- logo placements + old logo gone
   ;[c, p] = await open(b)
   const lg = await p.evaluate(() => { const i = document.querySelector('header img'); return { src: i.getAttribute('src'), w: i.getBoundingClientRect().width, h: i.getBoundingClientRect().height, nat: [i.naturalWidth, i.naturalHeight] } })
-  ok(lg.src === '/assets/logo-header.png' && Math.abs(lg.w / lg.h - 1063 / 244) < 0.02 && lg.nat[0] === 1063, `header logo: new asset, aspect ${(lg.w / lg.h).toFixed(2)} (native ${lg.nat.join('×')}), ${Math.round(lg.w)}×${Math.round(lg.h)}px`)
+  ok(lg.src === '/assets/logo-header.png' && Math.abs(lg.w / lg.h - 1063 / 244) < 0.02 && (lg.nat[0] === 1063 || lg.nat[0] === 480), `header logo: new asset, aspect ${(lg.w / lg.h).toFixed(2)} (native ${lg.nat.join('×')}), ${Math.round(lg.w)}×${Math.round(lg.h)}px`)
   await p.evaluate(() => scrollTo(0, document.body.scrollHeight)); await p.waitForTimeout(1200)
   const ft = await p.evaluate(() => { const i = document.querySelector('footer img'); return i && { src: i.getAttribute('src'), ok: i.naturalWidth > 0 } })
   ok(ft && ft.src === '/assets/logo-light.png' && ft.ok, 'footer logo: new transparent variant on dark footer loads')

@@ -1,12 +1,8 @@
 import { Component, type ReactNode } from 'react'
+import { glInfo } from './gate'
 
 export function webglSupported(): boolean {
-  try {
-    const c = document.createElement('canvas')
-    return !!(c.getContext('webgl2') || c.getContext('webgl'))
-  } catch {
-    return false
-  }
+  return glInfo().ok // one cached probe for the whole page
 }
 
 export const isMobile = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches

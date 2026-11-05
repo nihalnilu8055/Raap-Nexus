@@ -15,7 +15,9 @@ const FOV = (2 * Math.atan(VIS / 2 / CAM_Z) * 180) / Math.PI
 
 function useIcon() {
   const tex = useMemo(() => {
-    const t = new THREE.TextureLoader().load('/assets/r-icon.png')
+    // same URL as the DOM <img>/preload and NO crossOrigin attribute, so the browser reuses that one download instead of fetching the icon a second time in CORS mode
+    const loader = new THREE.TextureLoader(); loader.crossOrigin = undefined as unknown as string
+    const t = loader.load('/assets/r-icon.webp')
     t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t
   }, [])
   useEffect(() => () => tex.dispose(), [tex])

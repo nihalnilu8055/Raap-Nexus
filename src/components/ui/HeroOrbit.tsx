@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import { motion, useMotionValue, useReducedMotion, useTransform, type MotionValue } from 'framer-motion'
 import { useI18n } from '../../i18n'
 import { Boundary, webglSupported } from '../../lib/webgl'
+import { useSceneGate } from '../../lib/gate'
 import { DEFAULT_TARGET, layout, orbitState, place, WORD_TARGET, type OrbitLayout } from '../../lib/orbit'
 import { EASE } from '../../lib/motion'
 
@@ -23,7 +24,7 @@ export default function HeroOrbit({ alt, progress }: { alt: string; progress?: M
   const [W, setW] = useState(600)
   const L = useMemo<OrbitLayout>(() => layout(W), [W])
   const [gl] = useState(() => typeof window !== 'undefined' && webglSupported())
-  const [idle, setIdle] = useState(false)
+  const idle = useSceneGate() // the scene starts only after the page has loaded (and, without a GPU, on the first interaction)
   const [inView, setInView] = useState(true)
   const [ready, setReady] = useState(false)
   const [active, setActive] = useState(-1)
@@ -41,7 +42,6 @@ export default function HeroOrbit({ alt, progress }: { alt: string; progress?: M
     ro.observe(el); setW(Math.round(el.getBoundingClientRect().width) || 600)
     return () => ro.disconnect()
   }, [])
-  useEffect(() => { const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }; const go = () => setIdle(true); if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 2500 }); else setTimeout(go, 1200) }, [])
 
   // ---- draw (positions, depth, spokes, tooltip) -------------------------------------------------------------------
   const draw = useCallback(() => {
@@ -175,7 +175,7 @@ export default function HeroOrbit({ alt, progress }: { alt: string; progress?: M
           <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 transition-opacity duration-700" style={{ width: sphereD, height: sphereD, transform: 'translate(-50%,-50%)', opacity: ready ? 0 : 1 }}>
             <div className="absolute inset-0 rounded-full" style={{ background: 'radial-gradient(circle at 32% 26%, #6fb4ff 0%, #2a64e6 30%, #0e2a78 62%, #060d2c 100%)', boxShadow: '0 0 0 1px rgba(150,200,255,.45), inset 0 -10px 30px rgba(0,0,0,.45), 0 0 60px rgba(50,110,255,.45), 0 30px 50px -20px rgba(0,0,0,.7)' }} />
             <div className="absolute inset-[-7%] rounded-full border border-sky-300/30" />
-            <img src="/assets/r-icon.png" alt="" width={714} height={798} draggable={false} decoding="async" fetchPriority="high"
+            <img src="/assets/r-icon.webp" alt="" width={357} height={399} draggable={false} decoding="async" fetchPriority="low"
               className="absolute left-1/2 top-1/2 block select-none drop-shadow-[0_6px_10px_rgba(2,10,40,.55)]" style={{ height: iconH, width: 'auto', transform: 'translate(-50%,-50%)' }} />
           </div>
 

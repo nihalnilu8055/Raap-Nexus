@@ -5,6 +5,7 @@ import HeroOrbit from '../components/ui/HeroOrbit'
 import { useI18n } from '../i18n'
 import { useNearView } from '../components/ui/useNearView'
 import { Boundary, isMobile, webglSupported } from '../lib/webgl'
+import { useSceneGate } from '../lib/gate'
 import { EASE, gsap, scrollState, ScrollTrigger } from '../lib/motion'
 
 const DepthScene = lazy(() => import('../three/HeroDepthScene'))
@@ -19,9 +20,8 @@ export default function Hero() {
   const prog = useMotionValue(0)
   const { ref: depthRef, inView } = useNearView<HTMLDivElement>('0px')
   const [depthOK] = useState(() => typeof window !== 'undefined' && webglSupported() && !isMobile())
-  // the WebGL depth stage is decorative: load it only after first paint is done so it never competes with the headline (LCP)
-  const [idle, setIdle] = useState(false)
-  useEffect(() => { const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }; const go = () => setIdle(true); if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 2500 }); else setTimeout(go, 1500) }, [])
+  // the WebGL depth stage is decorative: it starts only after the page has loaded (and, without a GPU, on first interaction) so it never competes with the headline (LCP)
+  const idle = useSceneGate()
   const depth = depthOK && idle
   const [lite] = useState(() => typeof window !== 'undefined' && window.innerWidth < 1024)
   // one passive pointer listener feeds the 3D rig (normalised -1..1); no per-event React work
