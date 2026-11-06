@@ -32,7 +32,7 @@ const log = (ok, m) => console.log((ok ? 'PASS ' : 'FAIL ') + m)
   const bad = []; for (const l of links) { if (/^https?:/.test(l) && !l.startsWith(B)) continue; const r = await pg.request.get(new URL(l, B).href); if (r.status() >= 400) bad.push(l + ' ' + r.status()) }
   log(bad.length === 0, 'internal links ok (' + links.length + ' checked) ' + bad)
   // Lazy-loaded images only load once near the viewport, so scroll the whole page first, then check every <img>.
-  await pg.evaluate(async () => { const h = document.documentElement.scrollHeight; for (let y = 0; y <= h; y += 500) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 120)) } window.scrollTo(0, 0) }); await pg.waitForTimeout(1500)
+  await pg.evaluate(async () => { for (let y = 0; y <= document.documentElement.scrollHeight; y += 400) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 200)) } window.scrollTo(0, 0) }); await pg.waitForFunction(() => [...document.images].filter((i) => i.src.startsWith(location.origin)).every((i) => i.complete), null, { timeout: 15000 }).catch(() => {}); await pg.waitForTimeout(500)
   const imgs = await pg.evaluate(async () => { const o = []; for (const i of document.images) { if (!i.complete || i.naturalWidth === 0) o.push(i.src) } return o })
   const localBad = imgs.filter((s) => s.startsWith(B)), extBad = imgs.filter((s) => !s.startsWith(B))
   log(localBad.length === 0, 'no broken images (same-origin, after scrolling the full page) ' + localBad)

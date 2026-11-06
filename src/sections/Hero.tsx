@@ -10,9 +10,23 @@ import { EASE, gsap, scrollState, ScrollTrigger } from '../lib/motion'
 
 const DepthScene = lazy(() => import('../three/HeroDepthScene'))
 
+// Latin words are re-typeset letter by letter; connected scripts (Arabic, Devanagari) move word by word so letters never get separated
+const CONNECTED = /[\u0600-\u06FF\u0900-\u097F]/
+function MaskedWord({ text }: { text: string }) {
+  const words = CONNECTED.test(text)
+  const units = words ? text.split(' ') : [...text]
+  return (
+    <span className={`hx-t${words ? ' hx-w' : ''}`} style={{ ['--n' as string]: Math.max(1, units.length - 1) }}>
+      {units.map((u, i) => <i key={i} style={{ ['--i' as string]: i }}>{u}</i>)}
+    </span>
+  )
+}
+
 export default function Hero() {
   const { t } = useI18n()
-  const WORDS = [t('hero.l1'), t('hero.l2')]
+  const bring = t('hero.bring'), PRE = t('hero.pre'), W1 = t('hero.w1'), W2 = t('hero.w2')
+  // the static word is the visual anchor: longer words in other languages scale down so it always fits the copy column
+  const bringK = Math.min(1, 5.4 / [...bring].length) * (/[\u0600-\u06FF\u0900-\u097F]/.test(bring) ? 0.8 : 1)
   const wrap = useRef<HTMLDivElement>(null)
   const content = useRef<HTMLDivElement>(null)
   const canvasBox = useRef<HTMLDivElement>(null)
@@ -69,15 +83,22 @@ export default function Hero() {
 
         <div ref={content} className="pointer-events-none relative z-10 mx-auto flex h-full max-w-[1320px] flex-col justify-end px-6 pb-14 pt-28 sm:px-10 lg:justify-center lg:pb-0">
           <p className="mb-4 hidden text-xs font-bold uppercase tracking-[0.3em] text-sky-300 sm:block">{t('hero.eyebrow')}</p>
-          <h1 className="pointer-events-auto w-fit font-display text-[clamp(2.3rem,5vw,4.6rem)] md:max-w-[640px] font-extrabold leading-[0.98] tracking-[-0.035em] text-white">
-            {WORDS.map((w, i) => (
-              <span key={w} className="block overflow-hidden pb-[0.08em]">
-                <motion.span className={`block ${i === 1 ? 'bg-gradient-to-r from-sky-200 via-sky-400 to-blue-500 bg-clip-text text-transparent' : ''}`}
-                  initial={reduced ? false : { y: '110%' }} animate={{ y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.25 + i * 0.12 }}>
-                  {w}
-                </motion.span>
+          {/* both statements are exposed once to assistive tech; the animated copy is decorative (aria-hidden), so nothing is announced per frame */}
+          <h1 className="hx-stage pointer-events-auto w-fit max-w-full font-display text-white md:max-w-[640px]">
+            <span className="sr-only">{bring} {PRE} {W1}. {bring} {PRE} {W2}.</span>
+            <span aria-hidden className="block">
+              <span className="hx-bring" style={{ fontSize: `calc(clamp(3.6rem, 8.6vw, 8.2rem) * ${bringK})` }}>
+                <span className="hx-bring__back uppercase">{bring}</span>
+                <span className="hx-bring__front uppercase">{bring}</span>
               </span>
-            ))}
+              <span className="hx-line mt-[.5rem] text-[clamp(1.35rem,2.9vw,2.9rem)] font-bold leading-[1.14] tracking-[-0.02em]">
+                <span className="hx-pre">{PRE} </span>
+                <span className="hx-tail">
+                  {[W1, W2].map((w) => <MaskedWord key={w} text={w} />)}
+                  <span className="hx-ul" />
+                </span>
+              </span>
+            </span>
           </h1>
           <motion.p initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.7 }}
             className="pointer-events-auto mt-5 w-fit max-w-md text-lg text-slate-300 sm:text-xl">

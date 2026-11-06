@@ -4,6 +4,7 @@ import { useI18n } from '../../i18n'
 import { Boundary, webglSupported } from '../../lib/webgl'
 import { useSceneGate } from '../../lib/gate'
 import { DEFAULT_TARGET, layout, orbitState, place, WORD_TARGET, type OrbitLayout } from '../../lib/orbit'
+import { ERP_LOGOS } from '../../lib/erpLogos'
 import { EASE } from '../../lib/motion'
 
 const Scene = lazy(() => import('../../three/HeroOrbitScene'))
@@ -199,9 +200,14 @@ export default function HeroOrbit({ alt, progress }: { alt: string; progress?: M
                   onPointerEnter={(e) => { if (e.pointerType !== 'touch') activate(i) }} onPointerLeave={(e) => { if (e.pointerType !== 'touch') clear(i) }}
                   onPointerDown={(e) => { if (e.pointerType === 'touch') { activate(i); window.setTimeout(() => clear(i), 2400) } }}
                   onFocus={() => { setRove(i); activate(i) }} onBlur={() => clear(i)} onKeyDown={(e) => onKey(e, i)} onClick={() => go(i)}
-                  style={{ fontSize: L.f, lineHeight: 1.2, padding: L.compact ? '6px 6px' : '6px 8px', willChange: 'transform' }}
+                  style={{ fontSize: L.f, lineHeight: 1.2, padding: ERP_LOGOS[w.name] ? (L.compact ? (L.f < 9.4 ? '4.5px 3px 4.5px 2.5px' : '4.5px 6px') : '4.5px 8px') : L.compact ? '6px 6px' : '6px 8px', willChange: 'transform', ...(ERP_LOGOS[w.name] ? { columnGap: L.compact ? (L.f < 9.4 ? 1.5 : 2.5) : 5 } : null) }}
                   className={`group absolute left-1/2 top-1/2 inline-flex cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap border text-center font-semibold tracking-tight text-white backdrop-blur-[2px] transition-[border-color,background-color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#040a1c] ${parts.length > 2 ? 'rounded-2xl' : 'rounded-full'} ${w.ring === 0 ? 'border-sky-400/70 bg-[#0a1c46]/85' : 'border-violet-400/60 bg-[#14183f]/85'} ${isA ? (w.ring === 0 ? '!border-sky-200 !bg-[#10306f] shadow-[0_0_22px_rgba(80,190,255,.65)]' : '!border-violet-200 !bg-[#2a2470] shadow-[0_0_22px_rgba(150,130,255,.65)]') : 'shadow-[0_6px_18px_-8px_rgba(0,0,0,.7)]'}`}>
-                  {!L.compact && <span aria-hidden className={`h-1.5 w-1.5 shrink-0 rounded-full ${w.ring === 0 ? 'bg-sky-400' : 'bg-violet-400'}`} />}
+                  {ERP_LOGOS[w.name]
+                    ? <span aria-hidden data-orbit-logo className={`inline-flex shrink-0 items-center justify-center rounded-[0.4em] bg-white ring-1 ${w.ring === 0 ? 'ring-sky-300/80' : 'ring-violet-300/80'}`} style={{ height: L.compact ? (L.f < 9.4 ? '1.15em' : '1.3em') : '1.4em', padding: L.compact ? '0 0.08em' : '0 0.2em' }}>
+                        <img src={ERP_LOGOS[w.name].src} alt="" aria-hidden width={Math.round(ERP_LOGOS[w.name].ar * 16)} height={16} draggable={false} decoding="async"
+                          style={{ display: 'block', height: `${L.compact ? (ERP_LOGOS[w.name].ar > 1.5 ? 0.82 : 1) * (L.f < 9.4 ? 0.82 : 1) : 1.15}em`, width: `${(ERP_LOGOS[w.name].ar * (L.compact ? (ERP_LOGOS[w.name].ar > 1.5 ? 0.82 : 1) * (L.f < 9.4 ? 0.82 : 1) : 1.15)).toFixed(3)}em`, objectFit: 'contain' }} />
+                      </span>
+                    : !L.compact && <span aria-hidden className={`h-1.5 w-1.5 shrink-0 rounded-full ${w.ring === 0 ? 'bg-sky-400' : 'bg-violet-400'}`} />}
                   <span className="leading-[1.15]">{parts.map((s, k) => <span key={k} className="block">{s}</span>)}</span>
                 </button>
               )

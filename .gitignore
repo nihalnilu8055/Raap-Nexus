@@ -22,6 +22,7 @@ node_modules/
 # Production build outputs
 dist/
 dist-ssr/
+*.zip
 
 # Local env files
 .env

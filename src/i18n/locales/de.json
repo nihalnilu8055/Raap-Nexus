@@ -24,6 +24,10 @@
     "eyebrow": "RaapNexus",
     "l1": "Die ultimative",
     "l2": "Finanzplattform.",
+    "bring": "Bringen Sie",
+    "pre": "Klarheit in",
+    "w1": "Ihre Finanzen",
+    "w2": "Ihr Geschäft",
     "sub": "Klarere Finanzeinblicke. Sicherere Geschäftsentscheidungen.",
     "cta": "RaapNexus entdecken",
     "revenue": "Umsatz seit Jahresbeginn",
@@ -358,7 +362,13 @@
     "playerTitle": "{title} – Videoplayer",
     "inExpanded": "Wiedergabe in vergrößerter Ansicht",
     "inMini": "Wiedergabe im Mini-Fenster",
-    "frameLabel": "RaapNexus ERP-Demo"
+    "frameLabel": "RaapNexus ERP-Demo",
+    "soon": {
+      "label": "RAAPNEXUS VIDEO-ERLEBNIS",
+      "title": "BALD VERFÜGBAR",
+      "text": "Etwas Spannendes ist unterwegs. Entdecken Sie bald unser kommendes RaapNexus Video-Erlebnis.",
+      "screen": "RaapNexus Video-Erlebnis, bald verfügbar"
+    }
   },
   "flow": {
     "eyebrow": "Von Daten zu Entscheidungen",

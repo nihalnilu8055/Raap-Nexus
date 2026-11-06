@@ -37,8 +37,8 @@ const EMBED = `<!doctype html><body style="background:#123"><script>addEventList
     }
     await ctx.close()
   }
-  // landing unchanged: 2 frames
+  // landing: the Video section is the 3D "coming soon" stage (COMING_SOON in VideoGallery.tsx); set the flag to false to restore the 2 players
   const c = await b.newContext({ viewport: { width: 1440, height: 900 } }); const p = await c.newPage(); await p.goto(B + '/en/', { waitUntil: 'load' }); await p.waitForTimeout(1500)
-  log((await p.locator('#demo-videos [data-component=video-showcase]').count()) === 2, 'landing still shows exactly 2 videos')
+  log((await p.locator('#demo-videos [data-component=coming-soon]').count()) === 1 && (await p.locator('#demo-videos [data-component=video-showcase]').count()) === 0 && (await p.locator('#demo-videos a[href$="/demo-videos"]').count()) === 1, 'landing shows the coming-soon stage (no players) and still links to the library')
   await b.close(); console.log(fails ? fails + ' FAILED' : 'ALL PASSED'); process.exit(fails ? 1 : 0)
 })()

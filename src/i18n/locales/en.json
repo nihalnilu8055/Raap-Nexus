@@ -24,6 +24,10 @@
     "eyebrow": "RaapNexus",
     "l1": "The Ultimate",
     "l2": "Finance Platform.",
+    "bring": "Bring",
+    "pre": "clarity to your",
+    "w1": "finance",
+    "w2": "business",
     "sub": "Smarter financial insights. Confident business decisions.",
     "cta": "Explore RaapNexus",
     "revenue": "Revenue YTD",
@@ -358,7 +362,13 @@
     "playerTitle": "{title} – video player",
     "inExpanded": "Playing in expanded view",
     "inMini": "Playing in the mini window",
-    "frameLabel": "RaapNexus ERP demo"
+    "frameLabel": "RaapNexus ERP demo",
+    "soon": {
+      "label": "RAAPNEXUS VIDEO EXPERIENCE",
+      "title": "COMING SOON",
+      "text": "Something exciting is on its way. Explore our upcoming RaapNexus video experience soon.",
+      "screen": "RaapNexus video experience, coming soon"
+    }
   },
   "flow": {
     "eyebrow": "From data to decisions",
