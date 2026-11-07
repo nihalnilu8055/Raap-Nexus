@@ -40,7 +40,15 @@
     "c1post": "de su negocio",
     "c2pre": "Aporte",
     "c2w": "claridad",
-    "c2post": "a sus finanzas."
+    "c2post": "a sus finanzas.",
+    "vis": {
+      "alt": "Ilustración del panel financiero de RaapNexus: ingresos, margen bruto, caja y beneficio neto",
+      "title": "Resumen financiero",
+      "cash": "Posición de caja",
+      "net": "Beneficio neto",
+      "ok": "Balance de comprobación conciliado",
+      "demo": "Cifras de demostración ilustrativas"
+    }
   },
   "platform": {
     "eyebrow": "El panel financiero de RaapNexus",
@@ -222,30 +230,30 @@
     "models": {
       "claude": {
         "blurb": "Consulte sus datos financieros en lenguaje natural.",
-        "status": "Conectado vía MCP"
+        "status": "Connected via MCP"
       },
       "openai": {
         "blurb": "Proveedor de IA en la nube.",
-        "status": "Próximamente"
+        "status": "AI Powered"
       },
       "gemini": {
         "blurb": "Proveedor de IA en la nube.",
-        "status": "Próximamente"
+        "status": "Intelligence Active"
       },
       "mistral": {
         "blurb": "Proveedor de IA en la nube.",
-        "status": "Próximamente"
+        "status": "Model Ready"
       },
       "local": {
         "name": "Ollama (modelos locales)",
         "blurb": "Modelos locales en su propio hardware.",
-        "status": "Próximamente"
+        "status": "Local Runtime"
       },
       "custom": {
         "name": "Integración personalizada",
         "short": "Personalizada",
         "blurb": "Traiga su propio modelo.",
-        "status": "Próximamente"
+        "status": "Endpoint Ready"
       }
     }
   },
@@ -329,12 +337,12 @@
     "chars": "{n} / {max}"
   },
   "videos": {
-    "heading": "Descubre RaapNexus ERP en acción",
+    "heading": "Descubre RaapNexus en acción",
     "text": "Descubre cómo RaapNexus simplifica la gestión financiera y las operaciones empresariales con flujos de trabajo ERP reales y demostraciones prácticas.",
     "cta": "Explorar todos los vídeos de demostración",
     "alt": "Imagen de vista previa del vídeo: {title}",
-    "libTitle": "Biblioteca de demos de RaapNexus ERP",
-    "libText": "Explora demostraciones de RaapNexus ERP sobre gestión financiera, contabilidad, ventas, compras, inventario y operaciones empresariales.",
+    "libTitle": "Biblioteca de demos de RaapNexus",
+    "libText": "Explora demostraciones de RaapNexus sobre gestión financiera, contabilidad, ventas, compras, inventario y operaciones empresariales.",
     "back": "Volver al inicio",
     "crumb": "Vídeos de demo",
     "search": "Buscar vídeos por título",
@@ -347,7 +355,7 @@
     "count": "{n} de {total} vídeos",
     "meta": {
       "title": "Vídeos de demo de RaapNexus ERP | Explora las funciones del ERP",
-      "description": "Mira las demostraciones de RaapNexus ERP sobre finanzas, contabilidad, ventas, compras, inventario, informes y gestión empresarial."
+      "description": "Mira las demostraciones de RaapNexus sobre finanzas, contabilidad, ventas, compras, inventario, informes y gestión empresarial."
     },
     "cat": {
       "finance": "Finanzas y contabilidad",
@@ -371,7 +379,7 @@
     "playerTitle": "{title} – reproductor de vídeo",
     "inExpanded": "Reproduciendo en vista ampliada",
     "inMini": "Reproduciendo en la ventana pequeña",
-    "frameLabel": "Demo de RaapNexus ERP",
+    "frameLabel": "Demo de RaapNexus",
     "soon": {
       "label": "EXPERIENCIA DE VÍDEO RAAPNEXUS",
       "title": "PRÓXIMAMENTE",
@@ -448,5 +456,12 @@
         "text": "Informes y paneles de todos los módulos."
       }
     ]
+  },
+  "erp": {
+    "title": "Panel de ERP",
+    "loading": "Cargando el panel…",
+    "error": "No se pudo cargar el panel. Compruebe su conexión e inténtelo de nuevo.",
+    "retry": "Reintentar",
+    "close": "Cerrar el panel"
   }
 }

@@ -22,7 +22,7 @@ export default function FinalCta() {
     return () => ctx.revert()
   }, [reduced])
   return (
-    <section ref={root} id="about" aria-labelledby="cta-h" className="relative overflow-hidden bg-[#040a1c] px-6 py-28 text-center sm:py-36">
+    <section ref={root} id="about" aria-labelledby="cta-h" className="relative overflow-hidden bg-[#040a1c] px-6 py-24 text-center sm:py-32">
       <div aria-hidden className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 50% 60% at 50% 50%, rgba(37,99,235,.35), transparent 70%)' }} />
       <svg aria-hidden viewBox="0 0 800 400" className="absolute left-1/2 top-1/2 w-[min(1000px,150vw)] -translate-x-1/2 -translate-y-1/2 opacity-60">
         {[60, 110, 165, 225].map((r) => <ellipse key={r} className="draw" cx="400" cy="200" rx={r * 1.6} ry={r * 0.7} fill="none" stroke="#5ec8ff" strokeOpacity=".28" strokeWidth="1" />)}

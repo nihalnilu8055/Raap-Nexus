@@ -40,7 +40,15 @@
     "c1post": "über Ihr Geschäft",
     "c2pre": "Bringen Sie",
     "c2w": "Klarheit",
-    "c2post": "in Ihre Finanzen."
+    "c2post": "in Ihre Finanzen.",
+    "vis": {
+      "alt": "Illustration des RaapNexus-Finanz-Dashboards: Umsatzverlauf, Bruttomarge, Liquidität und Nettogewinn",
+      "title": "Finanzüberblick",
+      "cash": "Liquidität",
+      "net": "Nettogewinn",
+      "ok": "Saldenliste abgestimmt",
+      "demo": "Illustrative Demo-Zahlen"
+    }
   },
   "platform": {
     "eyebrow": "Das RaapNexus-Finanz-Dashboard",
@@ -222,30 +230,30 @@
     "models": {
       "claude": {
         "blurb": "Befragen Sie Ihre Finanzdaten in natürlicher Sprache.",
-        "status": "Über MCP verbunden"
+        "status": "Connected via MCP"
       },
       "openai": {
         "blurb": "Cloud-KI-Anbieter.",
-        "status": "Demnächst"
+        "status": "AI Powered"
       },
       "gemini": {
         "blurb": "Cloud-KI-Anbieter.",
-        "status": "Demnächst"
+        "status": "Intelligence Active"
       },
       "mistral": {
         "blurb": "Cloud-KI-Anbieter.",
-        "status": "Demnächst"
+        "status": "Model Ready"
       },
       "local": {
         "name": "Ollama (lokale Modelle)",
         "blurb": "Lokale Modelle auf Ihrer eigenen Hardware.",
-        "status": "Demnächst"
+        "status": "Local Runtime"
       },
       "custom": {
         "name": "Individuelle Integration",
         "short": "Individuell",
         "blurb": "Bringen Sie Ihr eigenes Modell mit.",
-        "status": "Demnächst"
+        "status": "Endpoint Ready"
       }
     }
   },
@@ -329,12 +337,12 @@
     "chars": "{n} / {max}"
   },
   "videos": {
-    "heading": "RaapNexus ERP in Aktion erleben",
+    "heading": "RaapNexus in Aktion erleben",
     "text": "Erleben Sie, wie RaapNexus Finanzmanagement und Geschäftsabläufe durch echte ERP-Workflows und praxisnahe Demonstrationen vereinfacht.",
     "cta": "Alle Demovideos entdecken",
     "alt": "Vorschaubild des Videos: {title}",
-    "libTitle": "RaapNexus ERP Demobibliothek",
-    "libText": "Entdecken Sie RaapNexus ERP-Demonstrationen zu Finanzmanagement, Buchhaltung, Vertrieb, Einkauf, Lager und Geschäftsabläufen.",
+    "libTitle": "RaapNexus Demobibliothek",
+    "libText": "Entdecken Sie RaapNexus-Demonstrationen zu Finanzmanagement, Buchhaltung, Vertrieb, Einkauf, Lager und Geschäftsabläufen.",
     "back": "Zurück zur Startseite",
     "crumb": "Demovideos",
     "search": "Videos nach Titel suchen",
@@ -347,7 +355,7 @@
     "count": "{n} von {total} Videos",
     "meta": {
       "title": "RaapNexus ERP Demovideos | ERP-Funktionen entdecken",
-      "description": "Sehen Sie RaapNexus ERP-Demonstrationen zu Finanzen, Buchhaltung, Vertrieb, Einkauf, Lager, Berichten und Unternehmenssteuerung."
+      "description": "Sehen Sie RaapNexus-Demonstrationen zu Finanzen, Buchhaltung, Vertrieb, Einkauf, Lager, Berichten und Unternehmenssteuerung."
     },
     "cat": {
       "finance": "Finanzen & Buchhaltung",
@@ -371,7 +379,7 @@
     "playerTitle": "{title} – Videoplayer",
     "inExpanded": "Wiedergabe in vergrößerter Ansicht",
     "inMini": "Wiedergabe im Mini-Fenster",
-    "frameLabel": "RaapNexus ERP-Demo",
+    "frameLabel": "RaapNexus-Demo",
     "soon": {
       "label": "RAAPNEXUS VIDEO-ERLEBNIS",
       "title": "BALD VERFÜGBAR",
@@ -448,5 +456,12 @@
         "text": "Berichte und Dashboards über alle Module."
       }
     ]
+  },
+  "erp": {
+    "title": "ERP-Dashboard",
+    "loading": "Dashboard wird geladen…",
+    "error": "Das Dashboard konnte nicht geladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+    "retry": "Erneut versuchen",
+    "close": "Dashboard schließen"
   }
 }

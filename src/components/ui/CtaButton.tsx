@@ -2,6 +2,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-moti
 import { ArrowUpRight, LayoutDashboard, type LucideIcon } from 'lucide-react'
 import { ERP_URL } from '../../config/routes'
 import { EASE } from '../../lib/motion'
+import { erpLinkClick } from '../../lib/erpDashboard'
 
 type Variant = 'light' | 'blue' | 'glass' | 'tint'
 const STYLE: Record<Variant, { btn: string; chip: string }> = {
@@ -24,8 +25,8 @@ export default function CtaButton({ label, variant = 'light', small = false, ico
   const pull = (e: React.PointerEvent<HTMLSpanElement>) => { if (calm || small || e.pointerType !== 'mouse') return; const r = e.currentTarget.getBoundingClientRect(); mx.set(Math.max(-8, Math.min(8, (e.clientX - (r.left + r.width / 2)) * 0.18))); my.set(Math.max(-6, Math.min(6, (e.clientY - (r.top + r.height / 2)) * 0.22))) }
   const rest = () => { mx.set(0); my.set(0) }
   const Tag = (onClick ? motion.button : motion.a) as typeof motion.a
-  // ERP destination opens in a new tab (noopener noreferrer); button mode is used for in-page actions such as Contact Us
-  const props = onClick ? { type: 'button', onClick } : { href, target: '_blank', rel: 'noopener noreferrer' }
+  // ERP destination opens in the in-page dashboard on a plain click (a modified click still opens a new tab, noopener noreferrer); button mode is used for in-page actions such as Contact Us
+  const props = onClick ? { type: 'button', onClick } : { href, target: '_blank', rel: 'noopener noreferrer', ...(href === ERP_URL ? { onClick: erpLinkClick } : {}) }
   return (
     <motion.span style={{ x, y }} onPointerMove={pull} onPointerLeave={rest} className="inline-flex">
     <Tag {...(props as object)} whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.25, ease: EASE }} style={accent ? ({ '--cta': accent } as React.CSSProperties) : undefined}

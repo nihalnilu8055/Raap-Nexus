@@ -70,6 +70,18 @@ export default function SiteNav() {
     if (!el) { nav(`/${lang}/#${id}`); return } // on another page (e.g. the demo library): go home, then to the section
     el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     history.replaceState(null, '', `#${id}`)
+    // the page above the target can still change height while the smooth scroll runs (pinned sections refresh, lazy media), which leaves the
+    // scroll short: after it settles, keep correcting until the section sits exactly at the top (stops on any user scroll input or after 3s)
+    let stop = false
+    const cancel = () => { stop = true }
+    window.addEventListener('wheel', cancel, { once: true, passive: true }); window.addEventListener('touchstart', cancel, { once: true, passive: true }); window.addEventListener('keydown', cancel, { once: true })
+    const t0 = performance.now(); let ok = 0
+    const tick = () => {
+      if (stop || performance.now() - t0 > 3500) return
+      if (Math.abs(el.getBoundingClientRect().top) > 4) { ok = 0; if (performance.now() - t0 > 900) el.scrollIntoView({ behavior: 'instant' as ScrollBehavior, block: 'start' }) } else ok++
+      if (ok < 4) window.setTimeout(tick, 150)
+    }
+    window.setTimeout(tick, 700)
   }
 
   return (

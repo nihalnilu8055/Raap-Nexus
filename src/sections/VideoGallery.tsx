@@ -37,7 +37,7 @@ export default function VideoGallery() {
   // placeholder anchors (href="#") must never jump the page to the top
   const guard = (e: React.MouseEvent) => { if ((e.target as HTMLElement).closest('a[href="#"]')) e.preventDefault() }
   return (
-    <section id="demo-videos" aria-labelledby="vg-h" onClick={guard} className="relative overflow-hidden bg-[#040a1c] px-6 py-24 sm:py-32">
+    <section id="demo-videos" aria-labelledby="vg-h" onClick={guard} className="relative overflow-hidden bg-[#040a1c] px-6 py-20 sm:py-28">
       {/* quiet animated backdrop: drifting navy/blue light + slow ERP data-flow lines (transform/opacity only; static for reduced motion) */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="vg-blob absolute -start-32 top-10 h-[460px] w-[460px] rounded-full bg-blue-600/25 blur-[120px]" />

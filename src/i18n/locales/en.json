@@ -37,10 +37,18 @@
     },
     "c1pre": "Take",
     "c1w": "control",
-    "c1post": "of your business",
+    "c1post": "of your business.",
     "c2pre": "Bring",
     "c2w": "clarity",
-    "c2post": "to your finances."
+    "c2post": "to your finances.",
+    "vis": {
+      "alt": "Illustration of the RaapNexus finance dashboard: revenue chart, gross margin, cash position and net profit panels",
+      "title": "Financial overview",
+      "cash": "Cash position",
+      "net": "Net profit",
+      "ok": "Trial balance reconciled",
+      "demo": "Illustrative demo figures"
+    }
   },
   "platform": {
     "eyebrow": "The RaapNexus finance dashboard",
@@ -226,26 +234,26 @@
       },
       "openai": {
         "blurb": "Cloud AI provider.",
-        "status": "Coming soon"
+        "status": "AI Powered"
       },
       "gemini": {
         "blurb": "Cloud AI provider.",
-        "status": "Coming soon"
+        "status": "Intelligence Active"
       },
       "mistral": {
         "blurb": "Cloud AI provider.",
-        "status": "Coming soon"
+        "status": "Model Ready"
       },
       "local": {
         "name": "Ollama (local models)",
         "blurb": "Local models on your own hardware.",
-        "status": "Coming soon"
+        "status": "Local Runtime"
       },
       "custom": {
         "name": "Custom integration",
         "short": "Custom",
         "blurb": "Bring your own model.",
-        "status": "Coming soon"
+        "status": "Endpoint Ready"
       }
     }
   },
@@ -329,12 +337,12 @@
     "chars": "{n} / {max}"
   },
   "videos": {
-    "heading": "Explore RaapNexus ERP in Action",
+    "heading": "Explore RaapNexus in Action",
     "text": "Experience how RaapNexus simplifies financial management and business operations through real ERP workflows and practical demonstrations.",
     "cta": "Explore All Demo Videos",
     "alt": "Preview image of the video: {title}",
-    "libTitle": "RaapNexus ERP Demo Library",
-    "libText": "Explore RaapNexus ERP demonstrations across financial management, accounting, sales, purchasing, inventory, and business operations.",
+    "libTitle": "RaapNexus Demo Library",
+    "libText": "Explore RaapNexus demonstrations across financial management, accounting, sales, purchasing, inventory, and business operations.",
     "back": "Back to home",
     "crumb": "Demo videos",
     "search": "Search videos by title",
@@ -371,7 +379,7 @@
     "playerTitle": "{title} – video player",
     "inExpanded": "Playing in expanded view",
     "inMini": "Playing in the mini window",
-    "frameLabel": "RaapNexus ERP demo",
+    "frameLabel": "RaapNexus Demo",
     "soon": {
       "label": "RAAPNEXUS VIDEO EXPERIENCE",
       "title": "COMING SOON",
@@ -448,5 +456,12 @@
         "text": "Reports and dashboards across every module."
       }
     ]
+  },
+  "erp": {
+    "title": "ERP Dashboard",
+    "loading": "Loading dashboard…",
+    "error": "The dashboard could not be loaded. Check your connection and try again.",
+    "retry": "Try again",
+    "close": "Close dashboard"
   }
 }

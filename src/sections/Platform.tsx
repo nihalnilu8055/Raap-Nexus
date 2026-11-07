@@ -74,7 +74,7 @@ export default function Platform() {
 
   const cur = TABS[tab]
   return (
-    <section ref={section} id="platform" aria-labelledby="platform-h" className="relative overflow-hidden px-4 pb-24 pt-20 sm:px-8 md:pb-32"
+    <section ref={section} id="platform" aria-labelledby="platform-h" className="relative overflow-hidden px-4 pb-20 pt-20 sm:px-8 md:pb-28"
       style={{ background: 'linear-gradient(180deg,#071331 0%,#0b1d4d 14%,#cfe0ff 46%,#eef4ff 70%,#f6f9ff 100%)' }}>
       <div className="mx-auto max-w-[1240px]">
         <div className="mb-12 text-center md:mb-16">

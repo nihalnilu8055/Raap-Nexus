@@ -27,13 +27,11 @@ export default function Hero() {
     { pre: t('hero.c2pre'), w: t('hero.c2w'), post: t('hero.c2post') },
   ]
   // the two key words are the visual anchors: longer words in other languages scale down a little so they always fit the copy column
-  const keyK = Math.min(1, 9.5 / Math.max(...lines.map((l) => [...l.w].length)))
-  // PREVIEW ONLY: two typography variants for review (?hv=a | ?hv=b); the losing one is removed once a variant is chosen
-  const [hv, setHv] = useState<'a' | 'b'>('a')
-  useEffect(() => { const v = new URLSearchParams(window.location.search).get('hv'); if (v === 'a' || v === 'b') setHv(v) }, [])
+  const keyK = Math.min(1, 9 / Math.max(...lines.map((l) => [...l.w].length)))
   const wrap = useRef<HTMLDivElement>(null)
   const content = useRef<HTMLDivElement>(null)
   const canvasBox = useRef<HTMLDivElement>(null)
+  const head = useRef<HTMLHeadingElement>(null)
   const reduced = !!useReducedMotion()
   const prog = useMotionValue(0)
   const { ref: depthRef, inView } = useNearView<HTMLDivElement>('0px')
@@ -59,14 +57,28 @@ export default function Hero() {
           onUpdate: (s) => { scrollState.hero = s.progress; prog.set(Math.min(1, s.progress / 0.75)) },
         },
       })
-      tl.to(content.current, { y: -70, opacity: 0, ease: 'none', duration: 0.45 }, 0)
-        .to(canvasBox.current, { scale: 1.12, opacity: 0, ease: 'power1.in', duration: 0.4 }, 0.6)
+      // The text side is never empty and nothing is added or removed: the two statements take turns as the focus while the supporting line and the
+      // button stay put. Once the hero unpins, the copy and the artwork scroll away with the section, so no empty stage is left behind.
+      const rows = head.current ? gsap.utils.toArray<HTMLElement>(head.current.querySelectorAll('.hx-row')) : []
+      const keys = head.current ? gsap.utils.toArray<HTMLElement>(head.current.querySelectorAll('.hx-key')) : []
+      if (rows.length === 2) {
+        gsap.set(keys, { transformOrigin: document.documentElement.dir === 'rtl' ? 'right bottom' : 'left bottom' })
+        tl.to(rows[1], { opacity: 0.38, ease: 'none', duration: 0.12 }, 0.04)
+          .to(keys[0], { scale: 1.06, ease: 'none', duration: 0.12 }, 0.04)
+          .to(rows[0], { opacity: 0.38, ease: 'none', duration: 0.14 }, 0.38)
+          .to(keys[0], { scale: 1, ease: 'none', duration: 0.14 }, 0.38)
+          .to(rows[1], { opacity: 1, ease: 'none', duration: 0.14 }, 0.38)
+          .to(keys[1], { scale: 1.06, ease: 'none', duration: 0.14 }, 0.38)
+          .to(rows[0], { opacity: 1, ease: 'none', duration: 0.14 }, 0.74)
+          .to(keys[1], { scale: 1, ease: 'none', duration: 0.14 }, 0.74)
+      }
+      tl.to(canvasBox.current, { scale: 1.08, opacity: 0.4, ease: 'power1.in', duration: 0.4 }, 0.6)
     }, wrap)
     return () => { ctx.revert(); scrollState.hero = 0; prog.set(0); ScrollTrigger.refresh() }
   }, [reduced, prog])
 
   return (
-    <div ref={wrap} id="top" className={reduced ? 'relative' : 'relative h-[165vh]'}>
+    <div ref={wrap} id="top" className={reduced ? 'relative' : 'relative h-[175vh]'}>
       <section aria-label={t('hero.label')} className="sticky top-0 h-screen min-h-[620px] w-full overflow-hidden bg-[#040a1c]">
         {/* cinematic backdrop, fades in first */}
         <motion.div aria-hidden initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }} className="absolute inset-0"
@@ -75,7 +87,7 @@ export default function Hero() {
 
         <div ref={canvasBox} className="absolute inset-0 will-change-transform">
           {/* artwork box: square, sized from the viewport so it never overlaps the copy on desktop and never gets cropped */}
-          <div className="absolute left-1/2 top-[11%] w-[min(100vw,60vh)] -translate-x-1/2 md:w-[min(86vw,52vh)] lg:left-auto lg:right-[1.5vw] lg:top-1/2 lg:w-[min(51vw,90vh)] lg:translate-x-0 lg:-translate-y-[47%] 2xl:right-[3vw] 2xl:w-[min(46vw,92vh)]">
+          <div className="absolute left-1/2 top-[11%] w-[min(100vw,60vh,max(240px,calc(100svh-400px)))] -translate-x-1/2 md:w-[min(86vw,52vh)] lg:left-auto lg:right-[1.5vw] lg:top-1/2 lg:w-[min(51vw,90vh)] lg:translate-x-0 lg:-translate-y-[47%] 2xl:right-[3vw] rtl:lg:right-auto rtl:lg:left-[1.5vw] rtl:2xl:right-auto rtl:2xl:left-[3vw] 2xl:w-[min(46vw,92vh)]">
             {depth && !reduced && (
               <div ref={depthRef} aria-hidden className="pointer-events-none absolute inset-[-22%]">
                 <Boundary fallback={null}><Suspense fallback={null}><DepthScene lite={lite} active={inView} /></Suspense></Boundary>
@@ -88,7 +100,8 @@ export default function Hero() {
         <div ref={content} className="pointer-events-none relative z-10 mx-auto flex h-full max-w-[1760px] flex-col justify-end px-6 pb-14 pt-28 sm:px-10 min-[1400px]:px-14 lg:justify-center lg:pb-0">
           <p className="mb-4 hidden text-xs font-bold uppercase tracking-[0.3em] text-sky-300 sm:block">{t('hero.eyebrow')}</p>
           {/* the sentence is exposed once to assistive tech; the styled copy is decorative (aria-hidden) so nothing is read twice */}
-          <h1 className={`hx-h1 hx-v-${hv} pointer-events-auto w-fit max-w-full font-display text-white md:max-w-[640px]`} style={{ ['--k' as string]: keyK }}>
+          <div className="hx-wrap pointer-events-none">
+          <h1 ref={head} className={`hx-h1 pointer-events-auto w-fit max-w-full font-display text-white md:max-w-[640px]`} style={{ ['--k' as string]: keyK }}>
             <span className="sr-only">{lines[0].pre} {lines[0].w} {lines[0].post}. {lines[1].pre} {lines[1].w} {lines[1].post}</span>
             <span aria-hidden className="block">
               {lines.map((l, i) => (
@@ -100,13 +113,10 @@ export default function Hero() {
               ))}
             </span>
           </h1>
-          <motion.p initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.7 }}
-            className="pointer-events-auto mt-5 w-fit max-w-md text-lg text-slate-300 sm:text-xl">
-            {t('hero.sub')}
-          </motion.p>
-          <motion.div initial={reduced ? false : { opacity: 0, y: 20, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.9, ease: EASE, delay: 0.85 }} className="pointer-events-auto mt-8 flex w-fit flex-wrap items-center gap-3">
-            <CtaButton label={t('nav.cta')} />
-          </motion.div>
+          </div>
+        <motion.div initial={reduced ? false : { opacity: 0, y: 20, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.9, ease: EASE, delay: 0.85 }} className="pointer-events-auto mt-9 flex w-fit flex-wrap items-center gap-3">
+          <CtaButton label={t('nav.cta')} />
+        </motion.div>
         </div>
 
         <motion.div aria-hidden initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4, duration: 1 }} className="absolute bottom-6 start-1/2 hidden -translate-x-1/2 rtl:translate-x-1/2 md:block">

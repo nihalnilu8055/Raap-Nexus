@@ -4,6 +4,7 @@ import { Reveal } from '../ui/Reveal'
 import Logo from '../Logo'
 import { ERP_URL } from '../../config/routes'
 import { openContact } from '../../lib/contact'
+import { erpLinkClick } from '../../lib/erpDashboard'
 import { CONTACT_EMAIL, CONTACT_MAILTO } from '../../config/contact'
 import { useI18n } from '../../i18n'
 
@@ -65,7 +66,7 @@ export default function SiteFooter() {
           <div>
             <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-500">{t('footer.erp')}</p>
             <ul className="mt-4">
-              <li><a href={ERP_URL} target="_blank" rel="noopener noreferrer" className={link}>{t('nav.cta')}<span className={bar} /></a></li>
+              <li><a href={ERP_URL} target="_blank" rel="noopener noreferrer" onClick={erpLinkClick} className={link}>{t('nav.cta')}<span className={bar} /></a></li>
               <li><button type="button" onClick={openContact} className={`${link} text-start`}>{t('nav.contact')}<span className={bar} /></button></li>
               <li><a href={CONTACT_MAILTO} dir="ltr" className={link}>{CONTACT_EMAIL}<span className={bar} /></a></li>
             </ul>

@@ -13,6 +13,7 @@ import VideoGallery from '../sections/VideoGallery'
 import FinalCta from '../sections/FinalCta'
 import CursorFX from '../components/CursorFX'
 import ContactModal from '../components/ContactModal'
+import ErpDashboardModal from '../components/ErpDashboardModal'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useI18n } from '../i18n'
@@ -47,6 +48,7 @@ export default function Home() {
       </main>
       <SiteFooter />
       <ContactModal />
+      <ErpDashboardModal />
       <CursorFX />
     </div>
   )

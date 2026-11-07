@@ -1,6 +1,6 @@
 import { lazy, memo, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { BadgeCheck, Bot, ChevronRight, FlaskConical, MessageSquareText, Server, Shuffle } from 'lucide-react'
+import { BadgeCheck, Bot, ChevronRight, MessageSquareText, Server, Shuffle } from 'lucide-react'
 import Fallback3D from '../components/ui/Fallback3D'
 import { useNearView } from '../components/ui/useNearView'
 import { Boundary, isMobile, webglSupported } from '../lib/webgl'
@@ -75,7 +75,6 @@ export default function AiFinance() {
   }, [reduced])
 
   const n = AI_NODES[sel]
-  const ok = n.status === 'verified'
   return (
     <section ref={wrap} id="ai" aria-labelledby="ai-h" className="relative overflow-hidden bg-[#050824] px-4 py-20 sm:px-8 md:py-28">
       <div aria-hidden className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 50% 55% at 72% 45%, rgba(99,88,255,.30), transparent 70%), radial-gradient(ellipse 40% 40% at 5% 90%, rgba(37,99,235,.18), transparent 70%)' }} />
@@ -129,13 +128,13 @@ export default function AiFinance() {
 
           {/* provider selection: refined, secondary */}
           <p className="mt-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{t('ai.providers')}</p>
-          <div className="mt-3 flex flex-wrap justify-center gap-2" role="group" aria-label={t('ai.providers')}>
+          <div className="mt-3 flex flex-wrap justify-center gap-x-2 gap-y-3" role="group" aria-label={t('ai.providers')}>
             {AI_NODES.map((a, i) => {
               const nm = a.id === 'local' || a.id === 'custom' ? t(`ai.models.${a.id}.name`) : a.name
               const sh = a.id === 'custom' ? t('ai.models.custom.short') : a.short
               return (
                 <Reveal key={a.id} variant="scale" delay={0.05 * i}>
-                <button type="button" onClick={() => pick(i)} onFocus={() => pick(i)} aria-pressed={sel === i} aria-label={`${nm}, ${a.status === 'verified' ? t('ai.live') : t('ai.planned')}`}
+                <button type="button" onClick={() => pick(i)} onFocus={() => pick(i)} aria-pressed={sel === i} aria-label={`${nm}, ${t('ai.live')}`}
                   className={`group flex items-center gap-2 rounded-full border hover:-translate-y-0.5 hover:scale-[1.04] py-1.5 ps-1.5 pe-3.5 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 ${sel === i ? 'border-white/40 bg-white/10' : 'border-white/10 bg-white/[0.03] hover:bg-white/[0.07]'}`}
                   style={sel === i ? { boxShadow: `0 0 26px -8px ${a.color}` } : undefined}>
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-white/95">
@@ -153,8 +152,8 @@ export default function AiFinance() {
               <motion.div key={n.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35, ease: EASE }}>
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{t('ai.active')}</p>
-                  <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${ok ? 'bg-emerald-400/15 text-emerald-300' : 'bg-indigo-400/15 text-indigo-200'}`}>
-                    {ok ? <BadgeCheck size={13} aria-hidden /> : <FlaskConical size={13} aria-hidden />}{ok ? t('ai.live') : t('ai.planned')} · {t(`ai.models.${n.id}.status`)}
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold text-emerald-300">
+                    <BadgeCheck size={13} aria-hidden />{t('ai.live')} · {t(`ai.models.${n.id}.status`)}
                   </span>
                 </div>
                 <h3 className="mt-2 font-display text-2xl font-extrabold text-white">{n.id === 'local' || n.id === 'custom' ? t(`ai.models.${n.id}.name`) : n.name}</h3>
