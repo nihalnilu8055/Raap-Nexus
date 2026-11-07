@@ -26,6 +26,7 @@
     "l2": "Finance Platform.",
     "bring": "Bring",
     "pre": "clarity to your",
+    "pre2": "control to your",
     "w1": "finance",
     "w2": "business",
     "sub": "Smarter financial insights. Confident business decisions.",
@@ -162,7 +163,7 @@
     "benefits": [
       {
         "t": "Ask in natural language",
-        "s": "Live via MCP"
+        "s": "Live"
       },
       {
         "t": "Flexible model connectivity",
@@ -216,15 +217,15 @@
         "status": "Connected via MCP"
       },
       "openai": {
-        "blurb": "Hosted model option.",
+        "blurb": "Cloud AI provider.",
         "status": "Coming soon"
       },
       "gemini": {
-        "blurb": "Hosted model option.",
+        "blurb": "Cloud AI provider.",
         "status": "Coming soon"
       },
       "mistral": {
-        "blurb": "Hosted model option.",
+        "blurb": "Cloud AI provider.",
         "status": "Coming soon"
       },
       "local": {

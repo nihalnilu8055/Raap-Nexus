@@ -21,9 +21,9 @@ export interface AiNode {
 
 export const AI_NODES: AiNode[] = [
   { id: 'claude', name: 'Anthropic Claude', short: 'Claude', status: 'verified', statusLabel: 'Connected via MCP', blurb: 'Ask your financial data in natural language.', env: 'cloud', Icon: Bot, color: '#D97757', logo: '/assets/providers/claude.svg' },
-  { id: 'openai', name: 'OpenAI', short: 'OpenAI', status: 'concept', statusLabel: 'Coming soon', blurb: 'Hosted model option.', env: 'cloud', Icon: Brain, color: '#10A37F', logo: '/assets/providers/openai.svg' },
-  { id: 'gemini', name: 'Google Gemini', short: 'Gemini', status: 'concept', statusLabel: 'Coming soon', blurb: 'Hosted model option.', env: 'cloud', Icon: Gem, color: '#4285F4', logo: '/assets/providers/gemini.svg' },
-  { id: 'mistral', name: 'Mistral', short: 'Mistral', status: 'concept', statusLabel: 'Coming soon', blurb: 'Hosted model option.', env: 'cloud', Icon: Wind, color: '#FA520F', logo: '/assets/providers/mistral.svg' },
+  { id: 'openai', name: 'OpenAI', short: 'OpenAI', status: 'concept', statusLabel: 'Coming soon', blurb: 'Cloud AI provider.', env: 'cloud', Icon: Brain, color: '#10A37F', logo: '/assets/providers/openai.svg' },
+  { id: 'gemini', name: 'Google Gemini', short: 'Gemini', status: 'concept', statusLabel: 'Coming soon', blurb: 'Cloud AI provider.', env: 'cloud', Icon: Gem, color: '#4285F4', logo: '/assets/providers/gemini.svg' },
+  { id: 'mistral', name: 'Mistral', short: 'Mistral', status: 'concept', statusLabel: 'Coming soon', blurb: 'Cloud AI provider.', env: 'cloud', Icon: Wind, color: '#FA520F', logo: '/assets/providers/mistral.svg' },
   { id: 'local', name: 'Ollama (local models)', short: 'Ollama', status: 'concept', statusLabel: 'Coming soon', blurb: 'Local models on your own hardware.', env: 'local', Icon: HardDrive, color: '#94A3B8', logo: '/assets/providers/ollama.svg' },
   { id: 'custom', name: 'Custom integration', short: 'Custom', status: 'concept', statusLabel: 'Coming soon', blurb: 'Bring your own model.', env: 'custom', Icon: Plug, color: '#818cf8' },
 ]

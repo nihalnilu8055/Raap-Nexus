@@ -60,15 +60,10 @@ export default function AiFinance() {
           <Reveal delay={0.1}><p className="mt-4 text-lg text-slate-200">{t('ai.sub')}</p></Reveal>
           <Reveal delay={0.18}><p className="mt-3 max-w-md text-slate-400">{t('ai.lead')}</p></Reveal>
           <ul className="mt-6 space-y-3">
-            {[
-              { Icon: MessageSquareText, live: true },
-              { Icon: Shuffle, live: false },
-              { Icon: Server, live: false },
-            ].map(({ Icon, live }, i) => (
+            {[MessageSquareText, Shuffle, Server].map((Icon, i) => (
               <Reveal as="li" variant="left" delay={0.1 * i} key={i} className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/[0.06] text-violet-200 ring-1 ring-white/10"><Icon size={18} aria-hidden /></span>
                 <span className="font-display font-bold text-white">{t(`ai.benefits.${i}.t`)}</span>
-                <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${live ? 'bg-emerald-400/15 text-emerald-300' : 'bg-indigo-400/15 text-indigo-200'}`}>{t(`ai.benefits.${i}.s`)}</span>
               </Reveal>
             ))}
           </ul>

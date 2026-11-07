@@ -26,6 +26,7 @@
     "l2": "Finanzplattform.",
     "bring": "Bringen Sie",
     "pre": "Klarheit in",
+    "pre2": "Kontrolle in",
     "w1": "Ihre Finanzen",
     "w2": "Ihr Geschäft",
     "sub": "Klarere Finanzeinblicke. Sicherere Geschäftsentscheidungen.",
@@ -162,7 +163,7 @@
     "benefits": [
       {
         "t": "Fragen in natürlicher Sprache",
-        "s": "Live über MCP"
+        "s": "Live"
       },
       {
         "t": "Flexible Modellanbindung",
@@ -216,15 +217,15 @@
         "status": "Über MCP verbunden"
       },
       "openai": {
-        "blurb": "Option für ein gehostetes Modell.",
+        "blurb": "Cloud-KI-Anbieter.",
         "status": "Demnächst"
       },
       "gemini": {
-        "blurb": "Option für ein gehostetes Modell.",
+        "blurb": "Cloud-KI-Anbieter.",
         "status": "Demnächst"
       },
       "mistral": {
-        "blurb": "Option für ein gehostetes Modell.",
+        "blurb": "Cloud-KI-Anbieter.",
         "status": "Demnächst"
       },
       "local": {

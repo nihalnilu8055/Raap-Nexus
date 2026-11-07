@@ -26,6 +26,7 @@
     "l2": "financière ultime.",
     "bring": "Apportez",
     "pre": "de la clarté à",
+    "pre2": "du contrôle à",
     "w1": "vos finances",
     "w2": "votre entreprise",
     "sub": "Des analyses financières plus fines. Des décisions plus sûres.",
@@ -162,7 +163,7 @@
     "benefits": [
       {
         "t": "Posez vos questions en langage naturel",
-        "s": "Actif via MCP"
+        "s": "Actif"
       },
       {
         "t": "Connexion flexible aux modèles",
@@ -216,15 +217,15 @@
         "status": "Connecté via MCP"
       },
       "openai": {
-        "blurb": "Option de modèle hébergé.",
+        "blurb": "Fournisseur d’IA cloud.",
         "status": "Bientôt disponible"
       },
       "gemini": {
-        "blurb": "Option de modèle hébergé.",
+        "blurb": "Fournisseur d’IA cloud.",
         "status": "Bientôt disponible"
       },
       "mistral": {
-        "blurb": "Option de modèle hébergé.",
+        "blurb": "Fournisseur d’IA cloud.",
         "status": "Bientôt disponible"
       },
       "local": {
