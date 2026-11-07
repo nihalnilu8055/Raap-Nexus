@@ -1,0 +1,56 @@
+# Apache / cPanel configuration for RaapNexus
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Note: HTTPS redirection is disabled until SSL certificate is confirmed active.
+  # Once SSL is active in cPanel, uncomment the 2 lines below:
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # 1. Redirect retired Hindi route (/hi) to English (/en/)
+  RewriteRule ^hi(/.*)?$ /en/ [R=301,L]
+
+  # 2. Serve existing physical files directly (CSS, JS, images, sitemap, robots)
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # 3. Serve existing physical pre-rendered directories directly (/en/, /ar/, /de/, /es/, /fr/)
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 4. SPA Fallback: Route any remaining client-side routes to index.html
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+  # Long-term cache for versioned JS/CSS/Fonts (1 year immutable)
+  <FilesMatch "\.(js|css|woff2)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+
+  # Cache images and icons (1 week)
+  <FilesMatch "\.(webp|png|svg|jpg|jpeg|ico)$">
+    Header set Cache-Control "max-age=604800, public"
+  </FilesMatch>
+
+  # HTML pages and manifests: revalidate to ensure immediate updates
+  <FilesMatch "\.(html|webmanifest|xml|txt)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# MIME Types
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType application/manifest+json .webmanifest
+  AddType font/woff2 .woff2
+</IfModule>
