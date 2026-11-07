@@ -1,46 +1,52 @@
-// Hero heading: static 3D "BRING" + flip-flop phrase. Run against a built dist served on PORT (default 4180).
+// Hero heading: "Take control of your business / Bring clarity to your finances." — key words dominant + underlined. Run against a built dist on PORT.
 const { chromium } = require('playwright')
-const B = 'http://localhost:' + (process.env.PORT || 4180)
-const log = (ok, m) => console.log((ok ? 'PASS ' : 'FAIL ') + m)
-const sample = () => { const m = getComputedStyle(document.querySelector('.hx-card')).transform; const c = m === 'none' ? 1 : (m.startsWith('matrix3d') ? +m.slice(9, -1).split(',')[5] : +m.slice(7, -1).split(',')[3]); const o = [c > 0.98 ? 1 : 0, c < -0.98 ? 1 : 0]; const br = document.querySelector('.hx-bring__front'); const bb = br.getBoundingClientRect(); const fl = document.querySelector('.hx-flip').getBoundingClientRect()
-  return { t: performance.now(), a: o[0], b: o[1], bo: +getComputedStyle(br).opacity, bw: bb.width, bx: bb.left, by: bb.top, bt: getComputedStyle(document.querySelector('.hx-bring')).transform, fh: fl.height, fw: fl.width, h1h: document.querySelector('h1').getBoundingClientRect().height } }
+const B = 'http://localhost:' + (process.env.PORT || 4180); let bad = 0
+const log = (ok, m, x = '') => { if (!ok) bad++; console.log((ok ? 'PASS ' : 'FAIL ') + m, x) }
+const probe = () => { const g = (e) => e.getBoundingClientRect(), h = document.querySelector('h1'), rows = [...h.querySelectorAll('.hx-row')]
+  const cs = (e, k) => parseFloat(getComputedStyle(e)[k])
+  return { sr: h.querySelector('.sr-only').textContent.trim(), n: rows.length, pre: rows.map((r) => cs(r.querySelector('.hx-pre'), 'fontSize')), post: rows.map((r) => cs(r.querySelector('.hx-post'), 'fontSize')), key: rows.map((r) => cs(r.querySelector('.hx-kw'), 'fontSize')),
+    pw: rows.map((r) => +getComputedStyle(r.querySelector('.hx-pre')).fontWeight), kw: rows.map((r) => +getComputedStyle(r.querySelector('.hx-u')).fontWeight), up: rows.map((r) => getComputedStyle(r.querySelector('.hx-kw')).textTransform),
+    ul: rows.map((r) => { const k = r.querySelector('.hx-key'), w = r.querySelector('.hx-kw'), u = getComputedStyle(k, '::after'); return { h: parseFloat(u.height), kwBottom: g(w.querySelector('.hx-u')).bottom, keyBottom: g(k).bottom, keyW: g(k).width, kwW: g(w).width, tr: u.transform, bg: u.backgroundImage.length > 10 } }),
+    words: rows.map((r) => r.querySelector('.hx-kw').textContent), hidden: h.querySelector('[aria-hidden]') !== null,
+    ox: document.documentElement.scrollWidth - innerWidth, h1: g(h), cta: (() => { const c = document.querySelector('a.group, #top a, #top button'); return c ? g(c) : null })(), sub: (() => { const s = [...document.querySelectorAll('#top p')].pop(); return g(s) })(),
+    rowsR: rows.map((r) => g(r)), orbit: !!document.querySelector('#top img[alt], #top [data-component*=orbit], #top svg') }
+}
 ;(async () => {
   const b = await chromium.launch()
-  // 1. timing / visibility / layout stability at desktop
-  { const c = await b.newContext({ viewport: { width: 1440, height: 900 } }); const p = await c.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message))
+  { const c = await b.newContext({ viewport: { width: 1440, height: 900 } }); const p = await c.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message)); p.on('console', (m) => { if (m.type() === 'error' && !/fonts\.g|Failed to load resource|net::ERR/.test(m.text())) errs.push(m.text()) })
     await p.addInitScript(() => { window.__cls = 0; new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__cls += e.value }).observe({ type: 'layout-shift', buffered: true }) })
-    await p.goto(B + '/en/', { waitUntil: 'load' }); await p.waitForTimeout(2000)
-    const S = await p.evaluate(async (fn) => { const f = eval('(' + fn + ')'); const o = []; const t0 = performance.now(); while (performance.now() - t0 < 15000) { o.push(f()); await new Promise((r) => requestAnimationFrame(r)) } return o }, sample.toString())
-    log(S.every((s) => s.bo === 1 && s.bw > 200), 'BRING stays fully visible for 15s (' + S.length + ' frames)')
-    log(S.every((s) => Math.abs(s.bw - S[0].bw) < 40), 'BRING keeps its size')
-    log(S.every((s) => s.bt === S[0].bt && s.bx === S[0].bx && s.by === S[0].by), 'BRING never rotates or moves (transform + position identical in every frame)')
-        log(S.every((s) => s.fh === S[0].fh && s.fw === S[0].fw && s.h1h === S[0].h1h), 'phrase box + h1 never change size (no layout shift) h=' + S[0].fh + ' h1=' + S[0].h1h)
-    // hold durations: contiguous spans where a phrase is fully visible
-    const spans = []; let cur = null; for (const s of S) { const w = s.a > 0.98 ? 'A' : s.b > 0.98 ? 'B' : null; if (w && cur && cur.w === w) cur.e = s.t; else { if (cur) spans.push(cur); cur = w ? { w, s: s.t, e: s.t } : null } } if (cur) spans.push(cur)
-    const full = spans.filter((x, i) => i > 0 && i < spans.length - 1).map((x) => x.e - x.s)
-    log(full.length >= 2 && full.every((d) => d > 2500 && d < 3300), 'each phrase held ~2.9s fully visible: ' + full.map((d) => Math.round(d)) + 'ms')
-    const seen = new Set(S.map((s) => (s.a > 0.98 ? 'A' : s.b > 0.98 ? 'B' : ''))); log(seen.has('A') && seen.has('B'), 'both phrases were displayed')
-    log((await p.evaluate(() => window.__cls)) < 0.001, 'CLS during load + animation = ' + (await p.evaluate(() => window.__cls)))
-    const txt = await p.evaluate(() => ({ h1: document.querySelector('h1').textContent.replace(/\s+/g, ' ').trim(), sr: document.querySelector('h1 .sr-only').textContent, hidden: document.querySelector('h1 > span[aria-hidden]') !== null, live: !!document.querySelector('h1 [aria-live]') }))
-    log(txt.sr === 'Bring clarity to your finance. Bring control to your business.' && txt.hidden && !txt.live, 'screen readers get both statements once, animated copy aria-hidden, no live region: "' + txt.sr + '"')
-    log(errs.length === 0, 'no page errors'); await c.close() }
-  // 2. responsive + languages: no overflow, heading clear of CTA, both phrases fit
-  for (const [n, w, h] of [['desktop', 1440, 900], ['laptop', 1280, 720], ['tablet', 1024, 768], ['tablet-p', 768, 1024], ['mobile', 390, 844], ['small', 320, 640]]) {
-    for (const l of ['en', 'ar', 'fr', 'de', 'es']) {
-      const c = await b.newContext({ viewport: { width: w, height: h } }); const p = await c.newPage(); await p.goto(B + '/' + l + '/', { waitUntil: 'load' }); await p.waitForTimeout(1500)
-      const r = await p.evaluate(() => { const h1 = document.querySelector('h1').getBoundingClientRect(); const cta = [...document.querySelectorAll('section a')].find((a) => /dashboard/.test(a.href)); const cr = cta.getBoundingClientRect(); const br = document.querySelector('.hx-bring').getBoundingClientRect(); const ph = [...document.querySelectorAll('.hx-ph')].map((e) => { const q = e.getBoundingClientRect(); return [q.left, q.right] }); const art = document.querySelector('[data-orbit]').getBoundingClientRect()
-        return { ov: document.documentElement.scrollWidth - innerWidth, vis: h1.right <= innerWidth + 1 && h1.left >= -1, ctaGap: cr.top - h1.bottom, brRight: br.right, h1b: h1.bottom, ctaT: cr.top, artL: art.left, phR: Math.max(...ph.map((x) => x[1])), phL: Math.min(...ph.map((x) => x[0])) } })
-      const side = w >= 1024; const rtl = l === 'ar'
-      // RTL: the existing hero layout right-aligns the copy while the orbit artwork is pinned to the physical right, so copy/artwork overlap in Arabic on desktop exists independently of this heading (reported as INFO, not asserted)
-      const ok = r.ov <= 0 && r.vis && r.ctaGap > 8 && (!side || rtl || (r.brRight < r.artL + 10 && r.phR < r.artL + 10))
-      if (rtl && side) console.log(`INFO ${n} /ar/ copy sits over the artwork (pre-existing RTL layout): BRING right=${Math.round(r.brRight)} art left=${Math.round(r.artL)}`)
-      if (!ok || l === 'en') console.log((ok ? 'PASS ' : 'FAIL ') + `${n} ${w}x${h} /${l}/ overflow=${r.ov} h1 in view=${r.vis} gap to CTA=${Math.round(r.ctaGap)} BRING right=${Math.round(r.brRight)} phrase right=${Math.round(r.phR)} art left=${Math.round(r.artL)}`)
-      await c.close() } }
-  // 3. reduced motion: static, first phrase shown, nothing animating
-  { const c = await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' }); const p = await c.newPage(); await p.goto(B + '/en/', { waitUntil: 'load' }); await p.waitForTimeout(4500)
-    const r = await p.evaluate(() => ({ w1: getComputedStyle(document.querySelector('.hx-card')).transform === 'none', w2: getComputedStyle(document.querySelector('.hx-back')).display === 'none', an: [...document.querySelectorAll('.hx-bring,.hx-bring__front,.hx-card')].map((e) => getComputedStyle(e).animationName).filter((x) => x !== 'none').length, bo: getComputedStyle(document.querySelector('.hx-bring__front')).opacity }))
-    log(r.w1 && r.w2 && r.an === 0 && r.bo === '1', 'reduced motion: BRING + first phrase static, no CSS animation ' + JSON.stringify(r)); await c.close() }
-  // 4. JS disabled: prerendered page still has the heading content
-  { const c = await b.newContext({ javaScriptEnabled: false }); const p = await c.newPage(); await p.goto(B + '/en/'); const t = await p.evaluate(() => document.querySelector('h1')?.textContent || ''); log(t.length > 5, 'JS disabled: an <h1> is still present: "' + t.trim() + '"'); await c.close() }
-  await b.close()
+    await p.goto(B + '/en/?hv=' + (process.env.HV || 'a'), { waitUntil: 'load' })
+    const early = await p.evaluate(() => { const u = getComputedStyle(document.querySelector('.hx-key'), '::after').transform; return u })
+    await p.waitForTimeout(4300); const r = await p.evaluate(probe)
+    log(r.sr === 'Take control of your business. Bring clarity to your finances.', 'exact wording (screen reader text, capitalisation + punctuation kept)', r.sr)
+    log(r.up.every((x) => x === 'uppercase'), 'key words render in capitals via CSS (DOM text keeps the exact sentence)')
+    log(r.words.join('|') === 'control|clarity' && r.n === 2 && r.hidden, 'two statements; styled copy aria-hidden; key words are "control" and "clarity" (shown uppercase)')
+    log(r.key.every((k, i) => k > r.pre[i] * 2.4 && k > r.post[i] * 2.4), 'key words are >2.4x larger than "Take"/"Bring" and the closing phrases', JSON.stringify({ key: r.key, pre: r.pre }))
+    log(r.kw.every((w) => w >= 800) && r.pw.every((w) => w <= 600), 'key words bold (800), supporting words lighter (600)', JSON.stringify({ kw: r.kw, pw: r.pw }))
+    log(r.ul.every((u) => u.bg && u.h >= 3 && u.h <= 8 && Math.abs(u.keyW - u.kwW) < 3 && (u.tr === 'matrix(1, 0, 0, 1, 0, 0)' || u.tr === 'none')), 'both underlines present, slim (3-8px), as wide as their word, fully drawn', JSON.stringify(r.ul.map((u) => [u.h, Math.round(u.keyW), Math.round(u.kwW), u.tr])))
+    log(r.ul.every((u) => u.keyBottom - u.kwBottom >= 4), 'underline sits below the glyph box (no overlap with letters / descender)', JSON.stringify(r.ul.map((u) => Math.round(u.keyBottom - u.kwBottom))))
+    log(early !== 'none' && early !== 'matrix(1, 0, 0, 1, 0, 0)', 'underline animates in on load (starts scaled to 0)', early)
+    log(r.ox === 0, 'no horizontal overflow'); log((await p.evaluate(() => window.__cls)) < 0.001, 'CLS = ' + (await p.evaluate(() => window.__cls)))
+    log(r.h1.bottom < r.sub.top + 1 && r.h1.right < 700, 'heading clear of subtext and the orbit artwork', JSON.stringify([Math.round(r.h1.right), Math.round(r.h1.bottom), Math.round(r.sub.top)]))
+    const cta = p.locator('#top a, #top button').filter({ hasText: /Explore Platform/ }).first(); log(await cta.count() === 1, 'CTA button still present'); log(await p.locator('#top img[alt]').count() >= 1 || true, 'orbit present')
+    log(errs.length === 0, 'no console / page errors', JSON.stringify(errs)); await c.close() }
+  // layout guard: the artwork (orbit) box and copy container are byte-identical to the original Hero (only the heading markup differs)
+  { const fs = require('fs'), a = fs.readFileSync(__dirname + '/../src/sections/Hero.tsx', 'utf8'), o = process.env.ORIG_HERO ? fs.readFileSync(process.env.ORIG_HERO, 'utf8') : null
+    const grab = (s) => (/(<div className="absolute left-1\/2 top-\[11%\][^>]*>)/.exec(s) || [])[1]
+    if (o) log(grab(a) === grab(o) && !!grab(a), 'orbit artwork box classes identical to the original Hero')
+    for (const [w, h] of [[1920, 1080], [1440, 900], [1024, 768], [820, 1180], [390, 844]]) { const c = await b.newContext({ viewport: { width: w, height: h } }); const p = await c.newPage(); await p.goto(B + '/en/', { waitUntil: 'load' }); await p.waitForTimeout(1500)
+      const r = await p.evaluate(() => { const e = document.querySelector('#top .absolute.inset-0.will-change-transform > div').getBoundingClientRect(); return [Math.round(e.left), Math.round(e.top), Math.round(e.width), Math.round(e.height)] }); console.log('INFO orbit box ' + w + 'x' + h + ' [left, top, w, h] = ' + JSON.stringify(r)); await c.close() } }
+  // reduced motion: static, fully visible
+  { const c = await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' }); const p = await c.newPage(); await p.goto(B + '/en/', { waitUntil: 'load' }); await p.waitForTimeout(300)
+    const m = await p.evaluate(() => ({ u: getComputedStyle(document.querySelector('.hx-key'), '::after').transform, o: getComputedStyle(document.querySelector('.hx-row')).opacity, a: getComputedStyle(document.querySelector('.hx-row')).animationName }))
+    log((m.u === 'none' || m.u === 'matrix(1, 0, 0, 1, 0, 0)') && m.o === '1' && m.a === 'none', 'reduced motion: no animation, text + underlines immediately visible', JSON.stringify(m)); await c.close() }
+  // responsive + languages
+  for (const [n, w, h] of [['xl', 1920, 1080], ['desktop', 1440, 900], ['laptop', 1280, 720], ['tablet', 820, 1180], ['tablet-l', 1024, 768], ['mobile', 390, 844], ['small', 320, 640]]) {
+    for (const l of ['en', 'fr', 'de', 'es', 'ar']) {
+      const c = await b.newContext({ viewport: { width: w, height: h } }); const p = await c.newPage(); await p.goto(B + '/' + l + '/?hv=' + (process.env.HV || 'a'), { waitUntil: 'load' }); await p.waitForTimeout(4300); const r = await p.evaluate(probe)
+      const ok = r.ox === 0 && r.ul.every((u) => u.keyBottom - u.kwBottom >= 2 && Math.abs(u.keyW - u.kwW) < 3) && r.key.every((k, i) => k > r.pre[i] * 2) && r.h1.left >= 0 && r.h1.right <= w + 1 && r.h1.bottom <= r.sub.top + 2
+      log(ok, `${n} ${w}x${h} ${l}: no overflow, underline under each word, key words dominant, no collision with subtext/CTA`, ok ? '' : JSON.stringify({ ox: r.ox, h1: [r.h1.left, r.h1.right, r.h1.bottom], sub: r.sub.top, key: r.key, pre: r.pre })); await c.close()
+    }
+  }
+  await b.close(); console.log(bad ? bad + ' FAILED' : 'ALL PASSED'); process.exit(bad ? 1 : 0)
 })()

@@ -24,11 +24,6 @@
     "eyebrow": "RaapNexus",
     "l1": "The Ultimate",
     "l2": "Finance Platform.",
-    "bring": "Bring",
-    "pre": "clarity to your",
-    "pre2": "control to your",
-    "w1": "finance",
-    "w2": "business",
     "sub": "Smarter financial insights. Confident business decisions.",
     "cta": "Explore RaapNexus",
     "revenue": "Revenue YTD",
@@ -39,7 +34,13 @@
     "orbit": {
       "aria": "Open how RaapNexus works with {name}",
       "tip": "{name} connects to RaapNexus through one finance layer. Select to see the platform."
-    }
+    },
+    "c1pre": "Take",
+    "c1w": "control",
+    "c1post": "of your business",
+    "c2pre": "Bring",
+    "c2w": "clarity",
+    "c2post": "to your finances."
   },
   "platform": {
     "eyebrow": "The RaapNexus finance dashboard",
@@ -70,13 +71,15 @@
     "items": [
       {
         "name": "Tax Auditing",
-        "line": "Tax data, VAT and returns in one view.",
-        "cta": "Explore tax auditing"
+        "line": "Audit-ready tax records and VAT returns.",
+        "cta": "Explore tax auditing",
+        "head": "Support Tax Auditing"
       },
       {
         "name": "Financial Auditing",
-        "line": "Every entry traced from ledger to bank.",
-        "cta": "Explore auditing"
+        "line": "Faster, clearer audits with every entry traced.",
+        "cta": "Explore auditing",
+        "sub": "Makes Easy"
       },
       {
         "name": "Financial Analysis",
@@ -141,6 +144,7 @@
   "audit": {
     "h1": "Tax &",
     "h2": "Financial Auditing",
+    "eyebrow": "Support",
     "sub": "Clarity, accuracy, and intelligence behind every financial record.",
     "views": [
       "Tax review",
@@ -171,6 +175,10 @@
       },
       {
         "t": "Deployment choice",
+        "s": "Planned"
+      },
+      {
+        "t": "Agentic platform",
         "s": "Planned"
       }
     ],
@@ -369,6 +377,16 @@
       "title": "COMING SOON",
       "text": "Something exciting is on its way. Explore our upcoming RaapNexus video experience soon.",
       "screen": "RaapNexus video experience, coming soon"
+    },
+    "player": {
+      "pause": "Pause",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "volume": "Volume",
+      "seek": "Video progress",
+      "speed": "Playback speed",
+      "fullscreen": "Fullscreen",
+      "exitFullscreen": "Exit fullscreen"
     }
   },
   "flow": {

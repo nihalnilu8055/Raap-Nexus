@@ -10,11 +10,27 @@ import { EASE, gsap, scrollState, ScrollTrigger } from '../lib/motion'
 
 const DepthScene = lazy(() => import('../three/HeroDepthScene'))
 
+// Latin words are revealed letter by letter; connected scripts (Arabic, Devanagari) are revealed as whole words so letters never get separated
+const CONNECTED = /[\u0600-\u06FF\u0900-\u097F]/
+function KeyWord({ text }: { text: string }) {
+  const units = CONNECTED.test(text) ? [text] : [...text]
+  return <span className="hx-kw">{units.map((u, i) => <i key={i} className="hx-u" style={{ ['--i' as string]: i }}>{u}</i>)}</span>
+}
+
+// Entrance timeline (seconds): [lead-in word, key word, underline, closing words] for each statement
+const TIMELINE = [[0.15, 0.3, 1.05, 1.3], [1.7, 1.85, 2.6, 2.85]]
+
 export default function Hero() {
   const { t } = useI18n()
-  const bring = t('hero.bring'), PRE = t('hero.pre'), PRE2 = t('hero.pre2'), W1 = t('hero.w1'), W2 = t('hero.w2')
-  // the static word is the visual anchor: longer words in other languages scale down so it always fits the copy column
-  const bringK = Math.min(1, 5.4 / [...bring].length) * (/[\u0600-\u06FF\u0900-\u097F]/.test(bring) ? 0.8 : 1)
+  const lines = [
+    { pre: t('hero.c1pre'), w: t('hero.c1w'), post: t('hero.c1post') },
+    { pre: t('hero.c2pre'), w: t('hero.c2w'), post: t('hero.c2post') },
+  ]
+  // the two key words are the visual anchors: longer words in other languages scale down a little so they always fit the copy column
+  const keyK = Math.min(1, 9.5 / Math.max(...lines.map((l) => [...l.w].length)))
+  // PREVIEW ONLY: two typography variants for review (?hv=a | ?hv=b); the losing one is removed once a variant is chosen
+  const [hv, setHv] = useState<'a' | 'b'>('a')
+  useEffect(() => { const v = new URLSearchParams(window.location.search).get('hv'); if (v === 'a' || v === 'b') setHv(v) }, [])
   const wrap = useRef<HTMLDivElement>(null)
   const content = useRef<HTMLDivElement>(null)
   const canvasBox = useRef<HTMLDivElement>(null)
@@ -71,22 +87,17 @@ export default function Hero() {
 
         <div ref={content} className="pointer-events-none relative z-10 mx-auto flex h-full max-w-[1760px] flex-col justify-end px-6 pb-14 pt-28 sm:px-10 min-[1400px]:px-14 lg:justify-center lg:pb-0">
           <p className="mb-4 hidden text-xs font-bold uppercase tracking-[0.3em] text-sky-300 sm:block">{t('hero.eyebrow')}</p>
-          {/* both statements are exposed once to assistive tech; the animated copy is decorative (aria-hidden), so nothing is announced per frame */}
-          <h1 className="hx-stage pointer-events-auto w-fit max-w-full font-display text-white md:max-w-[640px]">
-            <span className="sr-only">{bring} {PRE} {W1}. {bring} {PRE2} {W2}.</span>
+          {/* the sentence is exposed once to assistive tech; the styled copy is decorative (aria-hidden) so nothing is read twice */}
+          <h1 className={`hx-h1 hx-v-${hv} pointer-events-auto w-fit max-w-full font-display text-white md:max-w-[640px]`} style={{ ['--k' as string]: keyK }}>
+            <span className="sr-only">{lines[0].pre} {lines[0].w} {lines[0].post}. {lines[1].pre} {lines[1].w} {lines[1].post}</span>
             <span aria-hidden className="block">
-              <span className="hx-bring" style={{ fontSize: `calc(clamp(3.6rem, 8.6vw, 8.2rem) * ${bringK})` }}>
-                <span className="hx-bring__back uppercase">{bring}</span>
-                <span className="hx-bring__front uppercase">{bring}</span>
-              </span>
-              <span className="hx-line mt-[.5rem] text-[clamp(1.35rem,2.9vw,2.9rem)] font-bold leading-[1.14] tracking-[-0.02em]">
-                <span className="hx-flip">
-                  <span className="hx-card">
-                    <span className="hx-ph hx-front"><span className="hx-pre">{PRE} </span><span className="hx-w">{W1}</span></span>
-                    <span className="hx-ph hx-back"><span className="hx-pre">{PRE2} </span><span className="hx-w">{W2}</span></span>
-                  </span>
+              {lines.map((l, i) => (
+                <span key={i} className="hx-row" style={{ ['--t0' as string]: `${TIMELINE[i][0]}s`, ['--t1' as string]: `${TIMELINE[i][1]}s`, ['--t2' as string]: `${TIMELINE[i][2]}s`, ['--t3' as string]: `${TIMELINE[i][3]}s` }}>
+                  <span className="hx-pre">{l.pre}</span>
+                  <span className="hx-key"><KeyWord text={l.w} /></span>
+                  <span className="hx-post">{l.post}</span>
                 </span>
-              </span>
+              ))}
             </span>
           </h1>
           <motion.p initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.7 }}

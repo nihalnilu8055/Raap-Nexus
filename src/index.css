@@ -239,6 +239,7 @@ h1,h2,h3 { font-family: 'Manrope', 'Inter', system-ui, sans-serif; }
 @keyframes svcdot { from { left: 0; opacity: 1; } to { left: 100%; opacity: 0; } }
 
 @keyframes scanY{0%{top:-30%}100%{top:100%}}
+@keyframes scanT{0%{transform:translateY(-100%)}100%{transform:translateY(300%)}}
 @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 @keyframes keyPulse{0%,70%,100%{opacity:.55}80%{opacity:1}}
 @keyframes ringPing{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.2);opacity:0}}
@@ -292,39 +293,44 @@ html[lang='ar'] h1, html[lang='ar'] h2 { line-height: 1.2; }
 .rn-sheen::before { content: ''; position: absolute; inset: -10% auto -10% 0; width: 34%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent); animation: rn-sheen 9s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .rn-float, .rn-sheen::before { animation: none; } .rn-sheen::before { display: none; } }
 
-/* ── Hero heading: permanent 3D "BRING" + flip-flop phrase (pure CSS, GPU transforms only; no JS timers) ───────────── */
-.hx-stage { perspective: 1100px; perspective-origin: 30% 50%; }
-/* BRING — satin, softly lit solid with a fine extrusion; slow idle tilt, one gentle light pass */
-.hx-bring { position: relative; display: inline-block; transform-style: preserve-3d; transform-origin: 50% 80%; will-change: transform;
-  animation: hxIn 1.2s cubic-bezier(.22,1,.36,1) both; }
-.hx-bring__back, .hx-bring__front { display: block; font-weight: 800; letter-spacing: -.03em; line-height: .88; white-space: nowrap; padding: .03em .02em .06em; }
-.hx-bring__back { color: #11275a; user-select: none;
-  text-shadow: 1px 1px 0 #1b3a80, 2px 2px 0 #19367a, 3px 3px 0 #163071, 4px 4px 0 #132a66, 5px 5px 0 #11255a, 6px 6px 0 #0e1f4d, 7px 7px 0 #0b1a42,
-    10px 18px 28px rgba(2,8,28,.5); }
-.hx-bring__front { position: absolute; inset: 0; color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text;
-  background-image: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.55) 50%, transparent 60%), linear-gradient(180deg, #ffffff 0%, #e8f1ff 45%, #b9d3fb 100%);
-  background-size: 260% 100%, 100% 100%; background-repeat: no-repeat; background-position: 130% 0, 0 0; animation: hxSheen 9s ease-in-out 1.6s infinite; }
-/* supporting phrase — one two-sided card that flips around its horizontal axis (rotateX). Front/back share one grid cell, so the box never changes size and BRING never moves */
-.hx-line { display: block; }
-.hx-flip { display: block; perspective: 900px; perspective-origin: 30% 50%; padding-block: .08em; }
-.hx-card { display: grid; transform-style: preserve-3d; will-change: transform; animation: hxCard 6.6s linear infinite; }
-.hx-ph { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.hx-back { transform: rotateX(180deg); }
-.hx-pre { color: #dbe8ff; }
-.hx-w { background-image: linear-gradient(90deg, #bae6fd, #3b82f6); -webkit-background-clip: text; background-clip: text; color: #38bdf8; -webkit-text-fill-color: transparent; }
-/* 6.6s cycle: front held 2.6s → 0.7s flip → back held 2.6s → 0.7s flip (a continuous 360°, so it always turns the same way) */
-@keyframes hxCard {
-  0%, 39.4%    { transform: rotateX(0); animation-timing-function: cubic-bezier(.65,0,.35,1); }
-  50%, 89.4%   { transform: rotateX(180deg); animation-timing-function: cubic-bezier(.65,0,.35,1); }
-  100%         { transform: rotateX(360deg); }
-}
-@keyframes hxIn { from { transform: perspective(900px) rotateX(34deg) translateY(22px) scale(.97); } to { transform: perspective(900px) rotateX(0) translateY(0) scale(1); } }
-@keyframes hxSheen { 0%, 14% { background-position: 130% 0, 0 0; } 52%, 100% { background-position: -40% 0, 0 0; } }
-html[dir='rtl'] .hx-bring__back { text-shadow: -1px 1px 0 #1b3a80, -2px 2px 0 #19367a, -3px 3px 0 #163071, -4px 4px 0 #132a66, -5px 5px 0 #11255a, -6px 6px 0 #0e1f4d, -7px 7px 0 #0b1a42, -10px 18px 28px rgba(2,8,28,.5); }
-@media (prefers-reduced-motion: reduce) {
-  .hx-bring, .hx-bring__front, .hx-card { animation: none !important; }
-  .hx-back { display: none; }
-}
+/* ── Hero heading: "control" and "clarity" are the dominant words (uppercase, 800, gradient, underlined); the rest is small and light.
+      One entrance sequence (≈3.5s, transform/opacity only), then everything is static. Two review variants: .hx-v-a (masked rise) and .hx-v-b (depth reveal). ── */
+.hx-h1 { --k: 1; font-size: clamp(3.3rem, 4.6vw + 2.1rem, 7.2rem); line-height: 1; }
+.hx-row { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: .22em; row-gap: 0; margin-bottom: .3em; }
+.hx-row:last-child { margin-bottom: 0; }
+.hx-pre, .hx-post { font-size: .3em; font-weight: 600; letter-spacing: -.015em; line-height: 1.25; color: #dbe8ff; animation: hxFade .8s cubic-bezier(.22,1,.36,1) var(--t0) both; }
+.hx-post { flex-basis: 100%; margin-top: .06em; animation-delay: var(--t3); }
+.hx-key { position: relative; display: inline-block; font-size: calc(.75em * var(--k)); }
+.hx-kw { display: block; text-transform: uppercase; padding-bottom: .2em; }
+.hx-u { display: inline-block; font-style: normal; font-weight: 800; letter-spacing: .005em; line-height: .95; padding-top: .02em;
+  background-image: linear-gradient(180deg, #ffffff 8%, #dbeafe 48%, #7cb7ff 100%); -webkit-background-clip: text; background-clip: text; color: #fff; -webkit-text-fill-color: transparent;
+  animation-delay: calc(var(--t1) + var(--i) * 55ms); animation-fill-mode: both; animation-timing-function: cubic-bezier(.22,1,.36,1); }
+/* underline: slim gradient rule below the descender line; it draws itself (scaleX) once the word has landed */
+.hx-key::after { content: ''; position: absolute; inset-inline: .02em; bottom: 0; height: max(3px, .05em); border-radius: 99px; transform-origin: left center;
+  background: linear-gradient(90deg, #38bdf8, #3b82f6 62%, rgba(59,130,246,0)); box-shadow: 0 0 .5em rgba(56,189,248,.4);
+  animation: hxLine .9s cubic-bezier(.65,0,.35,1) var(--t2) both; }
+html[dir='rtl'] .hx-key::after { transform-origin: right center; background: linear-gradient(270deg, #38bdf8, #3b82f6 62%, rgba(59,130,246,0)); }
+/* Variant A — masked rise: letters rise out of a clipping line, supporting words slide in from the side */
+.hx-v-a .hx-kw { overflow: hidden; }
+.hx-v-a .hx-u { animation-name: hxMask; animation-duration: .85s; }
+.hx-v-a .hx-pre, .hx-v-a .hx-post { animation-name: hxSlide; }
+/* Variant B — depth reveal: letters fold up from the baseline in light perspective, underline carries a glowing head */
+.hx-v-b .hx-key { perspective: 520px; perspective-origin: 30% 100%; }
+.hx-v-b .hx-u { transform-origin: 50% 100%; animation-name: hxDepth; animation-duration: 1s; }
+.hx-v-b .hx-key::after { height: max(3px, .045em); background: linear-gradient(90deg, rgba(56,189,248,.15), #38bdf8 55%, #e0f2fe); box-shadow: 0 0 .7em rgba(56,189,248,.65); }
+html[dir='rtl'] .hx-v-b .hx-key::after { background: linear-gradient(270deg, rgba(56,189,248,.15), #38bdf8 55%, #e0f2fe); }
+html[dir='rtl'] .hx-v-a .hx-pre, html[dir='rtl'] .hx-v-a .hx-post { animation-name: hxSlideR; }
+@keyframes hxFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes hxSlide { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+@keyframes hxSlideR { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+@keyframes hxMask { from { transform: translateY(135%); } to { transform: none; } }
+@keyframes hxDepth { from { opacity: 0; transform: rotateX(-82deg) translateY(28%); } 60% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes hxLine { from { transform: scaleX(0); opacity: 0; } 8% { opacity: 1; } to { transform: scaleX(1); opacity: 1; } }
+html[dir='rtl'] .hx-h1 { font-size: clamp(2.6rem, 3.2vw + 1.7rem, 5rem); }
+html[dir='rtl'] .hx-u { line-height: 1.3; padding-bottom: .02em; }
+html[dir='rtl'] .hx-kw { padding-bottom: .1em; }
+@media (prefers-reduced-motion: reduce) { .hx-pre, .hx-post, .hx-u, .hx-key::after { animation: none !important; } }
+@media (max-width: 639px) { .hx-pre, .hx-post { font-size: .34em; } .hx-row { margin-bottom: .22em; } }
 
 /* ───────── Video section: premium 3D "coming soon" (all selectors prefixed cs-) ───────── */
 .cs-eyebrow { display: inline-flex; align-items: center; gap: .6rem; padding: .45rem 1rem; border-radius: 999px; border: 1px solid rgba(125,185,255,.28); background: rgba(56,120,255,.08);
@@ -389,3 +395,29 @@ html[dir='rtl'] .hx-bring__back { text-shadow: -1px 1px 0 #1b3a80, -2px 2px 0 #1
 .cs-foot i { flex: 1; height: 7px; border-radius: 5px; background: rgba(190,220,255,.14); }
 .cs-foot i:nth-child(2) { flex: .6; } .cs-foot i:nth-child(3) { flex: .35; }
 @media (max-width: 639px) { .cs-foot { bottom: 9%; } .cs-foot i { height: 5px; } }
+
+/* local video player: progress / volume sliders (played = sky→blue, buffered = faint) */
+.rn-range { --p: 0%; --b: 0%; --h: 4px; }
+.rn-range::-webkit-slider-runnable-track { height: var(--h); border-radius: 99px; transition: height .15s; background: linear-gradient(90deg, #38bdf8 0, #3b82f6 var(--p), rgba(255,255,255,.38) var(--p), rgba(255,255,255,.38) var(--b), rgba(255,255,255,.2) var(--b)); }
+.rn-range::-moz-range-track { height: var(--h); border-radius: 99px; background: linear-gradient(90deg, #38bdf8 0, #3b82f6 var(--p), rgba(255,255,255,.38) var(--p), rgba(255,255,255,.38) var(--b), rgba(255,255,255,.2) var(--b)); }
+.rn-range::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; margin-top: calc((var(--h) - 12px) / 2); border-radius: 50%; background: #fff; box-shadow: 0 1px 5px rgba(0,0,0,.6); transition: transform .15s; }
+.rn-range::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 1px 5px rgba(0,0,0,.6); }
+.rn-range:focus-visible::-webkit-slider-thumb { outline: 2px solid #7dd3fc; outline-offset: 2px; }
+.rn-range:focus-visible::-moz-range-thumb { outline: 2px solid #7dd3fc; outline-offset: 2px; }
+/* seek bar: slim until the pointer or focus is on it; thumb appears then (always visible on touch) */
+.rn-seek { --h: 3px; }
+.rn-seek::-webkit-slider-thumb { transform: scale(0); }
+.rn-seek:hover, .rn-seek:focus-visible, .vp-bar:hover .rn-seek { --h: 5px; }
+.rn-seek:hover::-webkit-slider-thumb, .rn-seek:focus-visible::-webkit-slider-thumb, .rn-seek:active::-webkit-slider-thumb { transform: scale(1); }
+.rn-seek::-moz-range-thumb { opacity: 0; }
+.rn-seek:hover::-moz-range-thumb, .rn-seek:focus-visible::-moz-range-thumb, .rn-seek:active::-moz-range-thumb { opacity: 1; }
+@media (hover: none) { .rn-seek::-webkit-slider-thumb { transform: scale(1); } .rn-seek::-moz-range-thumb { opacity: 1; } .rn-seek { --h: 4px; } }
+/* volume slider: revealed on hover (fine pointers), keyboard focus, or after a tap (touch) */
+.vol-pop { opacity: 0; visibility: hidden; transform: translate(6px, -50%); transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
+.vol-open .vol-pop, .vol-grp:has(:focus-visible) .vol-pop { opacity: 1; visibility: visible; transform: translate(0, -50%); transition-delay: 0s; }
+@media (hover: hover) { .vol-grp:hover .vol-pop { opacity: 1; visibility: visible; transform: translate(0, -50%); transition-delay: 0s; } }
+[dir=rtl] .vol-pop { transform: translate(-6px, -50%); }
+[dir=rtl] .vol-open .vol-pop, [dir=rtl] .vol-grp:has(:focus-visible) .vol-pop { transform: translate(0, -50%); }
+@media (hover: hover) { [dir=rtl] .vol-grp:hover .vol-pop { transform: translate(0, -50%); } }
+@media (prefers-reduced-motion: reduce) { .vol-pop, .rn-range::-webkit-slider-runnable-track, .rn-range::-webkit-slider-thumb { transition: none; } }
+@media (max-width: 359px) { .vp-bar:has(.vol-open) .vp-time { opacity: 0; } }

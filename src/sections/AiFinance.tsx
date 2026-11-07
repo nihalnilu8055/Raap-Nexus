@@ -1,6 +1,6 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, memo, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { BadgeCheck, ChevronRight, FlaskConical, MessageSquareText, Server, Shuffle } from 'lucide-react'
+import { BadgeCheck, Bot, ChevronRight, FlaskConical, MessageSquareText, Server, Shuffle } from 'lucide-react'
 import Fallback3D from '../components/ui/Fallback3D'
 import { useNearView } from '../components/ui/useNearView'
 import { Boundary, isMobile, webglSupported } from '../lib/webgl'
@@ -13,15 +13,44 @@ import { EASE } from '../lib/motion'
 
 const SHOTS = ['balance', 'pnl', 'trial', 'expenses', 'dashboard', 'anomalies']
 const FLOW_C = ['#0ea5e9', '#7c6bff', '#10b981']
+const BENEFIT_ICONS = [MessageSquareText, Shuffle, Server, Bot]
+
+/** The 3D engine + its data → processing → insights pill. It owns the `phase` state and is memoised, so the 4-second provider rotation and
+ *  use-case clicks in the parent never re-render it (and the engine's phase changes never re-render the whole section). */
+const EngineStage = memo(function EngineStage({ progressRef, reduced, mobile, webgl }: { progressRef: React.MutableRefObject<number>; reduced: boolean; mobile: boolean; webgl: boolean }) {
+  const { t, tr } = useI18n()
+  const { ref: stageRef, near, inView } = useNearView<HTMLDivElement>()
+  const [phase, setPhase] = useState(0)
+  return (
+    <div ref={stageRef} className="relative mx-auto w-full max-w-[680px]">
+      <div role="img" data-cursor="visual" aria-label={t('ai.engineAria')} className="relative h-[300px] w-full min-[400px]:h-[330px] sm:h-[430px] lg:h-[480px] [@media(orientation:landscape)_and_(max-height:520px)]:h-[260px]">
+        {webgl && near ? (
+          <Boundary fallback={<Fallback3D className="h-full w-full" />}>
+            <Suspense fallback={<Fallback3D className="h-full w-full opacity-40" />}>
+              <Engine progressRef={progressRef} onPhase={setPhase} reduced={reduced} mobile={mobile} active={inView} />
+            </Suspense>
+          </Boundary>
+        ) : <Fallback3D className="h-full w-full opacity-70" />}
+      </div>
+      <ol className="mx-auto -mt-2 flex w-fit max-w-full items-center gap-1 rounded-full border border-white/10 bg-white/[0.05] p-1.5 backdrop-blur-xl" aria-label={t('ai.engineAria')}>
+        {tr<string[]>('ai.flow').map((f, i) => (
+          <li key={i} className="flex items-center gap-1">
+            <span className={`rounded-full px-2.5 py-1.5 font-display text-[11px] font-bold transition-all duration-500 min-[400px]:px-3 sm:px-4 sm:text-sm ${phase === i ? 'text-white shadow-lg' : 'text-slate-400'}`}
+              style={phase === i ? { background: FLOW_C[i], boxShadow: `0 6px 24px -8px ${FLOW_C[i]}` } : undefined}>{f}</span>
+            {i < 2 && <ChevronRight size={14} className="shrink-0 text-slate-500 rtl:rotate-180" aria-hidden />}
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+})
 /** AI section: a 3D Intelligence Engine (data → processing → insights) with provider selection as a secondary area. */
 export default function AiFinance() {
-  const { t, tr } = useI18n()
+  const { t } = useI18n()
   const reduced = !!useReducedMotion()
-  const { ref: stageRef, near, inView } = useNearView<HTMLDivElement>()
   const progressRef = useRef(0.5)
   const [webgl] = useState(webglSupported)
   const [mobile] = useState(isMobile)
-  const [phase, setPhase] = useState(0)
   const [sel, setSel] = useState(0)
   const [uc, setUc] = useState(0)
   const touched = useRef(false)
@@ -54,13 +83,13 @@ export default function AiFinance() {
         {/* LEFT: message */}
         <div>
           <motion.h2 id="ai-h" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE }}
-            className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+            className="font-display text-[clamp(2rem,8.6vw,2.25rem)] font-extrabold leading-[1.1] tracking-tight text-white min-[400px]:text-4xl sm:text-5xl">
             {t('ai.h1')} <span className="text-violet-300">{t('ai.h2')}</span>
           </motion.h2>
           <Reveal delay={0.1}><p className="mt-4 text-lg text-slate-200">{t('ai.sub')}</p></Reveal>
           <Reveal delay={0.18}><p className="mt-3 max-w-md text-slate-400">{t('ai.lead')}</p></Reveal>
-          <ul className="mt-6 space-y-3">
-            {[MessageSquareText, Shuffle, Server].map((Icon, i) => (
+          <ul className="mt-6 space-y-2.5 sm:space-y-3">
+            {BENEFIT_ICONS.map((Icon, i) => (
               <Reveal as="li" variant="left" delay={0.1 * i} key={i} className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/[0.06] text-violet-200 ring-1 ring-white/10"><Icon size={18} aria-hidden /></span>
                 <span className="font-display font-bold text-white">{t(`ai.benefits.${i}.t`)}</span>
@@ -72,7 +101,7 @@ export default function AiFinance() {
             <div className="flex flex-wrap gap-2" role="group" aria-label={t('ai.useCasesLabel')}>
               {USE_CASES.map((u, i) => (
                 <button key={u.id} type="button" aria-pressed={uc === i} onClick={() => setUc(i)}
-                  className={`rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 ${uc === i ? 'border-violet-300 bg-violet-400/20 text-white' : 'border-white/12 text-slate-300 hover:text-white'}`}>{t(`ai.useCases.${i}.label`)}</button>
+                  className={`rounded-full border px-3.5 py-1.5 text-[13px] font-semibold sm:text-sm [@media(pointer:coarse)]:min-h-11 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 ${uc === i ? 'border-violet-300 bg-violet-400/20 text-white' : 'border-white/12 text-slate-300 hover:text-white'}`}>{t(`ai.useCases.${i}.label`)}</button>
               ))}
             </div>
             <AnimatePresence mode="wait">
@@ -85,7 +114,7 @@ export default function AiFinance() {
                 <motion.img key={uc} src={`/assets/shots/${SHOTS[uc]}.webp`} alt="" width={1440} height={900} loading="lazy" decoding="async"
                   initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 0.92, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease: EASE }} className="block h-40 w-full object-cover object-left-top sm:h-48" />
               </AnimatePresence>
-              {!reduced && <span aria-hidden className="absolute inset-x-0 h-16 bg-gradient-to-b from-transparent via-violet-300/35 to-transparent" style={{ animation: 'scanY 3.2s ease-in-out infinite' }} />}
+              {!reduced && <span aria-hidden className="absolute inset-x-0 h-16 bg-gradient-to-b from-transparent via-violet-300/35 to-transparent" style={{ top: 0, animation: 'scanT 3.2s ease-in-out infinite', willChange: 'transform' }} />}
               <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#050824]/70 to-transparent" />
               <motion.p key={`i${uc}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }} className="absolute bottom-3 start-4 flex items-center gap-2 text-sm font-bold text-white">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-violet-300" />{t(`ai.useCases.${uc}.label`)}
@@ -96,26 +125,7 @@ export default function AiFinance() {
 
         {/* RIGHT: the AI Intelligence Engine + secondary provider selection */}
         <Reveal variant="right" className="min-w-0">
-          <div ref={stageRef} className="relative mx-auto w-full max-w-[680px]">
-            <div role="img" data-cursor="visual" aria-label={t('ai.engineAria')} className="relative h-[330px] w-full sm:h-[430px] lg:h-[480px]">
-              {webgl && near ? (
-                <Boundary fallback={<Fallback3D className="h-full w-full" />}>
-                  <Suspense fallback={<Fallback3D className="h-full w-full opacity-40" />}>
-                    <Engine progressRef={progressRef} onPhase={setPhase} reduced={reduced} mobile={mobile} active={inView} />
-                  </Suspense>
-                </Boundary>
-              ) : <Fallback3D className="h-full w-full opacity-70" />}
-            </div>
-            <ol className="mx-auto -mt-2 flex w-fit max-w-full items-center gap-1 rounded-full border border-white/10 bg-white/[0.05] p-1.5 backdrop-blur-xl" aria-label={t('ai.engineAria')}>
-              {tr<string[]>('ai.flow').map((f, i) => (
-                <li key={i} className="flex items-center gap-1">
-                  <span className={`rounded-full px-3 py-1.5 font-display text-[11px] font-bold transition-all duration-500 sm:px-4 sm:text-sm ${phase === i ? 'text-white shadow-lg' : 'text-slate-400'}`}
-                    style={phase === i ? { background: FLOW_C[i], boxShadow: `0 6px 24px -8px ${FLOW_C[i]}` } : undefined}>{f}</span>
-                  {i < 2 && <ChevronRight size={14} className="text-slate-500 rtl:rotate-180" aria-hidden />}
-                </li>
-              ))}
-            </ol>
-          </div>
+          <EngineStage progressRef={progressRef} reduced={reduced} mobile={mobile} webgl={webgl} />
 
           {/* provider selection: refined, secondary */}
           <p className="mt-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{t('ai.providers')}</p>

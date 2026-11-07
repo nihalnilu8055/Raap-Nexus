@@ -10,7 +10,7 @@ const mock = http.createServer((req, res) => { let d = ''; req.on('data', (c) =>
 process.env.RESEND_API_URL = `http://127.0.0.1:${mock.address().port}/emails`
 if (process.env.NO_CONFIG !== '1') { process.env.RESEND_API_KEY = 'mock_key'; process.env.CONTACT_FROM_EMAIL = 'RaapNexus <sender@mock.invalid>' }
 const { default: contact } = await import('../api/contact.js')
-const T = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json' }
+const T = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json', '.mp4': 'video/mp4' }
 http.createServer(async (req, res) => {
   const u = new URL(req.url, 'http://x')
   if (u.pathname === '/__mock/fail') { mode = 'fail'; return res.end('ok') }
@@ -28,6 +28,10 @@ http.createServer(async (req, res) => {
   if (!existsSync(p)) p = join(dist, 'index.html')
   res.setHeader('content-type', T[extname(p)] || 'application/octet-stream')
   const buf = readFileSync(p)
+  // byte ranges for video seeking, like Vercel's static hosting
+  const rg = /^bytes=(\d*)-(\d*)$/.exec(String(req.headers.range || ''))
+  if (rg && extname(p) === '.mp4') { const a = rg[1] ? +rg[1] : 0, z = rg[2] ? Math.min(+rg[2], buf.length - 1) : buf.length - 1; res.writeHead(206, { 'content-type': 'video/mp4', 'accept-ranges': 'bytes', 'content-range': `bytes ${a}-${z}/${buf.length}`, 'content-length': z - a + 1 }); return res.end(buf.subarray(a, z + 1)) }
+  if (extname(p) === '.mp4') res.setHeader('accept-ranges', 'bytes')
   // compress text assets like Vercel does, so lab performance numbers are representative
   if (/\.(js|css|html|svg|json|xml|txt)$/.test(p) && /\bgzip\b/.test(String(req.headers['accept-encoding'] || ''))) { res.setHeader('content-encoding', 'gzip'); res.setHeader('vary', 'accept-encoding'); return res.end(gzipSync(buf)) }
   res.end(buf)

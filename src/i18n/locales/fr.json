@@ -24,11 +24,6 @@
     "eyebrow": "RaapNexus",
     "l1": "La plateforme",
     "l2": "financière ultime.",
-    "bring": "Apportez",
-    "pre": "de la clarté à",
-    "pre2": "du contrôle à",
-    "w1": "vos finances",
-    "w2": "votre entreprise",
     "sub": "Des analyses financières plus fines. Des décisions plus sûres.",
     "cta": "Découvrir RaapNexus",
     "revenue": "CA cumulé",
@@ -39,7 +34,13 @@
     "orbit": {
       "aria": "Voir comment RaapNexus fonctionne avec {name}",
       "tip": "{name} se connecte à RaapNexus via une couche financière unique. Sélectionnez pour voir la plateforme."
-    }
+    },
+    "c1pre": "Prenez le",
+    "c1w": "contrôle",
+    "c1post": "de votre entreprise",
+    "c2pre": "Apportez de la",
+    "c2w": "clarté",
+    "c2post": "à vos finances."
   },
   "platform": {
     "eyebrow": "Le tableau de bord financier RaapNexus",
@@ -70,13 +71,15 @@
     "items": [
       {
         "name": "Audit fiscal",
-        "line": "Données fiscales, TVA et déclarations en une seule vue.",
-        "cta": "Découvrir l'audit fiscal"
+        "line": "Des dossiers fiscaux et des déclarations de TVA prêts pour l’audit.",
+        "cta": "Découvrir l'audit fiscal",
+        "head": "Appui à l’audit fiscal"
       },
       {
         "name": "Audit financier",
-        "line": "Chaque écriture tracée du grand livre à la banque.",
-        "cta": "Découvrir l'audit"
+        "line": "Des audits plus rapides et plus clairs, chaque écriture tracée.",
+        "cta": "Découvrir l'audit",
+        "sub": "simplifié"
       },
       {
         "name": "Analyse financière",
@@ -141,6 +144,7 @@
   "audit": {
     "h1": "Audit fiscal et",
     "h2": "financier",
+    "eyebrow": "Appui",
     "sub": "Clarté, précision et intelligence derrière chaque écriture financière.",
     "views": [
       "Revue fiscale",
@@ -171,6 +175,10 @@
       },
       {
         "t": "Choix du déploiement",
+        "s": "Prévu"
+      },
+      {
+        "t": "Plateforme agentique",
         "s": "Prévu"
       }
     ],
@@ -369,6 +377,16 @@
       "title": "BIENTÔT",
       "text": "Quelque chose d’exceptionnel arrive. Découvrez bientôt notre future expérience vidéo RaapNexus.",
       "screen": "Expérience vidéo RaapNexus, bientôt disponible"
+    },
+    "player": {
+      "pause": "Pause",
+      "mute": "Couper le son",
+      "unmute": "Activer le son",
+      "volume": "Volume",
+      "seek": "Progression de la vidéo",
+      "speed": "Vitesse de lecture",
+      "fullscreen": "Plein écran",
+      "exitFullscreen": "Quitter le plein écran"
     }
   },
   "flow": {

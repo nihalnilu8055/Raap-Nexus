@@ -39,6 +39,7 @@ export default function AuditSection() {
         <div className="text-center">
           <motion.h2 id="au-h" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE }}
             className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
+            <span className="mb-3 block font-display text-xs font-bold uppercase tracking-[0.3em] text-emerald-300 sm:text-sm">{t('audit.eyebrow')}</span>
             {t('audit.h1')} <span className="bg-gradient-to-r from-emerald-300 to-sky-300 bg-clip-text text-transparent">{t('audit.h2')}</span>
           </motion.h2>
           <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: EASE, delay: 0.12 }} className="mx-auto mt-4 max-w-xl text-lg text-slate-300">

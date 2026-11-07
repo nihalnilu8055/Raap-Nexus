@@ -26,7 +26,10 @@ export default function Services() {
   const root = useRef<HTMLElement>(null)
   const stage = useRef<HTMLDivElement>(null)
   const s = SERVICES[sel], m = META[s.id]
-  const nm = (id: string) => t(`services.items.${SERVICES.findIndex((x) => x.id === id)}.name`)
+  // points 1 and 2 carry a display heading (`head`) and, for point 2, a smaller continuation (`sub`); the plain `name` stays for the footer and SEO
+  const idx = (id: string) => SERVICES.findIndex((x) => x.id === id)
+  const nm = (id: string) => t(`services.items.${idx(id)}.${idx(id) === 0 ? 'head' : 'name'}`)
+  const Title = ({ id, small }: { id: string; small: string }) => <>{nm(id)}{idx(id) === 1 && <>{' '}<span className={`ms-0.5 align-baseline font-semibold leading-none opacity-60 ${small}`}>{t('services.items.1.sub')}</span></>}</>
   const ln = (id: string) => t(`services.items.${SERVICES.findIndex((x) => x.id === id)}.line`)
 
   // scroll-driven entrance: the stage tilts up out of the page; background glows drift (parallax)
@@ -79,7 +82,7 @@ export default function Services() {
                     <div className="flex items-center gap-4">
                       <span className="grid h-12 w-12 place-items-center rounded-2xl text-white shadow-lg" style={{ background: m.accent, boxShadow: `0 10px 30px -8px ${m.accent}` }}><s.Icon size={24} strokeWidth={1.8} aria-hidden /></span>
                       <div>
-                        <h3 className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{nm(s.id)}</h3>
+                        <h3 className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl"><Title id={s.id} small="text-[.55em]" /></h3>
                         <p className="text-slate-300">{ln(s.id)}</p>
                       </div>
                     </div>
@@ -120,7 +123,7 @@ export default function Services() {
                     <span className={`font-display text-sm font-bold ${on ? 'text-white/60' : 'text-slate-400'}`}>0{i + 1}</span>
                   </div>
                   <div className="relative mt-4">
-                    <span className="block font-display text-base font-extrabold leading-tight sm:text-lg">{nm(v.id)}</span>
+                    <span className="block font-display text-base font-extrabold leading-tight sm:text-lg"><Title id={v.id} small="text-[.7em]" /></span>
                     <span className={`mt-1 hidden text-sm lg:block ${on ? 'text-slate-300' : 'text-slate-500'}`}>{ln(v.id)}</span>
                   </div>
                   {on && !reduced && auto && <span key={`p${sel}`} aria-hidden className="absolute inset-x-0 bottom-0 h-[3px] origin-left" style={{ background: mm.accent, animation: `svcprog ${AUTO}ms linear forwards` }} />}

@@ -40,12 +40,14 @@ function ledgerTex(i: number) {
   })
 }
 function paperTex(k: number) {
-  const heads = ['TAX RETURN', 'VAT STATEMENT', 'TAX SCHEDULE', 'RECEIPTS']
+  const heads = ['TAX RETURN', 'VAT STATEMENT', 'TAX SCHEDULE', 'CORPORATE TAX']
   const cols = ['#f59e0b', '#fb7185', '#f59e0b', '#38bdf8']
   return canvasTexture(512, 704, (g, w, h) => {
     g.fillStyle = '#f8fafc'; rr(g, 4, 4, w - 8, h - 8, 28); g.fill()
     g.fillStyle = cols[k % 4]; g.save(); rr(g, 4, 4, w - 8, 120, 28); g.clip(); g.fillRect(4, 4, w - 8, 120); g.restore()
-    g.fillStyle = '#fff'; g.font = '800 46px Manrope, Inter, sans-serif'; g.fillText(heads[k % 4], 36, 84)
+    g.fillStyle = '#fff'; let fs = 46; g.font = `800 ${fs}px Manrope, Inter, sans-serif`
+    while (g.measureText(heads[k % 4]).width > w - 72 && fs > 30) { fs -= 2; g.font = `800 ${fs}px Manrope, Inter, sans-serif` } // longest title (CORPORATE TAX) must stay inside the header band
+    g.fillText(heads[k % 4], 36, 84)
     for (let r = 0; r < 7; r++) {
       const y = 170 + r * 62
       g.fillStyle = r === 2 || r === 5 ? cols[k % 4] : '#cbd5e1'; g.fillRect(36, y, 150 + ((r * 47 + k * 29) % 140), 16)

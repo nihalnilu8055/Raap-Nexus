@@ -3,21 +3,17 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Reveal } from '../components/ui/Reveal'
-import VideoShowcase from '../components/video/VideoShowcase'
+import LocalVideoPlayer from '../components/video/LocalVideoPlayer'
 import ComingSoon from '../components/video/ComingSoon'
-import { featuredVideos } from '../data/videos'
+import { LOCAL_DEMO_VIDEO } from '../data/localVideo'
 import { useI18n } from '../i18n'
 
 /**
- * true  = the Video section shows the premium 3D "Coming soon" experience (the demo videos are placeholders until the real RaapNexus demos exist).
- * false = the original section: the featured players. Data (src/data/videos.ts) and the /:lang/demo-videos library are untouched either way.
+ * Landing section: the first real RaapNexus demo video (local file, portrait) as the single featured video, plus one button.
+ * The button opens the Coming Soon experience in a modal: more videos are on the way. The /:lang/demo-videos library route is untouched.
  */
-const COMING_SOON = true
-
-/** Landing section: exactly the featured demo videos (max 2, from src/data/videos.ts) in software-window mockups + one link to the library. */
 export default function VideoGallery() {
   const { t, lang } = useI18n()
-  const videos = featuredVideos()
   const [open, setOpen] = useState(false)
   const reduced = !!useReducedMotion()
   const opener = useRef<HTMLElement | null>(null)
@@ -38,7 +34,6 @@ export default function VideoGallery() {
     document.addEventListener('keydown', key)
     return () => { document.removeEventListener('keydown', key); b.style.overflow = po; b.style.paddingRight = pp; opener.current?.focus({ preventScroll: true }) }
   }, [open, close])
-  if (!videos.length) return null
   // placeholder anchors (href="#") must never jump the page to the top
   const guard = (e: React.MouseEvent) => { if ((e.target as HTMLElement).closest('a[href="#"]')) e.preventDefault() }
   return (
@@ -51,25 +46,14 @@ export default function VideoGallery() {
         <div className="vg-flow vg-flow-b absolute inset-x-0 top-[66%] h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent" />
       </div>
       <div className="relative mx-auto max-w-[1200px]">
-        {COMING_SOON ? (
-          <>
-            <Reveal className="text-center"><p className="cs-eyebrow"><i aria-hidden />{t('videos.soon.label')}</p></Reveal>
-            <div className="mt-8 sm:mt-10"><ComingSoon /></div>
-            <Reveal delay={0.1} className="mx-auto mt-10 max-w-xl text-center sm:mt-12"><p className="text-base leading-relaxed text-slate-300 sm:text-lg">{t('videos.soon.text')}</p></Reveal>
-          </>
-        ) : (
-          <>
-            <div className="mx-auto max-w-2xl text-center">
-              <Reveal><h2 id="vg-h" className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">{t('videos.heading')}</h2></Reveal>
-              <Reveal delay={0.1}><p className="mt-4 text-base leading-relaxed text-slate-300 sm:text-lg">{t('videos.text')}</p></Reveal>
-            </div>
-            <ul className="mt-14 grid gap-12 lg:grid-cols-2 lg:gap-10">
-              {videos.map((v, i) => (
-                <Reveal as="li" key={v.id} variant="depth" delay={0.12 + i * 0.16} className="[perspective:1200px]"><VideoShowcase video={v} float floatDelay={i * 1.6} /></Reveal>
-              ))}
-            </ul>
-          </>
-        )}
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-20">
+          <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-start">
+            <Reveal><p className="font-display text-[11px] font-bold uppercase tracking-[0.18em] text-sky-300">{t('videos.frameLabel')}</p></Reveal>
+            <Reveal delay={0.08}><h2 id="vg-h" className="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">{t('videos.heading')}</h2></Reveal>
+            <Reveal delay={0.16}><p className="mt-4 text-base leading-relaxed text-slate-300 sm:text-lg">{t('videos.text')}</p></Reveal>
+          </div>
+          <Reveal variant="depth" delay={0.12} className="w-full lg:w-[min(46vw,430px)]"><LocalVideoPlayer video={LOCAL_DEMO_VIDEO} title={t('videos.frameLabel')} /></Reveal>
+        </div>
         <Reveal delay={0.2} className="mt-14 flex justify-center">
           <Link to={`/${lang}/demo-videos`} onClick={(e) => { e.preventDefault(); opener.current = e.currentTarget; setOpen(true) }} className="group inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-400/40 bg-sky-400/10 px-7 py-3 font-display text-base font-bold text-white transition duration-300 hover:border-sky-300 hover:bg-sky-400/20 hover:shadow-[0_12px_36px_-12px_rgba(56,189,248,.6)] focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300">
             {t('videos.cta')}
