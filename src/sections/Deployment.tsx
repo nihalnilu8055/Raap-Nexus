@@ -15,8 +15,8 @@ const STAGES = [
   { Icon: Laptop, color: '#fbbf24' },
 ]
 // scroll progress -> continuous focus (0 intro, 1 cloud, 2 private, 3 local): short holds on each stage, scrubbed moves in between
-// five clearly separated ranges: intro hold 0-.12 | move to Cloud .12-.28 | hold -.42 | move to Private -.56 | hold -.70 | move to Local -.84 | hold to the end
-const KEYS: [number, number][] = [[0, 0], [0.12, 0], [0.28, 1], [0.42, 1], [0.56, 2], [0.7, 2], [0.84, 3], [1, 3]]
+// separated ranges: intro hold 0-.08 | move to Cloud -.27 | hold -.40 | move to Private -.57 | hold -.70 | move to Local -.87 | hold to the end (runway is 270vh / 220vh, so each move still gets ~30vh / ~23vh)
+const KEYS: [number, number][] = [[0, 0], [0.08, 0], [0.27, 1], [0.4, 1], [0.57, 2], [0.7, 2], [0.87, 3], [1, 3]]
 const focusAt = (p: number) => {
   for (let i = 1; i < KEYS.length; i++) if (p <= KEYS[i][0]) { const [a, fa] = KEYS[i - 1], [b, fb] = KEYS[i]; return fa + ((p - a) / (b - a)) * (fb - fa) }
   return 3
@@ -81,7 +81,7 @@ export default function Deployment() {
       </div>
 
       {/* scroll space belongs to the visual stage only */}
-      <div ref={track} className={reduced ? 'relative' : 'relative h-[240vh] md:h-[300vh]'}>
+      <div ref={track} className={reduced ? 'relative' : 'relative h-[220vh] md:h-[270vh]'}>
         <div className={`${reduced ? 'relative h-[760px]' : 'sticky top-0 h-[100svh] min-h-[600px]'} flex flex-col overflow-hidden`}>
           <div className="relative flex min-h-0 flex-1 items-center justify-center pt-14">
             {/* visual box: sized per breakpoint (height targets 340-400 / 400-480 / 500-580 / 580-680 / 680-780 px) */}

@@ -4,9 +4,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/install-help-center.mjs --if-missing",
     "dev": "vite",
+    "prebuild": "node scripts/install-help-center.mjs --if-missing",
     "build": "tsc && vite build && node scripts/prerender.mjs",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "prepreview": "node scripts/install-help-center.mjs --if-missing",
     "preview": "vite preview"
   },
   "dependencies": {

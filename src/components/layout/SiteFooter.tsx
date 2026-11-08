@@ -1,5 +1,5 @@
 import { Instagram, Linkedin } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Reveal } from '../ui/Reveal'
 import Logo from '../Logo'
 import { ERP_URL } from '../../config/routes'
@@ -68,6 +68,7 @@ export default function SiteFooter() {
             <ul className="mt-4">
               <li><a href={ERP_URL} target="_blank" rel="noopener noreferrer" onClick={erpLinkClick} className={link}>{t('nav.cta')}<span className={bar} /></a></li>
               <li><button type="button" onClick={openContact} className={`${link} text-start`}>{t('nav.contact')}<span className={bar} /></button></li>
+              <li><Link to={`/${lang}/help`} className={link}>{t('nav.help')}<span className={bar} /></Link></li>
               <li><a href={CONTACT_MAILTO} dir="ltr" className={link}>{CONTACT_EMAIL}<span className={bar} /></a></li>
             </ul>
           </div>

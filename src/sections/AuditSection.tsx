@@ -33,7 +33,7 @@ export default function AuditSection() {
   }, [])
 
   return (
-    <section ref={sec} id="audit" aria-labelledby="au-h" className="relative overflow-hidden bg-[#031018] px-4 pb-16 pt-20 sm:px-8 md:pt-28">
+    <section ref={sec} id="audit" aria-labelledby="au-h" className="relative overflow-hidden bg-[#031018] px-4 pb-20 pt-20 sm:px-8 md:pb-24 md:pt-28">
       <div aria-hidden className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 55% 45% at 50% 62%, rgba(16,185,129,.16), transparent 70%), radial-gradient(ellipse 55% 40% at 80% 15%, rgba(37,99,235,.24), transparent 70%), radial-gradient(ellipse 40% 35% at 10% 40%, rgba(245,158,11,.1), transparent 70%)' }} />
       <div className="relative mx-auto max-w-[1320px]">
         <div className="text-center">

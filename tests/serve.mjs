@@ -23,6 +23,7 @@ http.createServer(async (req, res) => {
     const r = { status(c) { res.statusCode = c; return r }, setHeader: (k, v) => res.setHeader(k, v), send: (x) => res.end(x) }
     return contact({ method: req.method, headers: req.headers, body, socket: req.socket }, r)
   }
+  if (u.pathname === '/help') { res.writeHead(302, { location: '/help/' }); return res.end() }
   if (/^\/hi(\/|$)/.test(u.pathname)) { res.writeHead(301, { location: '/en/' }); return res.end() }
   let p = join(dist, decodeURIComponent(u.pathname))
   if (existsSync(p) && statSync(p).isDirectory()) p = join(p, 'index.html')

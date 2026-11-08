@@ -106,6 +106,9 @@ export default function SiteNav() {
               </a>
             </li>
           ))}
+          <li>
+            <Link to={`/${lang}/help`} className="relative rounded-full px-3 py-2 transition-[background-color,color,transform] duration-200 hover:bg-electric-blue/10 active:scale-95 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-sky-300' : 'text-slate-300 hover:bg-white/10 hover:text-white'} text-slate-300 hover:bg-white/10 hover:text-white">{t('nav.help')}</Link>
+          </li>
         </ul>
         <div className="flex items-center gap-2">
           <div className="hidden items-center gap-1 md:flex"><LanguageSelector tone="dark" /></div>
@@ -123,6 +126,7 @@ export default function SiteNav() {
                 {LINKS.map((l) => (
                   <li key={l.id}><a href={`#${l.id}`} onClick={go(l.id)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t(l.label)}</a></li>
                 ))}
+                <li><Link to={`/${lang}/help`} onClick={() => setOpen(false)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t('nav.help')}</Link></li>
               </ul>
               <div className="mt-2 grid gap-2 px-1 md:hidden"><LanguageSelector full /></div>
               <div className="mt-2 px-1 pb-1"><CtaButton label={t('nav.contact')} variant="blue" icon={Mail} onClick={() => { setOpen(false); openContact() }} /></div>

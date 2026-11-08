@@ -2,6 +2,11 @@
   "cleanUrls": false,
   "redirects": [
     {
+      "source": "/help",
+      "destination": "/en/help",
+      "permanent": false
+    },
+    {
       "source": "/hi",
       "destination": "/en/",
       "permanent": true
@@ -13,6 +18,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/:lang(ar|de|en|es|fr)/help/:path*",
+      "destination": "/index.html"
+    },
     {
       "source": "/((?!api/|assets/|erp/|ar/|de/|en/|es/|fr/)(?!.*\\.).*)",
       "destination": "/index.html"
@@ -57,6 +66,14 @@
           "value": "public, max-age=604800, stale-while-revalidate=86400"
         }
       ]
+    },
+    {
+      "source": "/help-center/(shots|gifs)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }]
+    },
+    {
+      "source": "/help-center/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }]
     },
     {
       "source": "/erp/(.*)",

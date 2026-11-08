@@ -87,7 +87,7 @@ export default function Hero() {
 
         <div ref={canvasBox} className="absolute inset-0 will-change-transform">
           {/* artwork box: square, sized from the viewport so it never overlaps the copy on desktop and never gets cropped */}
-          <div className="absolute left-1/2 top-[11%] w-[min(100vw,60vh,max(240px,calc(100svh-400px)))] -translate-x-1/2 md:w-[min(86vw,52vh)] lg:left-auto lg:right-[1.5vw] lg:top-1/2 lg:w-[min(51vw,90vh)] lg:translate-x-0 lg:-translate-y-[47%] 2xl:right-[3vw] rtl:lg:right-auto rtl:lg:left-[1.5vw] rtl:2xl:right-auto rtl:2xl:left-[3vw] 2xl:w-[min(46vw,92vh)]">
+          <div className="absolute left-1/2 top-[11%] w-[min(100vw,60vh,max(240px,calc(100svh-400px)))] -translate-x-1/2 md:w-[min(86vw,52vh)] lg:left-auto lg:right-[1.5vw] lg:top-1/2 lg:w-[min(43vw,90vh)] xl:w-[min(48vw,90vh)] lg:translate-x-0 lg:-translate-y-[47%] 2xl:right-[3vw] rtl:lg:right-auto rtl:lg:left-[1.5vw] rtl:2xl:right-auto rtl:2xl:left-[3vw] 2xl:w-[min(46vw,92vh)]">
             {depth && !reduced && (
               <div ref={depthRef} aria-hidden className="pointer-events-none absolute inset-[-22%]">
                 <Boundary fallback={null}><Suspense fallback={null}><DepthScene lite={lite} active={inView} /></Suspense></Boundary>
@@ -102,7 +102,7 @@ export default function Hero() {
           {/* the sentence is exposed once to assistive tech; the styled copy is decorative (aria-hidden) so nothing is read twice */}
           <div className="hx-wrap pointer-events-none">
           <h1 ref={head} className={`hx-h1 pointer-events-auto w-fit max-w-full font-display text-white md:max-w-[640px]`} style={{ ['--k' as string]: keyK }}>
-            <span className="sr-only">{lines[0].pre} {lines[0].w} {lines[0].post}. {lines[1].pre} {lines[1].w} {lines[1].post}</span>
+            <span className="sr-only">{lines.map((l) => `${l.pre} ${l.w} ${l.post}`.replace(/[\s.。]+$/, '')).join('. ')}.</span>
             <span aria-hidden className="block">
               {lines.map((l, i) => (
                 <span key={i} className="hx-row" style={{ ['--t0' as string]: `${TIMELINE[i][0]}s`, ['--t1' as string]: `${TIMELINE[i][1]}s`, ['--t2' as string]: `${TIMELINE[i][2]}s`, ['--t3' as string]: `${TIMELINE[i][3]}s` }}>
