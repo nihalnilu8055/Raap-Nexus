@@ -291,7 +291,7 @@
     "desc": "The Ultimate Finance Platform.",
     "explore": "Explore",
     "services": "Services",
-    "erp": "ERP",
+    "erp": "Resources",
     "servicesAria": "Financial services",
     "rights": "All rights reserved."
   },
@@ -342,8 +342,8 @@
     "text": "Experience how RaapNexus simplifies financial management and business operations through real ERP workflows and practical demonstrations.",
     "cta": "Explore All Demo Videos",
     "alt": "Preview image of the video: {title}",
-    "libTitle": "RaapNexus Demo Library",
-    "libText": "Explore RaapNexus demonstrations across financial management, accounting, sales, purchasing, inventory, and business operations.",
+    "libTitle": "Explore RaapNexus in Action",
+    "libText": "Discover RaapNexus through product demonstrations.",
     "back": "Back to home",
     "crumb": "Demo videos",
     "search": "Search videos by title",
@@ -355,8 +355,8 @@
     "clear": "Clear search and filters",
     "count": "{n} of {total} videos",
     "meta": {
-      "title": "RaapNexus ERP Demo Videos | Explore ERP Features",
-      "description": "Watch RaapNexus ERP demonstrations covering finance, accounting, sales, purchase, inventory, reporting, and business management workflows."
+      "title": "RaapNexus Demo Videos | Explore RaapNexus in Action",
+      "description": "Watch RaapNexus product demonstration videos and explore RaapNexus in action."
     },
     "cat": {
       "finance": "Finance & Accounting",
@@ -381,12 +381,6 @@
     "inExpanded": "Playing in expanded view",
     "inMini": "Playing in the mini window",
     "frameLabel": "RaapNexus Demo",
-    "soon": {
-      "label": "RAAPNEXUS VIDEO EXPERIENCE",
-      "title": "COMING SOON",
-      "text": "Something exciting is on its way. Explore our upcoming RaapNexus video experience soon.",
-      "screen": "RaapNexus video experience, coming soon"
-    },
     "player": {
       "pause": "Pause",
       "mute": "Mute",
@@ -396,6 +390,12 @@
       "speed": "Playback speed",
       "fullscreen": "Fullscreen",
       "exitFullscreen": "Exit fullscreen"
+    },
+    "gal": {
+      "heading": "Demo videos",
+      "play": "Play video {n}",
+      "player": "Video player {n}",
+      "close": "Close video"
     }
   },
   "flow": {

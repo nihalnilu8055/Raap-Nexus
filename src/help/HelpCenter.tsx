@@ -43,6 +43,7 @@ export default function HelpCenter({ lang, slug }: { lang: string; slug?: string
       const doc = new DOMParser().parseFromString(html, 'text/html')
       doc.body.querySelectorAll('script').forEach((s) => s.remove())
       // original pages use relative asset paths (assets/…, shots/…, gifs/…): point them at the portal folder
+      doc.querySelectorAll(".note-lang").forEach((n) => n.remove()) // footer disclaimer intentionally not shown
       const inner = doc.body.innerHTML.replace(/(src|href)="(assets|shots|gifs)\//g, `$1="${BASE}$2/`)
       const root = ref.current
       root.innerHTML = inner

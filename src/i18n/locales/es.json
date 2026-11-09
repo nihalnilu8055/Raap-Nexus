@@ -291,7 +291,7 @@
     "desc": "La plataforma financiera definitiva.",
     "explore": "Explorar",
     "services": "Servicios",
-    "erp": "ERP",
+    "erp": "Recursos",
     "servicesAria": "Servicios financieros",
     "rights": "Todos los derechos reservados."
   },
@@ -342,8 +342,8 @@
     "text": "Descubre cómo RaapNexus simplifica la gestión financiera y las operaciones empresariales con flujos de trabajo ERP reales y demostraciones prácticas.",
     "cta": "Explorar todos los vídeos de demostración",
     "alt": "Imagen de vista previa del vídeo: {title}",
-    "libTitle": "Biblioteca de demos de RaapNexus",
-    "libText": "Explora demostraciones de RaapNexus sobre gestión financiera, contabilidad, ventas, compras, inventario y operaciones empresariales.",
+    "libTitle": "Descubre RaapNexus en acción",
+    "libText": "Descubre RaapNexus a través de demostraciones del producto.",
     "back": "Volver al inicio",
     "crumb": "Vídeos de demo",
     "search": "Buscar vídeos por título",
@@ -355,8 +355,8 @@
     "clear": "Borrar búsqueda y filtros",
     "count": "{n} de {total} vídeos",
     "meta": {
-      "title": "Vídeos de demo de RaapNexus ERP | Explora las funciones del ERP",
-      "description": "Mira las demostraciones de RaapNexus sobre finanzas, contabilidad, ventas, compras, inventario, informes y gestión empresarial."
+      "title": "Vídeos de demo de RaapNexus | Descubre RaapNexus en acción",
+      "description": "Mira las demostraciones del producto RaapNexus y descubre RaapNexus en acción."
     },
     "cat": {
       "finance": "Finanzas y contabilidad",
@@ -381,12 +381,6 @@
     "inExpanded": "Reproduciendo en vista ampliada",
     "inMini": "Reproduciendo en la ventana pequeña",
     "frameLabel": "Demo de RaapNexus",
-    "soon": {
-      "label": "EXPERIENCIA DE VÍDEO RAAPNEXUS",
-      "title": "PRÓXIMAMENTE",
-      "text": "Algo emocionante está en camino. Descubre pronto nuestra nueva experiencia de vídeo de RaapNexus.",
-      "screen": "Experiencia de vídeo RaapNexus, próximamente"
-    },
     "player": {
       "pause": "Pausa",
       "mute": "Silenciar",
@@ -396,6 +390,12 @@
       "speed": "Velocidad de reproducción",
       "fullscreen": "Pantalla completa",
       "exitFullscreen": "Salir de pantalla completa"
+    },
+    "gal": {
+      "heading": "Vídeos de demostración",
+      "play": "Reproducir vídeo {n}",
+      "player": "Reproductor de vídeo {n}",
+      "close": "Cerrar vídeo"
     }
   },
   "flow": {

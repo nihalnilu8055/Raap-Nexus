@@ -16,8 +16,6 @@ const tpl = readFileSync(join(dist, 'index.html'), 'utf8')
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 const OG_IMG = `${SITE}/assets/og/raapnexus-og.png`
 
-const videoSrc = readFileSync(join(root, 'src/data/videos.ts'), 'utf8')
-const demoVideos = [...videoSrc.matchAll(/title: '([^']+)',\s*description: '([^']+)',\s*youtubeId: '([^']{11})'/g)].map((m) => ({ title: m[1], description: m[2], id: m[3] }))
 
 function page(lang, kind = 'home') {
   const isV = kind === 'videos'
@@ -69,7 +67,6 @@ function page(lang, kind = 'home') {
       <p><a href="/${lang.code}/" style="color:#7dd3fc">${esc(d.videos.back)}</a></p>
       <h1>${esc(d.videos.libTitle)}</h1>
       <p>${esc(d.videos.libText)}</p>
-      <ul>${demoVideos.map((v) => `<li><strong>${esc(v.title)}</strong> – ${esc(v.description)}</li>`).join('')}</ul>
       <nav aria-label="${esc(d.nav.language)}">${langs.map((l) => `<a href="/${l.code}/demo-videos" hreflang="${l.code}" lang="${l.code}" style="color:#7dd3fc;margin-inline-end:12px">${esc(l.native)}</a>`).join('')}</nav>
     </main>`
   const body = isV ? bodyV : `<main style="min-height:100vh;background:#040a1c;color:#e2e8f0;font-family:system-ui,sans-serif;padding:96px 24px;max-width:860px;margin:0 auto">

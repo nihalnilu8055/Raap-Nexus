@@ -95,7 +95,6 @@
 .hc .pager a:hover { border-color: var(--accent); }
 .hc .pager small { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
 .hc .pager a.next { text-align: end; grid-column: 2; }
-.hc .note-lang { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px; }
 .hc .toc { position: sticky; top: var(--head); align-self: start; padding: 34px 18px 30px 6px; max-height: calc(100vh - var(--head)); overflow: auto; font-size: 13.5px; }
 .hc .toc b { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 8px; }
 .hc .toc a { display: block; color: var(--ink2); text-decoration: none; padding: 4px 0 4px 10px; border-inline-start: 2px solid var(--line); }

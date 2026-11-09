@@ -291,7 +291,7 @@
     "desc": "La plateforme financière ultime.",
     "explore": "Explorer",
     "services": "Services",
-    "erp": "ERP",
+    "erp": "Ressources",
     "servicesAria": "Services financiers",
     "rights": "Tous droits réservés."
   },
@@ -342,8 +342,8 @@
     "text": "Découvrez comment RaapNexus simplifie la gestion financière et les opérations de l'entreprise grâce à de vrais flux de travail ERP et à des démonstrations concrètes.",
     "cta": "Explorer toutes les vidéos de démonstration",
     "alt": "Aperçu de la vidéo : {title}",
-    "libTitle": "Bibliothèque de démos RaapNexus",
-    "libText": "Explorez les démonstrations de RaapNexus : gestion financière, comptabilité, ventes, achats, stocks et opérations de l'entreprise.",
+    "libTitle": "Découvrez RaapNexus en action",
+    "libText": "Découvrez RaapNexus à travers des démonstrations du produit.",
     "back": "Retour à l'accueil",
     "crumb": "Vidéos de démo",
     "search": "Rechercher une vidéo par titre",
@@ -355,8 +355,8 @@
     "clear": "Effacer la recherche et les filtres",
     "count": "{n} vidéo(s) sur {total}",
     "meta": {
-      "title": "Vidéos de démo RaapNexus ERP | Découvrez les fonctionnalités ERP",
-      "description": "Regardez les démonstrations de RaapNexus : finance, comptabilité, ventes, achats, stocks, reporting et gestion d'entreprise."
+      "title": "Vidéos de démo RaapNexus | Découvrez RaapNexus en action",
+      "description": "Regardez les démonstrations du produit RaapNexus et découvrez RaapNexus en action."
     },
     "cat": {
       "finance": "Finance et comptabilité",
@@ -381,12 +381,6 @@
     "inExpanded": "Lecture en vue agrandie",
     "inMini": "Lecture dans la mini-fenêtre",
     "frameLabel": "Démo RaapNexus",
-    "soon": {
-      "label": "EXPÉRIENCE VIDÉO RAAPNEXUS",
-      "title": "BIENTÔT",
-      "text": "Quelque chose d’exceptionnel arrive. Découvrez bientôt notre future expérience vidéo RaapNexus.",
-      "screen": "Expérience vidéo RaapNexus, bientôt disponible"
-    },
     "player": {
       "pause": "Pause",
       "mute": "Couper le son",
@@ -396,6 +390,12 @@
       "speed": "Vitesse de lecture",
       "fullscreen": "Plein écran",
       "exitFullscreen": "Quitter le plein écran"
+    },
+    "gal": {
+      "heading": "Vidéos de démonstration",
+      "play": "Lire la vidéo {n}",
+      "player": "Lecteur vidéo {n}",
+      "close": "Fermer la vidéo"
     }
   },
   "flow": {

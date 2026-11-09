@@ -291,7 +291,7 @@
     "desc": "Die ultimative Finanzplattform.",
     "explore": "Entdecken",
     "services": "Services",
-    "erp": "ERP",
+    "erp": "Ressourcen",
     "servicesAria": "Finanzdienstleistungen",
     "rights": "Alle Rechte vorbehalten."
   },
@@ -342,8 +342,8 @@
     "text": "Erleben Sie, wie RaapNexus Finanzmanagement und Geschäftsabläufe durch echte ERP-Workflows und praxisnahe Demonstrationen vereinfacht.",
     "cta": "Alle Demovideos entdecken",
     "alt": "Vorschaubild des Videos: {title}",
-    "libTitle": "RaapNexus Demobibliothek",
-    "libText": "Entdecken Sie RaapNexus-Demonstrationen zu Finanzmanagement, Buchhaltung, Vertrieb, Einkauf, Lager und Geschäftsabläufen.",
+    "libTitle": "RaapNexus in Aktion erleben",
+    "libText": "Entdecken Sie RaapNexus anhand von Produktdemonstrationen.",
     "back": "Zurück zur Startseite",
     "crumb": "Demovideos",
     "search": "Videos nach Titel suchen",
@@ -355,8 +355,8 @@
     "clear": "Suche und Filter zurücksetzen",
     "count": "{n} von {total} Videos",
     "meta": {
-      "title": "RaapNexus ERP Demovideos | ERP-Funktionen entdecken",
-      "description": "Sehen Sie RaapNexus-Demonstrationen zu Finanzen, Buchhaltung, Vertrieb, Einkauf, Lager, Berichten und Unternehmenssteuerung."
+      "title": "RaapNexus Demovideos | RaapNexus in Aktion erleben",
+      "description": "Sehen Sie Produktdemonstrationen von RaapNexus und erleben Sie RaapNexus in Aktion."
     },
     "cat": {
       "finance": "Finanzen & Buchhaltung",
@@ -381,12 +381,6 @@
     "inExpanded": "Wiedergabe in vergrößerter Ansicht",
     "inMini": "Wiedergabe im Mini-Fenster",
     "frameLabel": "RaapNexus-Demo",
-    "soon": {
-      "label": "RAAPNEXUS VIDEO-ERLEBNIS",
-      "title": "BALD VERFÜGBAR",
-      "text": "Etwas Spannendes ist unterwegs. Entdecken Sie bald unser kommendes RaapNexus Video-Erlebnis.",
-      "screen": "RaapNexus Video-Erlebnis, bald verfügbar"
-    },
     "player": {
       "pause": "Pause",
       "mute": "Stummschalten",
@@ -396,6 +390,12 @@
       "speed": "Wiedergabegeschwindigkeit",
       "fullscreen": "Vollbild",
       "exitFullscreen": "Vollbild beenden"
+    },
+    "gal": {
+      "heading": "Demovideos",
+      "play": "Video {n} abspielen",
+      "player": "Videoplayer {n}",
+      "close": "Video schließen"
     }
   },
   "flow": {
