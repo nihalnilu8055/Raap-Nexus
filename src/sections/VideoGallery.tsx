@@ -7,7 +7,7 @@ import { useI18n } from '../i18n'
 
 /**
  * Landing section: the first real RaapNexus demo video (local file, portrait) as the single featured video, plus one button
- * that opens the /:lang/demo-videos page (the 10 demo videos).
+ * that opens the /:lang/videos page (the 10 demo videos).
  */
 export default function VideoGallery() {
   const { t, lang } = useI18n()
@@ -30,7 +30,7 @@ export default function VideoGallery() {
           <Reveal variant="depth" delay={0.12} className="w-full lg:w-[min(46vw,430px)]"><LocalVideoPlayer video={LOCAL_DEMO_VIDEO} title={t('videos.frameLabel')} /></Reveal>
         </div>
         <Reveal delay={0.2} className="mt-14 flex justify-center">
-          <Link to={`/${lang}/demo-videos`} className="group inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-400/40 bg-sky-400/10 px-7 py-3 font-display text-base font-bold text-white transition duration-300 hover:border-sky-300 hover:bg-sky-400/20 hover:shadow-[0_12px_36px_-12px_rgba(56,189,248,.6)] focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300">
+          <Link to={`/${lang}/videos`} className="group inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-400/40 bg-sky-400/10 px-7 py-3 font-display text-base font-bold text-white transition duration-300 hover:border-sky-300 hover:bg-sky-400/20 hover:shadow-[0_12px_36px_-12px_rgba(56,189,248,.6)] focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300">
             {t('videos.cta')}
             <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1" aria-hidden />
           </Link>

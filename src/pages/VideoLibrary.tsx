@@ -9,7 +9,7 @@ import DemoGallery from '../components/video/DemoGallery'
 import { EASE } from '../lib/motion'
 import { useI18n } from '../i18n'
 
-/** /:lang/demo-videos – hero + the 10 demo videos as a gallery (see DemoGallery). */
+/** /:lang/videos – hero + the 10 demo videos as a gallery (see DemoGallery). */
 export default function VideoLibrary() {
   const { t, lang } = useI18n()
   const reduced = !!useReducedMotion()

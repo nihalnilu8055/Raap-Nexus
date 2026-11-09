@@ -30,7 +30,8 @@ export default function LangRoute() {
   if (seg[0] === 'help') {
     return seg.length > 2 ? <NotFound /> : <Suspense fallback={<div className="min-h-screen bg-[#f5f7fb]" />}><HelpCenter lang={lang} slug={seg[1]} /></Suspense>
   }
-  const videos = seg[0] === 'demo-videos' && seg.length === 1
+  if (seg[0] === 'demo-videos' && seg.length === 1) return <Navigate to={`/${lang}/videos`} replace /> // old URL kept alive (servers send a real 301 first)
+  const videos = seg[0] === 'videos' && seg.length === 1
   return (
     <I18nProvider lang={lang}>
       <motion.div key={videos ? 'videos' : 'home'} initial={animate ? { opacity: 0 } : false} animate={{ opacity: 1 }} transition={{ duration: 0.35, ease: 'easeOut' }}>

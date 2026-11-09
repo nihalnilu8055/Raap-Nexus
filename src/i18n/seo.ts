@@ -7,7 +7,7 @@ import es from './locales/es.json'
 
 const D = { en, ar, fr, de, es } as Record<Lang, typeof en>
 export const langUrl = (l: Lang) => `${SITE_URL}/${l}/`
-export const VIDEOS_SLUG = 'demo-videos'
+export const VIDEOS_SLUG = 'videos'
 export const videosUrl = (l: Lang) => `${SITE_URL}/${l}/${VIDEOS_SLUG}`
 export type PageKind = 'home' | 'videos'
 export const pageUrl = (l: Lang, k: PageKind) => (k === 'videos' ? videosUrl(l) : langUrl(l))

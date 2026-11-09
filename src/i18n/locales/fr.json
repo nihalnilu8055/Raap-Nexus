@@ -345,7 +345,7 @@
     "libTitle": "Découvrez RaapNexus en action",
     "libText": "Découvrez RaapNexus à travers des démonstrations du produit.",
     "back": "Retour à l'accueil",
-    "crumb": "Vidéos de démo",
+    "crumb": "Vidéothèque",
     "search": "Rechercher une vidéo par titre",
     "searchPlaceholder": "Rechercher par titre de vidéo",
     "filter": "Filtrer par catégorie",
@@ -355,7 +355,7 @@
     "clear": "Effacer la recherche et les filtres",
     "count": "{n} vidéo(s) sur {total}",
     "meta": {
-      "title": "Vidéos de démo RaapNexus | Découvrez RaapNexus en action",
+      "title": "Vidéothèque RaapNexus | Découvrez RaapNexus en action",
       "description": "Regardez les démonstrations du produit RaapNexus et découvrez RaapNexus en action."
     },
     "cat": {

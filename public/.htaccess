@@ -12,6 +12,9 @@
   # 1. Redirect retired Hindi route (/hi) to English (/en/)
   RewriteRule ^hi(/.*)?$ /en/ [R=301,L]
 
+  # 1b. Video page was renamed: /xx/demo-videos -> /xx/videos (permanent)
+  RewriteRule ^(ar|de|en|es|fr)/demo-videos/?$ /$1/videos [R=301,L]
+
   # 2. Serve existing physical files directly (CSS, JS, images, sitemap, robots)
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]

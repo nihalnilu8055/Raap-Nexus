@@ -340,12 +340,12 @@
   "videos": {
     "heading": "Explore RaapNexus in Action",
     "text": "Experience how RaapNexus simplifies financial management and business operations through real ERP workflows and practical demonstrations.",
-    "cta": "Explore All Demo Videos",
+    "cta": "Explore All Videos",
     "alt": "Preview image of the video: {title}",
     "libTitle": "Explore RaapNexus in Action",
     "libText": "Discover RaapNexus through product demonstrations.",
     "back": "Back to home",
-    "crumb": "Demo videos",
+    "crumb": "Video Library",
     "search": "Search videos by title",
     "searchPlaceholder": "Search by video title",
     "filter": "Filter by category",
@@ -355,7 +355,7 @@
     "clear": "Clear search and filters",
     "count": "{n} of {total} videos",
     "meta": {
-      "title": "RaapNexus Demo Videos | Explore RaapNexus in Action",
+      "title": "RaapNexus Video Library | Explore RaapNexus in Action",
       "description": "Watch RaapNexus product demonstration videos and explore RaapNexus in action."
     },
     "cat": {

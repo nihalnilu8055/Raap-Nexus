@@ -20,7 +20,7 @@ const OG_IMG = `${SITE}/assets/og/raapnexus-og.png`
 function page(lang, kind = 'home') {
   const isV = kind === 'videos'
   const d = JSON.parse(readFileSync(join(root, `src/i18n/locales/${lang.code}.json`), 'utf8'))
-  const pathFor = (code) => (isV ? `${SITE}/${code}/demo-videos` : `${SITE}/${code}/`)
+  const pathFor = (code) => (isV ? `${SITE}/${code}/videos` : `${SITE}/${code}/`)
   const url = pathFor(lang.code) // the bare root serves the English copy but declares /en/ canonical (no duplicate-content conflict)
   const alt = langs.map((l) => `<link rel="alternate" hreflang="${l.code}" href="${pathFor(l.code)}" />`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${pathFor('en')}" />`
   const M = isV ? d.videos.meta : d.meta
@@ -62,21 +62,24 @@ function page(lang, kind = 'home') {
     <meta name="robots" content="index,follow,max-image-preview:large" />
     ${isV ? '' : `<link rel="preload" as="image" href="/assets/r-icon.webp" fetchpriority="low" />`}
     ${fonts}
+    <style>/* #seo-text is the crawler / no-JS copy of the page. It stays in the DOM (indexable) but is not painted while the React bundle loads; visitors see the dark #seo-fallback backdrop with a minimal wordmark (#seo-brand) until React replaces it on mount. */
+      #seo-text{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;border:0!important}</style>
+    <noscript><style>#seo-brand{display:none!important}#seo-text{position:static!important;width:auto!important;height:auto!important;max-width:860px!important;margin:0 auto!important;padding:96px 24px!important;overflow:visible!important;clip:auto!important}</style></noscript>
     <script type="application/ld+json" id="ld-json">${JSON.stringify(ld)}</script>`
-  const bodyV = `<main style="min-height:100vh;background:#040a1c;color:#e2e8f0;font-family:system-ui,sans-serif;padding:96px 24px;max-width:860px;margin:0 auto">
+  const bodyV = `<main id="seo-fallback" style="min-height:100vh;background:#040a1c;color:#e2e8f0;font-family:system-ui,sans-serif"><div id="seo-brand" aria-hidden="true" style="min-height:100vh;display:grid;place-items:center;font:800 28px/1 system-ui,sans-serif;letter-spacing:-.02em;color:#fff"><span>Raap<span style="color:#38bdf8">Nexus</span></span></div><div id="seo-text">
       <p><a href="/${lang.code}/" style="color:#7dd3fc">${esc(d.videos.back)}</a></p>
       <h1>${esc(d.videos.libTitle)}</h1>
       <p>${esc(d.videos.libText)}</p>
-      <nav aria-label="${esc(d.nav.language)}">${langs.map((l) => `<a href="/${l.code}/demo-videos" hreflang="${l.code}" lang="${l.code}" style="color:#7dd3fc;margin-inline-end:12px">${esc(l.native)}</a>`).join('')}</nav>
-    </main>`
-  const body = isV ? bodyV : `<main style="min-height:100vh;background:#040a1c;color:#e2e8f0;font-family:system-ui,sans-serif;padding:96px 24px;max-width:860px;margin:0 auto">
+      <nav aria-label="${esc(d.nav.language)}">${langs.map((l) => `<a href="/${l.code}/videos" hreflang="${l.code}" lang="${l.code}" style="color:#7dd3fc;margin-inline-end:12px">${esc(l.native)}</a>`).join('')}</nav>
+    </div></main>`
+  const body = isV ? bodyV : `<main id="seo-fallback" style="min-height:100vh;background:#040a1c;color:#e2e8f0;font-family:system-ui,sans-serif"><div id="seo-brand" aria-hidden="true" style="min-height:100vh;display:grid;place-items:center;font:800 28px/1 system-ui,sans-serif;letter-spacing:-.02em;color:#fff"><span>Raap<span style="color:#38bdf8">Nexus</span></span></div><div id="seo-text">
       <h1>${esc(d.seo.h1)}</h1>
       <p>${esc(d.seo.p)}</p>
       <h2>${esc(d.services.h1)} ${esc(d.services.h2)}</h2>
       ${d.services.items.map((x) => `<h3>${esc(x.name)}</h3><p>${esc(x.line)}</p>`).join('')}
       <p>${esc(d.hero.sub)}</p>
       <nav aria-label="${esc(d.nav.language)}">${langs.map((l) => `<a href="/${l.code}/" hreflang="${l.code}" lang="${l.code}" style="color:#7dd3fc;margin-inline-end:12px">${esc(l.native)}</a>`).join('')}</nav>
-    </main>`
+    </div></main>`
   let html = tpl
     .replace(/<html lang="[^"]*"[^>]*>/, `<html lang="${lang.code}" dir="${lang.dir}">`)
     .replace(/<title>.*?<\/title>/, `<title>${esc(M.title)}</title>`)
@@ -89,12 +92,12 @@ const en = langs.find((l) => l.code === 'en')
 writeFileSync(join(dist, 'index.html'), page(en))
 for (const l of langs) {
   mkdirSync(join(dist, l.code), { recursive: true }); writeFileSync(join(dist, l.code, 'index.html'), page(l))
-  mkdirSync(join(dist, l.code, 'demo-videos'), { recursive: true }); writeFileSync(join(dist, l.code, 'demo-videos', 'index.html'), page(l, 'videos'))
+  mkdirSync(join(dist, l.code, 'videos'), { recursive: true }); writeFileSync(join(dist, l.code, 'videos', 'index.html'), page(l, 'videos'))
 }
 
 const today = new Date().toISOString().slice(0, 10)
 const altsFor = (path) => langs.map((l) => `    <xhtml:link rel="alternate" hreflang="${l.code}" href="${SITE}/${l.code}/${path}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/en/${path}"/>`
-const entries = [['', 1.0], ['demo-videos', 0.7]]
+const entries = [['', 1.0], ['videos', 0.7]]
 writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${entries.flatMap(([p]) => langs.map((l) => `  <url>\n    <loc>${SITE}/${l.code}/${p}</loc>\n    <lastmod>${today}</lastmod>\n${altsFor(p)}\n  </url>`)).join('\n')}\n</urlset>\n`)
 writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${SITE}/sitemap.xml\n`)
 console.log(`prerendered ${langs.length} languages (${langs.map((l) => l.code).join(', ')}), sitemap.xml, robots.txt -> ${SITE}`)
