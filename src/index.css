@@ -438,3 +438,42 @@ html[dir='rtl'] .hx-u { letter-spacing: 0; }
   .hv-draw, .hv-ring, .hv-bar, .hv-fade { animation: none !important; stroke-dashoffset: 0; opacity: 1; transform: none; }
   .hv-ring { stroke-dashoffset: 28; } .hv-layer { transition: none; }
 }
+
+/* Video Library card hover (approved preview): whole-card 3D tilt, scale, blue glow, cursor light, lift, play-button float. Tracking is set from DemoGallery.tsx (mouse only). */
+.vc-slot { display: flex; perspective: 900px; }
+.vc-card {
+  --rx: 0deg; --ry: 0deg; --gx: 50%; --gy: 50%; --s: 1; --glow: 0; --lift: 0px;
+  position: relative; display: flex; flex-direction: column; width: 100%; padding: 0; text-align: start; cursor: pointer; overflow: hidden;
+  background: rgba(7,18,41,.85); border: 1px solid rgba(255,255,255,.10); border-radius: .75rem;
+  transform: translateY(var(--lift)) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s)); transform-style: preserve-3d; will-change: transform;
+  box-shadow: 0 14px 32px -20px rgba(0,0,0,.9), 0 0 0 1px rgba(56,189,248,calc(var(--glow) * .55)),
+    0 24px 56px -18px rgba(56,189,248,calc(var(--glow) * .5)), 0 0 36px -6px rgba(37,99,235,calc(var(--glow) * .6));
+  transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s cubic-bezier(.22,1,.36,1), border-color .3s;
+}
+.vc-card.vc-on { --s: 1.025; --glow: 1; --lift: -4px; border-color: rgba(125,211,252,.5); transition: transform .08s linear, box-shadow .35s, border-color .3s; }
+.vc-card:focus { outline: none; }
+.vc-card:focus-visible { --glow: 1; --lift: -3px; outline: 2px solid #7dd3fc; outline-offset: 3px; }
+.vc-thumb { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: #071229; }
+.vc-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22,1,.36,1); }
+.vc-on .vc-img { transform: scale(1.02); }
+.vc-shade { position: absolute; inset-inline: 0; bottom: 0; height: 34%; background: linear-gradient(to top, rgba(4,10,28,.7), transparent); }
+.vc-glare { position: absolute; inset: 0; pointer-events: none; opacity: 0; mix-blend-mode: soft-light; transition: opacity .4s;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.30), rgba(125,211,252,.12) 28%, transparent 55%); }
+.vc-on .vc-glare { opacity: 1; }
+.vc-play { position: absolute; bottom: .625rem; inset-inline-end: .625rem; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 9999px;
+  color: #fff; border: 1px solid rgba(255,255,255,.25); background: rgba(11,29,68,.55); backdrop-filter: blur(8px); box-shadow: 0 0 14px rgba(56,189,248,.35);
+  transform: translateZ(30px); transition: transform .35s cubic-bezier(.22,1,.36,1), background .3s, border-color .3s, box-shadow .3s; }
+.vc-play-i { fill: currentColor; margin-inline-start: 1px; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+[dir="rtl"] .vc-play-i { transform: scaleX(-1); margin-inline-start: 1px; }
+.vc-on .vc-play, .vc-card:focus-visible .vc-play { transform: translateZ(30px) scale(1.10); background: rgba(14,165,233,.85); border-color: #7dd3fc; box-shadow: 0 0 24px rgba(56,189,248,.7); }
+.vc-on .vc-play-i { transform: scale(1.1); } [dir="rtl"] .vc-on .vc-play-i { transform: scaleX(-1) scale(1.1); }
+.vc-body { display: block; flex: 1; padding: .875rem 1rem 1rem; }
+.vc-title { display: block; font-family: Manrope, system-ui, sans-serif; font-size: 15px; font-weight: 700; line-height: 1.35; color: #fff; }
+.vc-kind { display: block; margin-top: .375rem; font-size: 13px; line-height: 1.35; color: #94a3b8; transition: color .3s; }
+.vc-on .vc-kind, .vc-card:focus-visible .vc-kind { color: #bae6fd; }
+@media (hover: none), (pointer: coarse) { .vc-card, .vc-img, .vc-play { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .vc-card, .vc-img, .vc-play, .vc-play-i, .vc-glare { transition: none !important; } .vc-on .vc-img { transform: none; } .vc-card.vc-on { --s: 1; } }
+.vc-play::after { content: ""; position: absolute; inset: -1px; border-radius: 9999px; border: 1.5px solid rgba(125,211,252,.8); opacity: 0; }
+.vc-on .vc-play::after { animation: vc-ripple 1.4s ease-out infinite; }
+@keyframes vc-ripple { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(1.9); } }
+@media (prefers-reduced-motion: reduce) { .vc-on .vc-play::after { animation: none; } }

@@ -395,7 +395,8 @@
       "heading": "Demovideos",
       "play": "Video {n} abspielen",
       "player": "Videoplayer {n}",
-      "close": "Video schließen"
+      "close": "Video schließen",
+      "kind": "Produktdemonstration"
     }
   },
   "flow": {

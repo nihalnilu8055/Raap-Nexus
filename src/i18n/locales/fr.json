@@ -395,7 +395,8 @@
       "heading": "Vidéos de démonstration",
       "play": "Lire la vidéo {n}",
       "player": "Lecteur vidéo {n}",
-      "close": "Fermer la vidéo"
+      "close": "Fermer la vidéo",
+      "kind": "Démonstration du produit"
     }
   },
   "flow": {

@@ -395,7 +395,8 @@
       "heading": "Demo videos",
       "play": "Play video {n}",
       "player": "Video player {n}",
-      "close": "Close video"
+      "close": "Close video",
+      "kind": "Product demonstration"
     }
   },
   "flow": {
