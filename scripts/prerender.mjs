@@ -95,6 +95,11 @@ for (const l of langs) {
   mkdirSync(join(dist, l.code, 'videos'), { recursive: true }); writeFileSync(join(dist, l.code, 'videos', 'index.html'), page(l, 'videos'))
 }
 
+// LEGAL-PAGES (removable): the host only serves pre-built folders under /<lang>/, so the four legal routes get the same shell (the page itself sets its own title and noindex while it is a draft)
+for (const l of langs) for (const slug of ['privacy-policy', 'cookie-policy', 'terms', 'disclaimer']) {
+  mkdirSync(join(dist, l.code, slug), { recursive: true }); writeFileSync(join(dist, l.code, slug, 'index.html'), page(l))
+}
+
 const today = new Date().toISOString().slice(0, 10)
 const altsFor = (path) => langs.map((l) => `    <xhtml:link rel="alternate" hreflang="${l.code}" href="${SITE}/${l.code}/${path}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/en/${path}"/>`
 const entries = [['', 1.0], ['videos', 0.7]]

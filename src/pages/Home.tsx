@@ -10,6 +10,7 @@ import AuditSection from '../sections/AuditSection'
 import AiFinance from '../sections/AiFinance'
 import Deployment from '../sections/Deployment'
 import VideoGallery from '../sections/VideoGallery'
+import BeforeAfter from '../sections/BeforeAfter' // BEFORE-AFTER-SECTION (removable)
 import FinalCta from '../sections/FinalCta'
 import CursorFX from '../components/CursorFX'
 import ContactModal from '../components/ContactModal'
@@ -43,6 +44,7 @@ export default function Home() {
         <Bridge from="#031018" to="#050824" stroke="#8b7bff" />
         <AiFinance />
         <Deployment />
+        <BeforeAfter /> {/* BEFORE-AFTER-SECTION (removable) */}
         <VideoGallery />
         <FinalCta />
       </main>

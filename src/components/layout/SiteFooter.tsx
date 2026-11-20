@@ -4,16 +4,11 @@ import { Reveal } from '../ui/Reveal'
 import Logo from '../Logo'
 import { ERP_URL } from '../../config/routes'
 import { openContact } from '../../lib/contact'
+import { openCookieSettings } from '../../lib/consent'
 import { erpLinkClick } from '../../lib/erpDashboard'
 import { CONTACT_EMAIL, CONTACT_MAILTO } from '../../config/contact'
 import { useI18n } from '../../i18n'
 
-const NAV = [
-  { label: 'nav.platform', id: 'platform' },
-  { label: 'nav.services', id: 'services' },
-  { label: 'nav.ai', id: 'ai' },
-  { label: 'nav.about', id: 'about' },
-]
 const SERVICES = [
   { label: 'services.items.0.name', id: 'tax' },
   { label: 'services.items.1.name', id: 'audit' },
@@ -46,35 +41,49 @@ export default function SiteFooter() {
   return (
     <footer className="bg-[#040a1c] px-6 pb-8 pt-16 text-slate-400">
       <div className="mx-auto max-w-[1200px]">
-        <Reveal><div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
-          <div className="sm:col-span-2 lg:col-span-1">
+        <Reveal><div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.5fr_1fr_1.2fr_1fr_1.2fr]">
+          <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Logo size="md" surface="dark" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-slate-300">{t('footer.desc')}</p>
           </div>
-          <nav aria-label={t('footer.explore')}>
-            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-500">{t('footer.explore')}</p>
+          <nav aria-label="Company" className="min-w-0">
+            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Company</p>
             <ul className="mt-4">
-              {NAV.map((l) => <li key={l.id}><a href={`#${l.id}`} onClick={go(l.id)} className={link}>{t(l.label)}<span className={bar} /></a></li>)}
-            </ul>
-          </nav>
-          <nav aria-label={t('footer.servicesAria')}>
-            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-500">{t('footer.services')}</p>
-            <ul className="mt-4">
-              {SERVICES.map((l) => <li key={l.id}><a href="#services" onClick={goService(l.id)} className={link}>{t(l.label)}<span className={bar} /></a></li>)}
-            </ul>
-          </nav>
-          <div>
-            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-500">{t('footer.erp')}</p>
-            <ul className="mt-4">
-              <li><a href={ERP_URL} target="_blank" rel="noopener noreferrer" onClick={erpLinkClick} className={link}>{t('nav.cta')}<span className={bar} /></a></li>
+              <li><a href="#about" onClick={go('about')} className={link}>{t('nav.about')}<span className={bar} /></a></li>
               <li><button type="button" onClick={openContact} className={`${link} text-start`}>{t('nav.contact')}<span className={bar} /></button></li>
-              <li><Link to={`/${lang}/help`} className={link}>{t('nav.help')}<span className={bar} /></Link></li>
-              <li><a href={CONTACT_MAILTO} dir="ltr" className={link}>{CONTACT_EMAIL}<span className={bar} /></a></li>
+              <li><Link to={`/${lang}/videos`} className={link}>Demo Videos<span className={bar} /></Link></li>
+            </ul>
+          </nav>
+          <nav aria-label="Platform" className="min-w-0">
+            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Platform</p>
+            <ul className="mt-4">
+              <li><a href="#platform" onClick={go('platform')} className={link}>Financial Intelligence<span className={bar} /></a></li>
+              {SERVICES.map((l) => <li key={l.id}><a href="#services" onClick={goService(l.id)} className={link}>{t(l.label)}<span className={bar} /></a></li>)}
+              <li><a href="#ai" onClick={go('ai')} className={link}>AI Agents<span className={bar} /></a></li>
+              <li><a href={ERP_URL} target="_blank" rel="noopener noreferrer" onClick={erpLinkClick} className={link}>{t('nav.cta')}<span className={bar} /></a></li>
+            </ul>
+          </nav>
+          <nav aria-label="Resources" className="min-w-0">
+            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Resources</p>
+            <ul className="mt-4">
+              <li><Link to={`/${lang}/help`} className={link}>Documentation<span className={bar} /></Link></li>
+              <li><Link to={`/${lang}/help/faq`} className={link}>FAQs<span className={bar} /></Link></li>
+              <li><Link to={`/${lang}/privacy-policy`} className={link}>Privacy Policy<span className={bar} /></Link></li>
+              <li><Link to={`/${lang}/cookie-policy`} className={link}>Cookie Policy<span className={bar} /></Link></li>
+              <li><Link to={`/${lang}/terms`} className={link}>Terms &amp; Conditions<span className={bar} /></Link></li>
+              <li><Link to={`/${lang}/disclaimer`} className={link}>Disclaimer<span className={bar} /></Link></li>
+            </ul>
+          </nav>
+          <div className="min-w-0">
+            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-500">{t('nav.contact')}</p>
+            <ul className="mt-4">
+              <li><a href={CONTACT_MAILTO} dir="ltr" className={`${link} break-all`}>{CONTACT_EMAIL}<span className={bar} /></a></li>
             </ul>
           </div>
         </div></Reveal>
         <div className="mt-12 flex flex-col items-center gap-4 border-t border-white/10 pt-6 text-sm sm:flex-row sm:justify-between">
           <p dir="ltr" className="text-balance text-center sm:text-start"><span>© {new Date().getFullYear()} RaapNexus. All rights reserved.</span> <span className="text-slate-500 max-sm:hidden">|</span> <span className="text-slate-400 max-sm:block">Designed &amp; Developed by <a href="https://techlogica.com/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-200 underline-offset-4 transition-colors hover:text-sky-300 hover:underline focus:outline-none focus-visible:text-sky-300 focus-visible:underline">Techlogica</a>.</span></p>
+          <button type="button" onClick={openCookieSettings} className="min-h-[40px] px-2 text-sm font-semibold text-slate-200 underline underline-offset-4 hover:text-sky-300 focus:outline-none focus-visible:text-sky-300">Cookie Settings</button>
           <ul className="flex items-center gap-3">
             {SOCIALS.map(({ label, href, Icon, hover }) => (
               <li key={label}>
