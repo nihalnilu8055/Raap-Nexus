@@ -185,6 +185,14 @@ text{font-family:'JetBrains Mono',monospace}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 .portrait .np-svg{display:none}.m .gd{opacity:0;transition:opacity .15s}.m:hover .gd{opacity:1}.sl{transition:stroke-width .15s}.sl:hover{stroke-width:23}.a{animation:fi .35s ease}@keyframes fi{from{opacity:0;transform:translateY(4px)}}.portrait .kpis{grid-template-columns:repeat(2,1fr)}.portrait .kpi .v{font-size:22px}
+.lgs{pointer-events:auto}
+.pOnly{display:none!important}.portrait .pOnly{display:block!important}
+.lgt{position:relative;width:100%;aspect-ratio:var(--ar,2.4);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.lgt img{position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;opacity:0;transition:opacity .8s ease;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 0 1.2px rgba(255,255,255,.7)) drop-shadow(0 0 10px rgba(255,255,255,.16)) drop-shadow(0 10px 10px rgba(0,0,0,.55))}
+.lgt img.on{opacity:1}
+.ink img{filter:none!important;mix-blend-mode:multiply;opacity:0}.ink img.on{opacity:.88}
+.lgs:hover .lgt{transform:translateY(-3px) scale(1.04)}
+@media (prefers-reduced-motion:reduce){.lgt,.lgt img{transition:none}}
 `
 
 const HTML = `<div class="root"><div class="pg">
@@ -242,6 +250,15 @@ B+=`<div class="neq np" style="left:640px;top:352px;transform:rotate(-4deg)">Sal
 B+=`<div class="neq np" style="left:1020px;top:296px;transform:rotate(3deg)">49,900 paid twice?</div>`;
 B+=`<div class="circ np" style="left:1108px;top:526px;width:90px;height:34px"></div>`;
 B+=O('',{x:640,y:818,w:220,r:-12,z:2},`<div class="pen"></div>`);
+
+/* ERP logos (Before layer only): bare logos, some printed on the paper props, some floating. Cycles slowly. */
+const LGF={"odoo": "odoo-wordmark.svg", "sap": "sap.svg", "oracle": "oracle.svg", "dynamics": "dynamics-365.svg", "zoho": "zoho.svg", "quickbooks": "quickbooks.svg", "tally": "tally.png", "sage": "sage.svg"}, LGN={"odoo": "Odoo", "sap": "SAP", "oracle": "Oracle", "dynamics": "Microsoft Dynamics 365", "zoho": "Zoho", "quickbooks": "QuickBooks", "tally": "Tally", "sage": "Sage"}, LSL=[{"x": 52, "y": 540, "w": 150, "r": -2, "ar": 2.4, "px": 36, "py": 544, "pw": 104}, {"x": 72, "y": 762, "w": 160, "r": -1, "ar": 2.6, "cls": "ink"}, {"x": 508, "y": 68, "w": 118, "r": -1.5, "ar": 2.7, "cls": "ink"}, {"x": 0, "y": 0, "w": 10, "r": 0, "ar": 2.4, "px": 310, "py": 544, "pw": 104, "cls": "pOnly"}, {"x": 0, "y": 0, "w": 10, "r": 0, "ar": 2.4, "px": 170, "py": 1076, "pw": 140, "cls": "pOnly"}, {"x": 1290, "y": 8, "w": 200, "r": 2, "ar": 2.4}, {"x": 1318, "y": 772, "w": 170, "r": -1, "ar": 2.2}], LSETS=[["sap", "tally", "odoo", "dynamics", "zoho", "zoho", "dynamics"], ["zoho", "tally", "odoo", "quickbooks", "oracle", "sage", "oracle"], ["oracle", "tally", "odoo", "sap", "dynamics", "quickbooks", "sage"]];
+LSL.forEach((s,i)=>{
+  const used=[...new Set(LSETS.map(x=>x[i]))];
+  B+=O('lgs '+(s.cls||''),{x:s.x,y:s.y,w:s.w,r:s.r,z:6,px:s.px,py:s.py,pw:s.pw},`<div class="lgt" style="--ar:${s.ar||2.4}">${used.map(k=>`<img data-l="${k}" src="/assets/erp/${LGF[k]}" alt="${LGN[k]} logo" draggable="false">`).join('')}</div>`);
+});
+let LT=0;
+const setLogoSet=i=>{$$('.lgs').forEach((el,si)=>$$('img',el).forEach(im=>im.classList.toggle('on',im.dataset.l===LSETS[i][si])))};
 
 /* ================= AFTER ================= */
 let A='';
@@ -366,7 +383,9 @@ qs.innerHTML=QA.map((q,i)=>`<button type="button" data-i="${i}">${['Why did prof
 function ask(i){$$('button',qs).forEach((b,j)=>b.classList.toggle('on',j===i));$('#aq').textContent=QA[i][0];const a=$('#aa');a.style.animation='none';a.offsetWidth;a.style.animation='';a.innerHTML='<div class="ai-t">✦ ANSWER</div>'+QA[i][1]}
 qs.addEventListener('click',e=>{const b=e.target.closest('button');if(b)ask(+b.dataset.i)});
 ask(0);
-return()=>{ac.abort();lro.disconnect();cancelAnimationFrame(anim)};
+setLogoSet(0);
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){let lc=0;LT=setInterval(()=>{if(document.hidden||ROOT.host.matches(':hover'))return;lc=(lc+1)%LSETS.length;setLogoSet(lc)},6500)}
+return()=>{clearInterval(LT);ac.abort();lro.disconnect();cancelAnimationFrame(anim)};
 }
 
 export default function BeforeAfter() {
