@@ -12,6 +12,7 @@ import Deployment from '../sections/Deployment'
 import VideoGallery from '../sections/VideoGallery'
 import BeforeAfter from '../sections/BeforeAfter' // BEFORE-AFTER-SECTION (removable)
 import FinalCta from '../sections/FinalCta'
+import DownloadSection from '../download/DownloadSection' // DOWNLOAD-APP (removable)
 import CursorFX from '../components/CursorFX'
 import ContactModal from '../components/ContactModal'
 import ErpDashboardModal from '../components/ErpDashboardModal'
@@ -47,6 +48,7 @@ export default function Home() {
         <BeforeAfter /> {/* BEFORE-AFTER-SECTION (removable) */}
         <VideoGallery />
         <FinalCta />
+        <DownloadSection /> {/* DOWNLOAD-APP (removable) */}
       </main>
       <SiteFooter />
       <ContactModal />

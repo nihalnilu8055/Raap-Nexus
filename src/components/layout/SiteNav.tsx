@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react' // PRICING-PAGE (removable): Fragment is only used by the Pricing item; the original import is { useEffect, useRef, useState }
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Download, Menu, X } from 'lucide-react' // DOWNLOAD-APP (removable): Download icon
 import Logo from '../Logo'
 import { Mail } from 'lucide-react'
 import CtaButton from '../ui/CtaButton'
@@ -11,6 +11,7 @@ import { useI18n } from '../../i18n'
 import { LanguageSelector } from './Selectors'
 
 // PRICING-PAGE (removable) — start
+const DL_LABEL /* DOWNLOAD-APP (removable) */: Record<string, string> = { en: 'Download', ar: 'تحميل', fr: 'Télécharger', de: 'Download', es: 'Descargar' }
 const PRICING_LABEL: Record<string, string> = { en: 'Pricing', ar: 'الأسعار', fr: 'Tarifs', de: 'Preise', es: 'Precios' }
 // PRICING-PAGE (removable) — end
 const LINKS = [
@@ -133,6 +134,9 @@ export default function SiteNav() {
         </ul>
         <div className="flex items-center gap-2">
           <div className="hidden items-center gap-1 md:flex"><LanguageSelector tone="dark" /></div>
+          {/* DOWNLOAD-APP (removable) */}
+          <a href="#download" onClick={go('download')} className="hidden items-center gap-2 rounded-full border border-white/20 bg-white/[.06] py-1.5 pl-3 pr-4 font-display text-sm font-bold text-white transition-[background-color,border-color,transform] duration-200 hover:border-sky-300/50 hover:bg-white/10 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue xl:inline-flex"><Download size={15} aria-hidden />{DL_LABEL[lang] ?? DL_LABEL.en}</a>
+          <a href="#download" onClick={go('download')} aria-label={DL_LABEL[lang] ?? DL_LABEL.en} className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-white/[.06] text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue xl:hidden"><Download size={17} aria-hidden /></a>
           <div className="hidden xl:block"><CtaButton label={t('nav.contact')} variant="blue" small icon={Mail} onClick={openContact} /></div>
           <button ref={toggle} type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? t('nav.menuClose') : t('nav.menuOpen')}
             className="grid h-10 w-10 place-items-center rounded-full text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue xl:hidden">
@@ -147,6 +151,8 @@ export default function SiteNav() {
                 {LINKS.map((l) => (
                   <Fragment key={l.id}>{l.id === 'about' && pricingMobile}<li><a href={`#${l.id}`} onClick={go(l.id)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t(l.label)}</a></li></Fragment>
                 ))}
+                {/* DOWNLOAD-APP (removable) */}
+                <li><a href="#download" onClick={go('download')} className="flex items-center gap-2 rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"><Download size={18} aria-hidden />{DL_LABEL[lang] ?? DL_LABEL.en}</a></li>
                 <li><Link to={`/${lang}/help`} onClick={() => setOpen(false)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t('nav.help')}</Link></li>
               </ul>
               <div className="mt-2 grid gap-2 px-1 md:hidden"><LanguageSelector full /></div>
