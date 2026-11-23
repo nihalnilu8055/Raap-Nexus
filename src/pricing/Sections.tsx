@@ -12,15 +12,15 @@ import { Billing, FreeBadge, Mark, Plate, Section, SectionHead, Tilt, usd } from
 export function FreePlan() {
   const tiles = [['Users', FREE_BASELINE.users], ['Dashboards', FREE_BASELINE.dashboards], ['Workflows', FREE_BASELINE.workflows], ['Software profiles', FREE_BASELINE.profiles]] as const
   return (
-    <Section id="free">
+    <Section id="free" className="fit">
       <SectionHead eyebrow="Free base plan" title={<span id="free-h">Start Free. Grow When You Need.</span>} text="Every RaapNexus installation starts with useful business intelligence capabilities at no cost. Add more users, dashboards, workflows and integrations only when your business needs them." />
-      <Reveal variant="depth" className="mt-12">
-        <div className="glass relative overflow-hidden rounded-[2rem] p-6 sm:p-10">
+      <Reveal variant="depth" className="fit-gap mt-12">
+        <div className="fit-card glass relative overflow-hidden rounded-[2rem] p-6 sm:p-10">
           <div aria-hidden className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-emerald-400/15 blur-[90px]" />
           <div className="relative grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
             <div>
               <FreeBadge>Free baseline</FreeBadge>
-              <p className="mt-4 font-display text-7xl font-extrabold leading-none tracking-tight text-white sm:text-8xl">$0</p>
+              <p className="fit-zero mt-4 font-display text-7xl font-extrabold leading-none tracking-tight text-white sm:text-8xl">$0</p>
               <p className="mt-3 font-display text-lg font-bold text-emerald-200">Free baseline — included with every installation</p>
               <ul className="mt-5 space-y-2 text-sm text-slate-300">
                 <li className="flex gap-2"><BadgeCheck size={18} className="mt-0.5 shrink-0 text-emerald-300" aria-hidden />No credit card or payment required.</li>
@@ -31,7 +31,7 @@ export function FreePlan() {
               <p className="mb-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Included with every installation</p>
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {tiles.map(([label, n]) => (
-                  <Tilt key={label} className="glass rounded-2xl p-5">
+                  <Tilt key={label} className="fit-tile glass rounded-2xl p-5">
                     <p className="num font-display text-5xl font-extrabold text-white sm:text-6xl">{n}</p>
                     <p className="mt-1 font-display text-sm font-bold text-slate-300">{label}</p>
                     <p className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-emerald-300">Free allowance</p>
@@ -50,9 +50,9 @@ export function FreePlan() {
 const FC_ICON = { remote: Globe, local: Terminal, sqlite: Database, folder: FolderOpen } as const
 export function FreeConnectors() {
   return (
-    <Section id="connectors" tone="b">
+    <Section id="connectors" tone="b" className="fit">
       <SectionHead eyebrow="Free connectors" title={<span id="connectors-h">Connect for Free</span>} text="Start connecting your business information without paying for the basic connector types." />
-      <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="fit-gap mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {FREE_CONNECTORS.map((c, i) => {
           const I = FC_ICON[c.icon]
           return (
@@ -197,9 +197,9 @@ export function Payments() {
   const once = ['Extra dashboards', 'Extra workflows', 'Customer channel lines', 'Approvals', 'Phone mode', 'Software-profile packs']
   const monthly = ['Extra users', 'Company web address', 'Every software profile', 'Every paid connector']
   return (
-    <Section id="payments" tone="b">
+    <Section id="payments" tone="b" className="fit">
       <SectionHead eyebrow="Billing" title={<span id="payments-h">Simple, Transparent Payments</span>} text="Two payment methods. Every price is in USD and excludes applicable local taxes." />
-      <div className="mt-12 grid gap-5 md:grid-cols-2">
+      <div className="fit-gap mt-12 grid gap-5 md:grid-cols-2">
         <Reveal variant="left"><div className="glass h-full rounded-[1.75rem] border-amber-300/20 p-7"><Billing type="one-time" /><h3 className="mt-4 font-display text-2xl font-extrabold text-white">One-time payments</h3><p className="mt-1 text-sm text-slate-300">Paid once through a payment link. Used for:</p><ul className="mt-4 space-y-2">{once.map((x) => <li key={x} className="flex gap-2 text-sm text-slate-200"><span aria-hidden className="mt-2 h-1.5 w-1.5 rounded-full bg-amber-300" />{x}</li>)}</ul></div></Reveal>
         <Reveal variant="right"><div className="glass h-full rounded-[1.75rem] border-cyan-300/20 p-7"><Billing type="monthly" /><h3 className="mt-4 font-display text-2xl font-extrabold text-white">Monthly subscriptions</h3><p className="mt-1 text-sm text-slate-300">Renew monthly through Razorpay. Used for:</p><ul className="mt-4 space-y-2">{monthly.map((x) => <li key={x} className="flex gap-2 text-sm text-slate-200"><span aria-hidden className="mt-2 h-1.5 w-1.5 rounded-full bg-cyan-300" />{x}</li>)}</ul></div></Reveal>
       </div>
@@ -227,9 +227,9 @@ export function Approval() {
     return () => window.clearInterval(id)
   }, [pause, calm])
   return (
-    <Section id="approval">
+    <Section id="approval" className="fit">
       <SectionHead eyebrow="Approval process" title={<span id="approval-h">Every Purchase Is Reviewed and Approved</span>} text="Your requested capabilities become active only after Techlogica reviews and approves your purchase request." />
-      <div className="relative mt-14" onMouseEnter={() => setPause(true)} onMouseLeave={() => setPause(false)}>
+      <div className="fit-gap relative mt-14" onMouseEnter={() => setPause(true)} onMouseLeave={() => setPause(false)}>
         <div aria-hidden className="absolute left-[12.5%] right-[12.5%] top-[42px] hidden h-0.5 rounded-full bg-white/10 lg:block"><div className="flow-line h-full rounded-full transition-[width] duration-700" style={{ width: `${(on / 3) * 100}%` }} /></div>
         <ol className="relative z-10 grid gap-4 [perspective:1200px] sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => {

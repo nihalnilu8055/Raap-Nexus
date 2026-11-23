@@ -75,16 +75,16 @@ export default function DownloadSection() {
   const [os, setOs] = useState<Plat | null>(null)
   useEffect(() => { const u = navigator.userAgent; setOs(/Windows/i.test(u) ? 'windows' : /Mac/i.test(u) && !/iPhone|iPad/i.test(u) ? 'macos' : null) }, [])
   return (
-    <section ref={ref} id="download" aria-labelledby="download-h" className="relative overflow-hidden bg-[#040a1c] px-6 py-20 sm:py-24">
+    <section ref={ref} id="download" aria-labelledby="download-h" className="relative flex flex-col justify-center overflow-hidden bg-[#040a1c] px-6 py-20 sm:py-24 lg:min-h-svh lg:pb-[clamp(1.5rem,5vh,4rem)] lg:pt-[clamp(5rem,11vh,7rem)]">
       <div aria-hidden className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 55% 55% at 50% 0%, rgba(37,99,235,.28), transparent 70%)' }} />
       <div aria-hidden className="absolute inset-0 opacity-[.07]" style={{ backgroundImage: 'linear-gradient(#8fb4ff 1px,transparent 1px),linear-gradient(90deg,#8fb4ff 1px,transparent 1px)', backgroundSize: '56px 56px', maskImage: 'radial-gradient(ellipse 70% 70% at 50% 40%,#000,transparent)' }} />
-      <div className="relative mx-auto max-w-4xl">
+      <div className="relative mx-auto w-full max-w-4xl">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: EASE }} className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-sky-300/20 bg-sky-400/10 px-3.5 py-1.5 font-display text-[11px] font-bold uppercase tracking-[.16em] text-sky-200"><Download size={13} aria-hidden />Desktop app</span>
           <h2 id="download-h" className="mx-auto mt-5 max-w-2xl font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl">Take Your Business Intelligence <span className="bg-gradient-to-r from-sky-200 to-blue-500 bg-clip-text text-transparent">Anywhere</span></h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">Download RaapNexus for your desktop and connect your business systems with intelligent financial insights.</p>
         </motion.div>
-        <div className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-2 md:gap-7">
+        <div className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-2 md:gap-7 lg:mt-[clamp(1.25rem,4.5vh,3rem)]">
           <Card plat="windows" index={0} recommended={os === 'windows'} />
           <Card plat="macos" index={1} recommended={os === 'macos'} />
         </div>

@@ -25,3 +25,25 @@
 @keyframes flowmove{to{background-position:-200% 0}}
 @media (prefers-reduced-motion:reduce){.px .flow-line{animation:none}}
 .px details>summary::-webkit-details-marker{display:none}
+
+
+/* ───────── Single-screen sections (laptop / desktop only) ─────────
+   .fit sections fill the visible height (header included) and centre their content; sizes follow the viewport HEIGHT so the whole
+   section stays in view on short laptops and spreads out on tall screens. Phones/tablets and every long section scroll normally. */
+@media (min-width: 1024px) and (min-height: 600px) {
+  section.fit { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; scroll-margin-top: 0; padding-top: clamp(4.75rem, 11vh, 7rem); padding-bottom: clamp(1.25rem, 4.5vh, 3.5rem); }
+  section.fit > div { width: 100%; }
+  section.fit .fit-gap { margin-top: clamp(1rem, 3.6vh, 3rem); }
+  section.fit h2 { font-size: clamp(1.85rem, 5.2vh, 2.6rem); }
+  section.fit h2 + p { margin-top: clamp(.4rem, 1.4vh, 1rem); font-size: clamp(.95rem, 2.2vh, 1.125rem); }
+  /* hero */
+  section.fit-hero h1 { font-size: clamp(2rem, 6.4vh, 3.35rem); margin-top: clamp(.6rem, 2vh, 1.25rem); }
+  section.fit-hero .fit-cta { margin-top: clamp(1rem, 3.2vh, 2rem); }
+  section.fit-hero .fit-stats { margin-top: clamp(1rem, 3.4vh, 2.25rem); }
+  section.fit-hero .hero-art { width: auto; height: clamp(300px, 52vh, 540px); aspect-ratio: 1.05 / 1; max-width: 100%; }
+  /* free base plan */
+  section.fit .fit-card { padding: clamp(1.25rem, 4vh, 2.5rem); }
+  section.fit .fit-zero { font-size: clamp(3.75rem, 13vh, 6rem); }
+  section.fit .fit-tile { padding: clamp(.85rem, 2.4vh, 1.25rem); }
+  section.fit .fit-tile .num { font-size: clamp(2.25rem, 7.2vh, 3.75rem); }
+}

@@ -64,6 +64,7 @@ export function SectionHead({ eyebrow, title, text, align = 'center' }: { eyebro
 }
 
 export function Section({ id, children, className = '', tone = 'a' }: { id: string; children: ReactNode; className?: string; tone?: 'a' | 'b' }) {
+  // className "fit" = a section that fills one screen on laptop/desktop (see pricing.css); every other section scrolls normally
   return (
     <section id={id} aria-labelledby={`${id}-h`} className={`relative scroll-mt-24 px-4 py-20 sm:px-6 sm:py-24 ${tone === 'b' ? 'bg-[#050d24]' : ''} ${className}`}>
       <div className="mx-auto max-w-[1200px]">{children}</div>

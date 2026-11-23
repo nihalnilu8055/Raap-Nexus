@@ -43,11 +43,11 @@ export default function Hero() {
   const active = HUB_ITEMS.find((h) => h.id === hover)
 
   return (
-    <section id="pricing-hero" aria-labelledby="pricing-h1" className="relative overflow-hidden px-4 pb-14 pt-28 sm:px-6 sm:pt-36 lg:pb-20">
+    <section id="pricing-hero" aria-labelledby="pricing-h1" className="fit fit-hero relative overflow-hidden px-4 pb-12 pt-28 sm:px-6 sm:pt-32">
       <div aria-hidden className="grid-bg absolute inset-0" />
       <div aria-hidden className="absolute -right-40 top-10 h-[640px] w-[640px] rounded-full bg-blue-600/20 blur-[140px]" />
       <div aria-hidden className="absolute -left-40 bottom-0 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-[120px]" />
-      <div className="relative mx-auto grid max-w-[1200px] items-center gap-10 lg:grid-cols-[1.02fr_1fr] lg:gap-6">
+      <div className="relative mx-auto grid w-full max-w-[1200px] items-center gap-10 lg:grid-cols-[1.02fr_1fr] lg:gap-6">
         <div className="min-w-0">
           <Reveal>
             <p className="inline-flex items-center gap-2 rounded-full border border-sky-300/25 bg-sky-400/10 px-3.5 py-1.5 font-display text-xs font-bold uppercase tracking-[0.18em] text-sky-200"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />RaapNexus Pricing</p>
@@ -55,12 +55,12 @@ export default function Hero() {
               <span className="glow-text">Powerful Business Intelligence.</span> Pricing That Scales With You.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">Start free with RaapNexus. Connect your business systems, unlock advanced capabilities and pay only for what your business needs.</p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="fit-cta mt-8 flex flex-wrap gap-3">
               <a href="#profiles" className="inline-flex items-center gap-2 rounded-full bg-electric-blue px-6 py-3 font-display text-sm font-bold text-white shadow-[0_10px_30px_-10px_rgba(37,99,235,.9)] transition hover:-translate-y-0.5 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300">View pricing <ArrowDown size={16} aria-hidden /></a>
               <a href="#calculator" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[.06] px-6 py-3 font-display text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/[.12] focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"><Calculator size={16} aria-hidden />Estimate your cost</a>
             </div>
           </Reveal>
-          <dl className="mt-9 grid max-w-xl grid-cols-3 gap-3">
+          <dl className="fit-stats mt-9 grid max-w-xl grid-cols-3 gap-3">
             {[['$0', 'to start'], ['4', 'free connectors'], ['USD', 'excl. local taxes']].map(([a, b]) => (
               <div key={b} className="glass rounded-2xl px-4 py-3"><dt className="sr-only">{b}</dt><dd className="font-display text-xl font-extrabold text-white sm:text-2xl">{a}<span className="mt-1 block text-[11px] font-semibold uppercase leading-tight tracking-wider text-slate-400">{b}</span></dd></div>
             ))}
@@ -68,7 +68,7 @@ export default function Hero() {
         </div>
 
         <div className="min-w-0">
-          <div className="relative mx-auto aspect-square w-full max-w-[560px] sm:aspect-[1.05/1]" role="img" aria-label="Interactive 3D model: the RaapNexus core connected to ERP systems, databases, AI agents, dashboards, business intelligence, data sources and workflows.">
+          <div className="hero-art relative mx-auto aspect-square w-full max-w-[560px] sm:aspect-[1.05/1]" role="img" aria-label="Interactive 3D model: the RaapNexus core connected to ERP systems, databases, AI agents, dashboards, business intelligence, data sources and workflows.">
             <div aria-hidden className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,rgba(47,107,255,.28),transparent 68%)]" />
             {!live && <Fallback />}
             {live && (
