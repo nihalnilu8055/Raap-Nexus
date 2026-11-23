@@ -8,6 +8,7 @@ import Home from '../../pages/Home'
 const VideoLibrary = lazy(() => import('../../pages/VideoLibrary')) // the library is a separate route chunk: it is not downloaded for the home page
 import NotFound from '../../pages/NotFound'
 const LegalPage = lazy(() => import('../../pages/LegalPage')) // LEGAL-PAGES (removable): own chunk, not downloaded for the home page
+const PricingPage = lazy(() => import('../../pricing/PricingPage')) // PRICING-PAGE (removable): own chunk, not downloaded for the home page
 const LEGAL = ['privacy-policy', 'cookie-policy', 'terms', 'disclaimer'] as const
 const HelpCenter = lazy(() => import('../../help/HelpCenter')) // the portal (styles, behaviour) is its own chunk: the home page never downloads it
 
@@ -36,6 +37,11 @@ export default function LangRoute() {
   if (seg.length === 1 && (LEGAL as readonly string[]).includes(seg[0])) {
     return <I18nProvider lang={lang}><Suspense fallback={<div className="min-h-screen bg-[#040a1c]" />}><LegalPage slug={seg[0] as (typeof LEGAL)[number]} /></Suspense></I18nProvider>
   }
+  // PRICING-PAGE (removable) — start
+  if (seg[0] === 'pricing' && seg.length === 1) {
+    return <I18nProvider lang={lang}><motion.div key="pricing" initial={animate ? { opacity: 0 } : false} animate={{ opacity: 1 }} transition={{ duration: 0.35, ease: 'easeOut' }}><Suspense fallback={<div className="min-h-screen bg-[#040a1c]" />}><PricingPage /></Suspense></motion.div></I18nProvider>
+  }
+  // PRICING-PAGE (removable) — end
   const videos = seg[0] === 'videos' && seg.length === 1
   return (
     <I18nProvider lang={lang}>

@@ -1,0 +1,27 @@
+/* PRICING-PAGE (removable): part of the self-contained Pricing feature, see README-REMOVE.md */
+/* Pricing page only. Colour language: free = emerald, monthly = cyan, one-time = amber. */
+.px{--free:#34d399;--mo:#22d3ee;--once:#fbbf24;--ink:#040a1c;--line:rgba(148,197,255,.14)}
+.px .glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 60px -30px rgba(0,0,0,.7);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.px .grid-bg{background-image:linear-gradient(rgba(96,165,250,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.06) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 30%,#000 30%,transparent 80%);mask-image:radial-gradient(ellipse 70% 60% at 50% 30%,#000 30%,transparent 80%)}
+.px .tilt{transform-style:preserve-3d;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .35s;will-change:transform}
+.px .tilt:hover{border-color:rgba(96,165,250,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 30px 70px -28px rgba(37,99,235,.55)}
+.px .plate{background:linear-gradient(180deg,#f4f8ff,#e4ecf9);box-shadow:inset 0 1px 0 #fff,0 6px 16px -8px rgba(0,0,0,.6);border-radius:14px}
+.px .num{font-variant-numeric:tabular-nums}
+.px .shine{position:relative;overflow:hidden}
+.px .shine::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.12) 50%,transparent 65%);transform:translateX(-120%);transition:transform .9s}
+.px .shine:hover::after{transform:translateX(120%)}
+.px .glow-text{background:linear-gradient(120deg,#fff 10%,#9fd0ff 45%,#22d3ee 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.px input[type=range]{accent-color:#3b82f6}
+/* CSS-3D fallback hero (no WebGL / before the scene starts) */
+.px .fb{perspective:900px;position:absolute;inset:0;display:grid;place-items:center}
+.px .fb-stage{position:relative;width:min(88%,420px);aspect-ratio:1;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(-20deg)}
+.px .fb-ring{position:absolute;inset:var(--i);border-radius:50%;border:1px solid rgba(96,165,250,.35);transform-style:preserve-3d;animation:fbspin var(--d) linear infinite}
+.px .fb-ring::after{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:3px;background:var(--c);box-shadow:0 0 16px var(--c)}
+.px .fb-core{position:absolute;inset:36%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#9fd0ff,#2563eb 45%,#0a1d52);transform:translateZ(20px) rotateX(-58deg) rotateZ(20deg)}
+@keyframes fbspin{to{transform:rotateZ(360deg)}}
+@media (prefers-reduced-motion:reduce){.px .fb-ring{animation:none}.px .tilt,.px .shine::after{transition:none}}
+/* approval timeline */
+.px .flow-line{background:linear-gradient(90deg,rgba(34,211,238,.9),rgba(59,130,246,.9));background-size:200% 100%;animation:flowmove 3s linear infinite}
+@keyframes flowmove{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.px .flow-line{animation:none}}
+.px details>summary::-webkit-details-marker{display:none}

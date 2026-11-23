@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react' // PRICING-PAGE (removable): Fragment is only used by the Pricing item; the original import is { useEffect, useRef, useState }
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
@@ -10,6 +10,9 @@ import { EASE } from '../../lib/motion'
 import { useI18n } from '../../i18n'
 import { LanguageSelector } from './Selectors'
 
+// PRICING-PAGE (removable) — start
+const PRICING_LABEL: Record<string, string> = { en: 'Pricing', ar: 'الأسعار', fr: 'Tarifs', de: 'Preise', es: 'Precios' }
+// PRICING-PAGE (removable) — end
 const LINKS = [
   { label: 'nav.platform', id: 'platform', also: [] as string[] },
   { label: 'nav.services', id: 'services', also: ['intelligence', 'audit'] },
@@ -22,6 +25,9 @@ export default function SiteNav() {
   const loc = useLocation()
   const nav = useNavigate()
   const homePath = `/${lang}`
+  // PRICING-PAGE (removable) — start
+  const onPricing = /\/pricing\/?$/.test(loc.pathname)
+  // PRICING-PAGE (removable) — end
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [current, setCurrent] = useState('')
@@ -84,6 +90,21 @@ export default function SiteNav() {
     window.setTimeout(tick, 700)
   }
 
+  // PRICING-PAGE (removable) — start
+  const pricingDesktop = (
+    <li>
+      <Link to={`/${lang}/pricing`} aria-current={onPricing ? 'page' : undefined}
+        className={`relative rounded-full px-3 py-2 transition-[background-color,color,transform] duration-200 hover:bg-electric-blue/10 active:scale-95 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${onPricing ? 'text-sky-300' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}>
+        {PRICING_LABEL[lang] ?? PRICING_LABEL.en}
+        {onPricing && <motion.span layoutId="navdot" className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-electric-blue" />}
+      </Link>
+    </li>
+  )
+  const pricingMobile = (
+    <li><Link to={`/${lang}/pricing`} onClick={() => setOpen(false)} aria-current={onPricing ? 'page' : undefined} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{PRICING_LABEL[lang] ?? PRICING_LABEL.en}</Link></li>
+  )
+  // PRICING-PAGE (removable) — end
+
   return (
     <header className={`fixed inset-x-0 top-0 z-50 flex justify-center px-3 transition-[padding] duration-500 ease-[cubic-bezier(.22,1,.36,1)] sm:px-5 ${scrolled ? 'pt-2 sm:pt-3' : 'pt-3 sm:pt-5'}`}>
       <motion.nav
@@ -98,13 +119,13 @@ export default function SiteNav() {
         </Link>
         <ul className="hidden items-center gap-0 xl:flex">
           {LINKS.map((l) => (
-            <li key={l.id}>
+            <Fragment key={l.id}>{l.id === 'about' && pricingDesktop}<li>
               <a href={`#${l.id}`} onClick={go(l.id)} aria-current={current === l.id ? 'true' : undefined}
                 className={`relative rounded-full px-3 py-2 transition-[background-color,color,transform] duration-200 hover:bg-electric-blue/10 active:scale-95 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-sky-300' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}>
                 {t(l.label)}
                 {current === l.id && <motion.span layoutId="navdot" className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-electric-blue" />}
               </a>
-            </li>
+            </li></Fragment>
           ))}
           <li>
             <Link to={`/${lang}/help`} className="relative rounded-full px-3 py-2 transition-[background-color,color,transform] duration-200 hover:bg-electric-blue/10 active:scale-95 font-display text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue ${current === l.id ? 'text-sky-300' : 'text-slate-300 hover:bg-white/10 hover:text-white'} text-slate-300 hover:bg-white/10 hover:text-white">{t('nav.help')}</Link>
@@ -124,7 +145,7 @@ export default function SiteNav() {
               className="absolute inset-x-0 top-[calc(100%+10px)] rounded-3xl border border-slate-200 bg-white p-3 shadow-2xl xl:hidden">
               <ul className="flex flex-col">
                 {LINKS.map((l) => (
-                  <li key={l.id}><a href={`#${l.id}`} onClick={go(l.id)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t(l.label)}</a></li>
+                  <Fragment key={l.id}>{l.id === 'about' && pricingMobile}<li><a href={`#${l.id}`} onClick={go(l.id)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t(l.label)}</a></li></Fragment>
                 ))}
                 <li><Link to={`/${lang}/help`} onClick={() => setOpen(false)} className="block rounded-2xl px-4 py-3 font-display text-lg font-bold text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue">{t('nav.help')}</Link></li>
               </ul>

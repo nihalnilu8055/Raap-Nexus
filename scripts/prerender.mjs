@@ -100,9 +100,29 @@ for (const l of langs) for (const slug of ['privacy-policy', 'cookie-policy', 't
   mkdirSync(join(dist, l.code, slug), { recursive: true }); writeFileSync(join(dist, l.code, slug, 'index.html'), page(l))
 }
 
+// PRICING-PAGE (removable) — start: pre-built /<lang>/pricing/index.html (same shell, pricing title/description/canonical)
+const PRICING_T = 'Pricing | RaapNexus — Start Free, Pay Only for What You Need'
+const PRICING_D = 'RaapNexus pricing in USD: a free baseline with free connectors, add-ons, ERP and accounting software profiles, paid database connectors and a pricing calculator. Every purchase is reviewed and approved by Techlogica.'
+for (const l of langs) {
+  const u = `${SITE}/${l.code}/pricing`
+  const alt = langs.map((x) => `<link rel="alternate" hreflang="${x.code}" href="${SITE}/${x.code}/pricing" />`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${SITE}/en/pricing" />`
+  const html = page(l)
+    .replace(/<title>.*?<\/title>/, `<title>${esc(PRICING_T)}</title>`)
+    .replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(PRICING_D)}$2`)
+    .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${esc(PRICING_T)}$2`)
+    .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(PRICING_D)}$2`)
+    .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${esc(PRICING_T)}$2`)
+    .replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${esc(PRICING_D)}$2`)
+    .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${u}$2`)
+    .replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${u}" />`)
+    .replace(/(<link rel="alternate" hreflang="[^"]*" href="[^"]*" \/>\s*)+/, alt + '\n    ')
+  mkdirSync(join(dist, l.code, 'pricing'), { recursive: true }); writeFileSync(join(dist, l.code, 'pricing', 'index.html'), html)
+}
+// PRICING-PAGE (removable) — end
+
 const today = new Date().toISOString().slice(0, 10)
 const altsFor = (path) => langs.map((l) => `    <xhtml:link rel="alternate" hreflang="${l.code}" href="${SITE}/${l.code}/${path}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/en/${path}"/>`
-const entries = [['', 1.0], ['videos', 0.7]]
+const entries = [['', 1.0], ['videos', 0.7], ['pricing', 0.8] /* PRICING-PAGE (removable) */]
 writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${entries.flatMap(([p]) => langs.map((l) => `  <url>\n    <loc>${SITE}/${l.code}/${p}</loc>\n    <lastmod>${today}</lastmod>\n${altsFor(p)}\n  </url>`)).join('\n')}\n</urlset>\n`)
 writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${SITE}/sitemap.xml\n`)
 console.log(`prerendered ${langs.length} languages (${langs.map((l) => l.code).join(', ')}), sitemap.xml, robots.txt -> ${SITE}`)
