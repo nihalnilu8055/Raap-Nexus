@@ -61,7 +61,7 @@ export default function Hero() {
             </div>
           </Reveal>
           <dl className="fit-stats mt-9 grid max-w-xl grid-cols-3 gap-3">
-            {[['$0', 'to start'], ['4', 'free connectors'], ['USD', 'excl. local taxes']].map(([a, b]) => (
+            {[['$0', 'to start'], ['4', 'free connectors'], ['$1', 'add-ons from']].map(([a, b]) => (
               <div key={b} className="glass rounded-2xl px-4 py-3"><dt className="sr-only">{b}</dt><dd className="font-display text-xl font-extrabold text-white sm:text-2xl">{a}<span className="mt-1 block text-[11px] font-semibold uppercase leading-tight tracking-wider text-slate-400">{b}</span></dd></div>
             ))}
           </dl>

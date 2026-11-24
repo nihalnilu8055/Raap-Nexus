@@ -10,7 +10,7 @@ import { Billing, FreeBadge, Mark, Plate, Section, SectionHead, Tilt, usd } from
 
 /* ───────── A · Free base plan ───────── */
 export function FreePlan() {
-  const tiles = [['Users', FREE_BASELINE.users], ['Dashboards', FREE_BASELINE.dashboards], ['Workflows', FREE_BASELINE.workflows], ['Software profiles', FREE_BASELINE.profiles]] as const
+  const tiles = [['Users', FREE_BASELINE.users], ['Dashboards', FREE_BASELINE.dashboards], ['Workflows', FREE_BASELINE.workflows], ['Free Connectors', FREE_CONNECTORS.length]] as const
   return (
     <Section id="free" className="fit">
       <SectionHead eyebrow="Free base plan" title={<span id="free-h">Start Free. Grow When You Need.</span>} text="Every RaapNexus installation starts with useful business intelligence capabilities at no cost. Add more users, dashboards, workflows and integrations only when your business needs them." />
