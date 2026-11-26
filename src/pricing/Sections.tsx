@@ -1,7 +1,7 @@
 // PRICING-PAGE (removable): part of the self-contained Pricing feature, see README-REMOVE.md
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { AlertTriangle, ArrowRight, BadgeCheck, ChevronDown, ClipboardList, Cable, Database, FileText, FolderOpen, Globe, Info, Layers, Mail, SearchCheck, ShieldCheck, Terminal, Zap } from 'lucide-react'
+import { ArrowRight, BadgeCheck, ChevronDown, ClipboardList, Cable, Database, FileText, FolderOpen, Globe, Info, Layers, Mail, SearchCheck, ShieldCheck, Terminal, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Reveal } from '../components/ui/Reveal'
 import { openContact } from '../lib/contact'
@@ -203,9 +203,6 @@ export function Payments() {
         <Reveal variant="left"><div className="glass h-full rounded-[1.75rem] border-amber-300/20 p-7"><Billing type="one-time" /><h3 className="mt-4 font-display text-2xl font-extrabold text-white">One-time payments</h3><p className="mt-1 text-sm text-slate-300">Paid once through a payment link. Used for:</p><ul className="mt-4 space-y-2">{once.map((x) => <li key={x} className="flex gap-2 text-sm text-slate-200"><span aria-hidden className="mt-2 h-1.5 w-1.5 rounded-full bg-amber-300" />{x}</li>)}</ul></div></Reveal>
         <Reveal variant="right"><div className="glass h-full rounded-[1.75rem] border-cyan-300/20 p-7"><Billing type="monthly" /><h3 className="mt-4 font-display text-2xl font-extrabold text-white">Monthly subscriptions</h3><p className="mt-1 text-sm text-slate-300">Renew monthly through Razorpay. Used for:</p><ul className="mt-4 space-y-2">{monthly.map((x) => <li key={x} className="flex gap-2 text-sm text-slate-200"><span aria-hidden className="mt-2 h-1.5 w-1.5 rounded-full bg-cyan-300" />{x}</li>)}</ul></div></Reveal>
       </div>
-      <Reveal className="mx-auto mt-6 max-w-4xl">
-        <div className="flex gap-3 rounded-2xl border border-amber-300/35 bg-amber-400/[.08] px-5 py-4 text-sm leading-relaxed text-amber-50"><AlertTriangle size={20} className="mt-0.5 shrink-0 text-amber-300" aria-hidden /><p><strong>Product ID requirement.</strong> Monthly subscriptions can be purchased online only after the corresponding Razorpay product ID has been configured. If it has not been configured, the Marketplace displays a “Needs a product ID” warning.</p></div>
-      </Reveal>
     </Section>
   )
 }
@@ -247,7 +244,6 @@ export function Approval() {
           })}
         </ol>
       </div>
-      <Reveal className="mx-auto mt-8 max-w-3xl"><p className="rounded-2xl border border-white/10 bg-white/[.03] px-5 py-4 text-center text-sm leading-relaxed text-slate-300">Nothing is automatic: payment and activation do not happen before the administrator approves. <strong className="text-white">Every purchase is subject to Techlogica approval.</strong></p></Reveal>
     </Section>
   )
 }
@@ -288,9 +284,7 @@ const FAQ: [string, string][] = [
   ['What is the difference between a software profile and a connector?', 'A software profile provides the knowledge about a specific business system. A connector is the connection to a database or API. Profiles and paid connectors are priced separately, and each is billed monthly.'],
   ['Do I pay separately for a connector if I already purchase its software profile?', 'No. If you already purchase the matching software profile, the connectors made specifically for that software are included at no additional cost. You are never charged twice for the same included connector capability.'],
   ['Are additional dashboards and workflows monthly or one-time payments?', 'One-time. Extra dashboards and extra workflows are $1 each, paid once. By contrast, extra users ($1 each) and the company web address ($1) are monthly subscriptions.'],
-  ['How does the approval process work?', 'You request an add-on or integration inside RaapNexus. A Techlogica administrator reviews it in the Central Console Marketplace, then approves or rejects it. If it is rejected, you can see the reason. Every purchase is subject to Techlogica approval.'],
   ['How quickly does an approved purchase become active?', 'The approved change reaches your application during its next hourly check-in, or immediately when you select “Check now.”'],
-  ['Why does the Marketplace display “Needs a product ID”?', 'Monthly subscriptions can be purchased online only after the corresponding Razorpay product ID has been configured. If it has not been configured, the Marketplace displays a “Needs a product ID” warning.'],
   ['Which currency are the prices displayed in?', 'All prices are in US dollars (USD).'],
   ['Are local taxes included?', 'No. Prices exclude applicable local taxes.'],
 ]
