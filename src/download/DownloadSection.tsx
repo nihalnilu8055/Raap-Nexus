@@ -3,13 +3,7 @@ import { useEffect, useRef, useState, type ComponentType } from 'react'
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
 import { Check, Download, Loader2, Clock, Smartphone } from 'lucide-react'
 import { EASE } from '../lib/motion'
-
-/** Official GitHub release v3.3.19 assets (santoputhoor/raap-nexus-releases), each tested: 302 to the asset, correct size, MZ / PK headers, attachment filename matches. Set a url to null to show the "awaiting installer" state. */
-export const DOWNLOADS = {
-  windows: { url: 'https://github.com/santoputhoor/raap-nexus-releases/releases/download/v3.3.19/RaapNexus-Setup-3.3.19.exe' as string | null, file: 'RaapNexus-Setup-3.3.19.exe' },
-  macos: { url: 'https://github.com/santoputhoor/raap-nexus-releases/releases/download/v3.3.19/RaapNexus-3.3.19-mac.zip' as string | null, file: 'RaapNexus-3.3.19-mac.zip' },
-  mobile: { url: 'https://github.com/santoputhoor/raap-nexus-releases/releases/download/v3.3.19/RaapNexus-3.3.19.apk' as string | null, file: 'RaapNexus-3.3.19.apk' },
-}
+import { explain, useLatestRelease, type Asset, type Plat, type Source } from './releases'
 
 const WinIcon = ({ className = '' }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden fill="currentColor"><path d="M2 4.6 10.4 3.4v7.8H2zM11.5 3.3 22 1.8v9.4H11.5zM2 12.3h8.4v7.9L2 19zM11.5 12.3H22v9.4l-10.5-1.5z" /></svg>
@@ -18,7 +12,6 @@ const AppleIcon = ({ className = '' }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden fill="currentColor"><path d="M17.05 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.15-2.8.85-3.5.85-.75 0-1.85-.8-3.05-.8-1.55 0-3 .9-3.8 2.3-1.65 2.85-.4 7 1.15 9.3.8 1.1 1.7 2.35 2.9 2.3 1.15-.05 1.6-.75 3-.75s1.8.75 3.05.7c1.25-.05 2.05-1.15 2.8-2.25.9-1.3 1.25-2.55 1.3-2.6-.05 0-2.45-.95-2.5-3.75zM14.8 5.8c.65-.8 1.1-1.9.95-3-.95.05-2.1.65-2.75 1.45-.6.7-1.1 1.8-.95 2.9 1.05.1 2.1-.5 2.75-1.35z" /></svg>
 )
 
-type Plat = 'windows' | 'macos' | 'mobile'
 const META: Record<Plat, { title: string; desc: string; btn: string; kind: string; Icon: ComponentType<{ className?: string }>; glow: string; chip: string }> = {
   windows: { title: 'RaapNexus for Windows', desc: 'Download the desktop application for Windows.', btn: 'Download for Windows', kind: 'Windows installer · .exe', Icon: WinIcon, glow: '56,189,248', chip: 'from-sky-400 to-blue-600' },
   macos: { title: 'RaapNexus for macOS', desc: 'Download the desktop application for macOS.', btn: 'Download for macOS', kind: 'macOS app · .zip', Icon: AppleIcon, glow: '167,139,250', chip: 'from-slate-200 to-slate-400' },
@@ -28,8 +21,9 @@ const META: Record<Plat, { title: string; desc: string; btn: string; kind: strin
 /** When false the button follows the verified installer URL (the browser downloads the file). Kept as a switch for demos. */
 const DEMO = false
 
-function Card({ plat, recommended, index }: { plat: Plat; recommended: boolean; index: number }) {
-  const m = META[plat]; const d = DOWNLOADS[plat]; const live = !!d.url
+type Phase = 'loading' | 'ready' | 'stale' | 'error'
+function Card({ plat, recommended, index, asset, phase, tag }: { plat: Plat; recommended: boolean; index: number; asset: Asset | null; phase: Phase; tag: string }) {
+  const m = META[plat]; const live = !!asset && phase !== 'loading' && phase !== 'error'
   const reduced = !!useReducedMotion()
   const [state, setState] = useState<'idle' | 'busy' | 'done'>('idle')
   const mx = useMotionValue(0), my = useMotionValue(0)
@@ -59,11 +53,11 @@ function Card({ plat, recommended, index }: { plat: Plat; recommended: boolean; 
           <p className="mt-2 max-w-xs text-[15px] leading-relaxed text-slate-300">{m.desc}</p>
           <p className="mt-3 font-display text-[11px] font-semibold uppercase tracking-[.14em] text-slate-400 md:text-[10px] md:tracking-[.06em] lg:text-[11px] lg:tracking-[.14em]">{m.kind}</p>
           <span className="flex-1" aria-hidden />
-          <a href={live ? d.url! : undefined} download={live ? d.file : undefined} onClick={click} aria-disabled={!live} aria-live="polite" data-testid={`dl-${plat}`} data-state={live ? state : 'pending'}
+          <a href={live ? asset!.url : undefined} download={live ? asset!.name : undefined} title={live ? asset!.name : undefined} onClick={click} aria-disabled={!live} aria-live="polite" data-testid={`dl-${plat}`} data-state={live ? state : phase === 'loading' ? 'loading' : 'pending'}
             className={`relative mt-6 inline-flex w-full max-w-full items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-full px-6 py-3.5 font-display text-base font-bold md:gap-1.5 md:px-2 md:text-[13px] md:[&_svg]:hidden lg:[&_svg]:inline-block lg:gap-2.5 lg:px-6 lg:text-base transition-[transform,box-shadow,filter,background-color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#040a1c] sm:w-auto ${live ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-[0_14px_34px_-10px_rgba(37,99,235,.9)] hover:brightness-110 hover:shadow-[0_18px_44px_-10px_rgba(56,189,248,.8)] active:scale-[.97]' : 'cursor-not-allowed border border-white/15 bg-white/5 text-slate-400'}`}>
             <AnimatePresence mode="wait" initial={false}>
-              <motion.span key={live ? state : 'pending'} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }} className="inline-flex items-center gap-2.5">
-                {!live ? <><Clock size={18} aria-hidden />Installer coming soon</> : state === 'busy' ? <><Loader2 size={18} className="animate-spin" aria-hidden />Preparing download…</> : state === 'done' ? <><Check size={18} aria-hidden />Download started</> : <><Download size={18} aria-hidden />{m.btn}</>}
+              <motion.span key={live ? state : phase === 'loading' ? 'loading' : 'pending'} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }} className="inline-flex items-center gap-2.5">
+                {!live ? (phase === 'loading' ? <><Loader2 size={18} className="animate-spin" aria-hidden />Checking latest release…</> : phase === 'error' ? <><Clock size={18} aria-hidden />Unavailable right now</> : <><Clock size={18} aria-hidden />Not available in {tag}</>) : state === 'busy' ? <><Loader2 size={18} className="animate-spin" aria-hidden />Preparing download…</> : state === 'done' ? <><Check size={18} aria-hidden />Download started</> : <><Download size={18} aria-hidden />{m.btn}</>}
               </motion.span>
             </AnimatePresence>
           </a>
@@ -73,9 +67,14 @@ function Card({ plat, recommended, index }: { plat: Plat; recommended: boolean; 
   )
 }
 
-export default function DownloadSection() {
+export default function DownloadSection({ source }: { source?: Source } = {}) {
   const ref = useRef<HTMLElement>(null)
   const [os, setOs] = useState<Plat | null>(null)
+  const { state } = useLatestRelease(source)
+  const picks = state.status === 'ready' || state.status === 'stale' ? explain(state.release.assets).picks : { windows: null, macos: null, mobile: null }
+  const phase: Phase = state.status
+  const tag = state.status === 'ready' || state.status === 'stale' ? state.release.tag : ''
+  const card = (p: Plat, i: number) => <Card plat={p} index={i} recommended={os === p} asset={picks[p]} phase={phase} tag={tag} />
   useEffect(() => { const u = navigator.userAgent; setOs(/Android/i.test(u) ? 'mobile' : /Windows/i.test(u) ? 'windows' : /Mac/i.test(u) && !/iPhone|iPad/i.test(u) ? 'macos' : null) }, [])
   return (
     <section ref={ref} id="download" aria-labelledby="download-h" className="relative flex flex-col justify-center overflow-hidden bg-[#040a1c] px-6 py-20 sm:py-24 lg:min-h-svh lg:pb-[clamp(1.5rem,5vh,4rem)] lg:pt-[clamp(5rem,11vh,7rem)]">
@@ -88,9 +87,9 @@ export default function DownloadSection() {
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">Download RaapNexus for your desktop and connect your business systems with intelligent financial insights.</p>
         </motion.div>
         <div className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-3 md:gap-4 lg:gap-6 lg:mt-[clamp(1.25rem,4.5vh,3rem)]">
-          <Card plat="windows" index={0} recommended={os === 'windows'} />
-          <Card plat="macos" index={1} recommended={os === 'macos'} />
-          <Card plat="mobile" index={2} recommended={os === 'mobile'} />
+          {card('windows', 0)}
+          {card('macos', 1)}
+          {card('mobile', 2)}
         </div>
       </div>
     </section>
