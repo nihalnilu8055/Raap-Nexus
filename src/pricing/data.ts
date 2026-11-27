@@ -21,16 +21,17 @@ export const ADD_ONS: AddOn[] = [
 export const PRICE = Object.fromEntries(ADD_ONS.map((a) => [a.id, a.price])) as Record<string, number>
 
 export interface Profile { id: string; name: string; logo: string }
-export interface Tier { id: 1 | 2 | 3 | 4; name: string; price: number; profiles: Profile[] }
+export interface Tier { id: 1 | 2 | 3 | 4 | 5; name: string; price: number; profiles: Profile[] }
 export const TIERS: Tier[] = [
-  { id: 1, name: 'Premium ERP', price: 100, profiles: [
-    { id: 'odoo', name: 'Odoo', logo: 'odoo' }, { id: 'erpnext', name: 'ERPNext', logo: 'erpnext' }, { id: 's4', name: 'SAP S/4HANA', logo: 'sap' },
-    { id: 'dyn', name: 'Microsoft Dynamics', logo: 'dynamics' }, { id: 'netsuite', name: 'Oracle NetSuite', logo: 'netsuite' } ] },
-  { id: 2, name: 'Mid-Market ERP', price: 50, profiles: [
+  { id: 1, name: 'Premium ERP', price: 150, profiles: [
+    { id: 's4', name: 'SAP S/4HANA', logo: 'sap' }, { id: 'dyn', name: 'Microsoft Dynamics', logo: 'dynamics' }, { id: 'netsuite', name: 'Oracle NetSuite', logo: 'netsuite' } ] },
+  { id: 2, name: 'Business ERP', price: 100, profiles: [
+    { id: 'odoo', name: 'Odoo', logo: 'odoo' }, { id: 'erpnext', name: 'ERPNext', logo: 'erpnext' } ] },
+  { id: 3, name: 'Mid-Market ERP', price: 50, profiles: [
     { id: 'sapb1', name: 'SAP Business One', logo: 'sap' }, { id: 'nav', name: 'Microsoft Dynamics NAV', logo: 'dynamics' }, { id: 'sage50', name: 'Sage 50', logo: 'sage' },
     { id: 'sageacc', name: 'Sage Accounting', logo: 'sage' }, { id: 'dolibarr', name: 'Dolibarr', logo: 'dolibarr' } ] },
-  { id: 3, name: 'Standard', price: 20, profiles: [{ id: 'tallyprime', name: 'TallyPrime', logo: 'tally' }] },
-  { id: 4, name: 'Entry / Small Business', price: 1, profiles: [
+  { id: 4, name: 'Standard', price: 10, profiles: [{ id: 'tallyprime', name: 'TallyPrime', logo: 'tally' }] },
+  { id: 5, name: 'Entry / Small Business', price: 5, profiles: [
     { id: 'qb', name: 'QuickBooks', logo: 'quickbooks' }, { id: 'xero', name: 'Xero', logo: 'xero' }, { id: 'zohobooks', name: 'Zoho Books', logo: 'zoho' },
     { id: 'shopify', name: 'Shopify', logo: 'shopify' }, { id: 'woo', name: 'WooCommerce', logo: 'woocommerce' }, { id: 'ngpos', name: 'NG Restaurant POS', logo: 'ngpos' } ] },
 ]

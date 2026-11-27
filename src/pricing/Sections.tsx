@@ -117,9 +117,10 @@ export function AddOns() {
 /* ───────── D · Software profiles ───────── */
 const TIER_STYLE = {
   1: { ring: 'from-sky-400/60 to-blue-600/40', chip: 'text-sky-200 bg-sky-400/10 border-sky-300/40', inset: '' },
-  2: { ring: 'from-cyan-400/50 to-sky-600/30', chip: 'text-cyan-200 bg-cyan-400/10 border-cyan-300/40', inset: 'lg:mx-8' },
-  3: { ring: 'from-teal-300/45 to-cyan-600/30', chip: 'text-teal-200 bg-teal-400/10 border-teal-300/40', inset: 'lg:mx-16' },
-  4: { ring: 'from-slate-300/35 to-slate-500/20', chip: 'text-slate-200 bg-white/10 border-white/25', inset: 'lg:mx-24' },
+  2: { ring: 'from-sky-300/55 to-blue-500/35', chip: 'text-sky-200 bg-sky-400/10 border-sky-300/40', inset: 'lg:mx-6' },
+  3: { ring: 'from-cyan-400/50 to-sky-600/30', chip: 'text-cyan-200 bg-cyan-400/10 border-cyan-300/40', inset: 'lg:mx-12' },
+  4: { ring: 'from-teal-300/45 to-cyan-600/30', chip: 'text-teal-200 bg-teal-400/10 border-teal-300/40', inset: 'lg:mx-[4.5rem]' },
+  5: { ring: 'from-slate-300/35 to-slate-500/20', chip: 'text-slate-200 bg-white/10 border-white/25', inset: 'lg:mx-24' },
 } as const
 export function Profiles() {
   return (

@@ -4,15 +4,16 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Env } from '../three/parts'
 
-/** The satellites of the RaapNexus core. Shared with the DOM legend so the 3D scene and the page text always agree. */
+/** Eight holographic glass currency tokens orbit the core. Shared with the DOM legend so the 3D scene and the page text always agree. */
 export const HUB_ITEMS = [
-  { id: 'erp', name: 'ERP systems', text: 'Odoo, SAP, Dynamics, Tally and more.' },
-  { id: 'db', name: 'Business databases', text: 'SQL Server, PostgreSQL, MySQL and others.' },
-  { id: 'ai', name: 'AI agents', text: 'Assistants that read your connected data.' },
-  { id: 'dash', name: 'Financial dashboards', text: 'Live views of the numbers that matter.' },
-  { id: 'bi', name: 'Business intelligence', text: 'Analysis across every connected source.' },
-  { id: 'src', name: 'Connected data sources', text: 'MCP servers, files and APIs.' },
-  { id: 'flow', name: 'Workflow automation', text: 'Repeatable processes, automated.' },
+  { id: 'usd', name: 'USD', text: 'US Dollar · $', sym: '$', code: 'USD', finish: 'gold', size: 1.15, spin: 0.9 },
+  { id: 'inr', name: 'INR', text: 'Indian Rupee · ₹', sym: '₹', code: 'INR', finish: 'cyan', size: 0.95, spin: -0.7 },
+  { id: 'eur', name: 'EUR', text: 'Euro · €', sym: '€', code: 'EUR', finish: 'blue', size: 1.3, spin: 0.6 },
+  { id: 'gbp', name: 'GBP', text: 'British Pound · £', sym: '£', code: 'GBP', finish: 'silver', size: 1.0, spin: -1.0 },
+  { id: 'jpy', name: 'JPY', text: 'Japanese Yen · ¥', sym: '¥', code: 'JPY', finish: 'gold', size: 0.88, spin: 0.8 },
+  { id: 'aed', name: 'AED', text: 'UAE Dirham · د.إ', sym: 'د.إ', code: 'AED', finish: 'silver', size: 1.2, spin: -0.55 },
+  { id: 'sar', name: 'SAR', text: 'Saudi Riyal · ر.س', sym: 'ر.س', code: 'SAR', finish: 'cyan', size: 0.82, spin: 1.05 },
+  { id: 'kwd', name: 'KWD', text: 'Kuwaiti Dinar · د.ك', sym: 'د.ك', code: 'KWD', finish: 'blue', size: 1.05, spin: -0.85 },
 ] as const
 export type HubId = (typeof HUB_ITEMS)[number]['id']
 export const STAGES = ['Connect', 'Analyse', 'Expand'] as const
@@ -20,24 +21,62 @@ export const STAGES = ['Connect', 'Analyse', 'Expand'] as const
 const C = { blue: '#2f6bff', cyan: '#22d3ee', ice: '#bfe8ff', navy: '#0a1d52' }
 // three tilted orbit rings: [radius, tilt, items on it]
 const RINGS: { r: number; tilt: [number, number]; speed: number; items: HubId[] }[] = [
-  { r: 2.35, tilt: [0.35, 0], speed: 0.22, items: ['erp', 'ai', 'flow'] },
-  { r: 3.15, tilt: [-0.3, 0.5], speed: -0.15, items: ['db', 'dash'] },
-  { r: 3.85, tilt: [0.15, -0.6], speed: 0.1, items: ['bi', 'src'] },
+  { r: 2.35, tilt: [0.35, 0], speed: 0.22, items: ['usd', 'eur', 'jpy'] },
+  { r: 3.15, tilt: [-0.3, 0.5], speed: -0.15, items: ['inr', 'aed', 'kwd'] },
+  { r: 3.85, tilt: [0.15, -0.6], speed: 0.1, items: ['gbp', 'sar'] },
 ]
 
-const mat = (color: string, emissive = 0.25, metal = 0.7, rough = 0.25) => <meshStandardMaterial color={color} metalness={metal} roughness={rough} emissive={color} emissiveIntensity={emissive} />
+const FINISH = {
+  gold: { a: '#fff1b8', b: '#d9a62b', c: '#8a5a0c', ink: '#6b4208', metal: 1, rough: 0.28, glow: '#b8860b' },
+  silver: { a: '#ffffff', b: '#c9d3e0', c: '#7d8aa0', ink: '#3b475c', metal: 1, rough: 0.26, glow: '#8aa0c0' },
+  cyan: { a: '#c9fbff', b: '#22d3ee', c: '#0b6f86', ink: '#064a5c', metal: 0.95, rough: 0.3, glow: '#0891b2' },
+  blue: { a: '#cfe0ff', b: '#3b7bff', c: '#12307f', ink: '#0b1f5c', metal: 0.95, rough: 0.3, glow: '#1d4ed8' },
+} as const
 
-function Shape({ id, lite }: { id: HubId; lite: boolean }) {
-  const s = lite ? 1 : 1
-  switch (id) {
-    case 'erp': return <group scale={s}><mesh><boxGeometry args={[0.46, 0.46, 0.46]} />{mat('#2563eb', 0.3)}</mesh><mesh scale={1.06}><boxGeometry args={[0.46, 0.46, 0.46]} /><meshBasicMaterial color={C.ice} wireframe transparent opacity={0.45} /></mesh></group>
-    case 'db': return <group>{[-0.2, 0, 0.2].map((y) => <mesh key={y} position={[0, y, 0]}><cylinderGeometry args={[0.28, 0.28, 0.13, lite ? 20 : 36]} />{mat(y === 0 ? '#22d3ee' : '#2563eb', 0.3)}</mesh>)}</group>
-    case 'ai': return <group><mesh><octahedronGeometry args={[0.3, 0]} />{mat('#8b7bff', 0.5, 0.5, 0.2)}</mesh><mesh rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[0.42, 0.012, 8, 48]} /><meshBasicMaterial color={C.ice} /></mesh></group>
-    case 'dash': return <group rotation={[0, 0.25, 0]}><mesh><boxGeometry args={[0.7, 0.44, 0.04]} />{mat('#0f2a6b', 0.2, 0.6, 0.3)}</mesh>{[-0.2, -0.07, 0.06, 0.19].map((x, i) => <mesh key={x} position={[x, -0.08 + (0.05 * (i + 1)) / 2, 0.03]}><boxGeometry args={[0.08, 0.05 * (i + 1) + 0.06, 0.02]} /><meshBasicMaterial color={i % 2 ? C.cyan : '#60a5fa'} /></mesh>)}</group>
-    case 'bi': return <group>{[-0.17, 0, 0.17].map((x, i) => <mesh key={x} position={[x, -0.18 + (0.2 + i * 0.14) / 2, 0]}><boxGeometry args={[0.12, 0.2 + i * 0.14, 0.12]} />{mat(['#60a5fa', '#38bdf8', '#22d3ee'][i], 0.4)}</mesh>)}</group>
-    case 'src': return <group>{[[0, 0, 0, 0.17], [0.26, 0.16, 0.05, 0.1], [-0.24, 0.12, -0.04, 0.09], [0.04, -0.27, 0.06, 0.1], [-0.16, -0.18, 0.1, 0.07]].map((p, i) => <mesh key={i} position={[p[0], p[1], p[2]]}><sphereGeometry args={[p[3], lite ? 12 : 20, lite ? 12 : 20]} />{mat(i ? '#38bdf8' : '#3b82f6', 0.45)}</mesh>)}</group>
-    default: return <mesh><torusKnotGeometry args={[0.2, 0.065, lite ? 48 : 96, 10, 2, 3]} />{mat('#34d399', 0.35, 0.6, 0.25)}</mesh>
-  }
+/** The glowing artwork of one token face (ring, inner ring, symbol and ISO code, white on black). It is used as the face's alpha map. */
+function glowTexture(it: (typeof HUB_ITEMS)[number], lite: boolean) {
+  const N = lite ? 512 : 1024, u = N / 512, C = N / 2
+  const e = document.createElement('canvas'); e.width = e.height = N
+  const y = e.getContext('2d')!; y.fillStyle = '#000'; y.fillRect(0, 0, N, N)
+  y.shadowColor = '#fff'; y.shadowBlur = 22 * u; y.strokeStyle = '#fff'
+  y.lineWidth = 6 * u; y.beginPath(); y.arc(C, C, N * 0.4, 0, 7); y.stroke()
+  y.lineWidth = 3 * u; y.beginPath(); y.arc(C, C, N * 0.34, 0, 7); y.stroke()
+  const fam = "'Segoe UI','Arial','Noto Sans','DejaVu Sans',sans-serif", rtl = /[\u0600-\u06FF]/.test(it.sym), big = (it.sym.length > 2 ? 150 : 250) * u
+  y.textAlign = 'center'; y.textBaseline = 'middle'; y.fillStyle = '#fff'
+  y.direction = rtl ? 'rtl' : 'ltr'; y.font = `800 ${big}px ${fam}`; y.fillText(it.sym, C, N * 0.45)
+  y.direction = 'ltr'; y.font = `700 ${54 * u}px ${fam}`; y.fillText(it.code, C, N * 0.78)
+  const t = new THREE.CanvasTexture(e); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8
+  return t
+}
+
+function Coin({ id, lite }: { id: HubId; lite: boolean }) {
+  const it = HUB_ITEMS.find((h) => h.id === id)!, f = FINISH[it.finish]
+  const glowMap = useMemo(() => glowTexture(it, lite), [it, lite])
+  const T = 0.12, R = 0.5, seg = lite ? 48 : 96
+  // beveled rim profile (revolved), axis turned to Z so the token faces the viewer
+  const rim = useMemo(() => new THREE.LatheGeometry([[R - 0.09, -T / 2], [R - 0.03, -T / 2], [R, -T / 2 + 0.03], [R, T / 2 - 0.03], [R - 0.03, T / 2], [R - 0.09, T / 2]].map(([x, y]) => new THREE.Vector2(x, y)), seg), [seg])
+  const face = <meshBasicMaterial alphaMap={glowMap} color={f.a} transparent opacity={1} depthWrite={false} toneMapped={false} />
+  return (
+    <group scale={it.size * 0.74}>
+      <mesh geometry={rim} rotation={[Math.PI / 2, 0, 0]}><meshPhysicalMaterial color={f.b} transparent opacity={0.55} roughness={0.08} metalness={0.3} clearcoat={1} emissive={f.glow} emissiveIntensity={0.9} envMapIntensity={2.4} /></mesh>
+      <mesh position={[0, 0, T / 2 - 0.02]}><circleGeometry args={[R - 0.085, seg]} />{face}</mesh>
+      <mesh position={[0, 0, -T / 2 + 0.02]} rotation={[0, Math.PI, 0]}><circleGeometry args={[R - 0.085, seg]} />{face}</mesh>
+      <mesh><circleGeometry args={[R - 0.09, seg]} /><meshBasicMaterial color={f.b} transparent opacity={0.16} side={THREE.DoubleSide} depthWrite={false} /></mesh>
+      <mesh><torusGeometry args={[R - 0.005, 0.016, 8, seg]} /><meshBasicMaterial color={f.a} /></mesh>
+    </group>
+  )
+}
+
+/** Twinkling dust that drifts around the core, for depth. */
+function Sparkles({ count, reduced }: { count: number; reduced: boolean }) {
+  const ref = useRef<THREE.Points>(null!)
+  const geo = useMemo(() => {
+    const p = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) { const r = 1.8 + Math.random() * 3.2, a = Math.random() * 6.283, y = (Math.random() - 0.5) * 3.2; p.set([Math.cos(a) * r, y, Math.sin(a) * r], i * 3) }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3)); return g
+  }, [count])
+  useFrame((s) => { if (reduced) return; ref.current.rotation.y = s.clock.elapsedTime * 0.04; ;(ref.current.material as THREE.PointsMaterial).opacity = 0.55 + Math.sin(s.clock.elapsedTime * 1.7) * 0.2 })
+  return <points ref={ref} geometry={geo}><pointsMaterial color="#cfeaff" size={0.045} sizeAttenuation transparent opacity={0.6} depthWrite={false} blending={THREE.AdditiveBlending} /></points>
 }
 
 interface Api { hover: HubId | null; stage: number; px: number; py: number; reduced: boolean }
@@ -68,10 +107,11 @@ function Scene({ api, lite, onHover }: { api: React.MutableRefObject<Api>; lite:
     const pos = lineGeo.attributes.position as THREE.BufferAttribute
     items.forEach((it, i) => {
       const g = itemRefs.current[it.id]; if (!g) return
+      const sd = HUB_ITEMS.find((h) => h.id === it.id)!.spin
       const R = RINGS[it.ring], ang = it.phase, rr = R.r * radius.current
       g.position.set(Math.cos(ang) * rr, 0, Math.sin(ang) * rr)
-      g.rotation.y += dt * 0.6; g.rotation.x += dt * 0.2
-      const hv = a.hover === it.id, tgt = hv ? 1.35 : 1
+      g.rotation.y += dt * sd * 1.7; g.rotation.x = Math.sin(t * 0.6 + it.phase * 2) * 0.3; g.rotation.z = Math.sin(t * 0.45 + it.phase) * 0.18; g.position.y = Math.sin(t * 1.1 + it.phase * 3) * 0.16
+      const intro = a.reduced ? 1 : Math.min(1, Math.max(0, (t - i * 0.14) / 1.0)), ease = 1 - Math.pow(1 - intro, 3), hv = a.hover === it.id, tgt = (hv ? 1.4 : 1) * ease
       g.scale.setScalar(g.scale.x + (tgt - g.scale.x) * k)
       // satellite world position → line to core (in root space)
       g.getWorldPosition(tmp); root.current.worldToLocal(tmp)
@@ -80,6 +120,13 @@ function Scene({ api, lite, onHover }: { api: React.MutableRefObject<Api>; lite:
     pos.needsUpdate = true
     ;(lines.current.material as THREE.LineBasicMaterial).opacity = (a.stage === 0 ? 0.75 : 0.4) + Math.sin(t * 2) * 0.1
   })
+  const renderItem = (it: (typeof items)[number]) => (
+    <group key={it.id} scale={0.001} ref={(el) => { itemRefs.current[it.id] = el }}
+      onPointerOver={(e) => { e.stopPropagation(); onHover(it.id) }} onPointerOut={() => onHover(null)}>
+      <Coin id={it.id} lite={lite} />
+      <mesh visible={false}><sphereGeometry args={[0.6, 8, 8]} /></mesh>
+    </group>
+  )
   return (
     <group ref={root}>
       <group ref={core}>
@@ -92,16 +139,11 @@ function Scene({ api, lite, onHover }: { api: React.MutableRefObject<Api>; lite:
         <group key={i} rotation={[r.tilt[0], r.tilt[1], 0]}>
           <mesh rotation={[Math.PI / 2, 0, 0]} scale={1}><torusGeometry args={[r.r, 0.006, 6, 160]} /><meshBasicMaterial color={i === 0 ? C.cyan : C.blue} transparent opacity={0.28} /></mesh>
           <group ref={(el) => { ringRefs.current[i] = el }}>
-            {items.filter((x) => x.ring === i).map((it) => (
-              <group key={it.id} ref={(el) => { itemRefs.current[it.id] = el }}
-                onPointerOver={(e) => { e.stopPropagation(); onHover(it.id) }} onPointerOut={() => onHover(null)}>
-                <Shape id={it.id} lite={lite} />
-                <mesh visible={false}><sphereGeometry args={[0.55, 8, 8]} /></mesh>
-              </group>
-            ))}
+            {items.filter((x) => x.ring === i).map(renderItem)}
           </group>
         </group>
       ))}
+      <Sparkles count={lite ? 40 : 110} reduced={api.current.reduced} />
       <lineSegments ref={lines} geometry={lineGeo}><lineBasicMaterial color={C.ice} transparent opacity={0.5} depthWrite={false} blending={THREE.AdditiveBlending} /></lineSegments>
     </group>
   )
@@ -123,6 +165,8 @@ export default function Hero3D({ api, lite, onHover }: { api: React.MutableRefOb
         <ambientLight intensity={0.5} />
         <pointLight position={[5, 4, 6]} intensity={80} color="#6ea8ff" />
         <pointLight position={[-6, -3, 4]} intensity={50} color="#22d3ee" />
+        <directionalLight position={[3, 5, 7]} intensity={2.2} color="#fff4dc" />
+        <pointLight position={[0, 6, -6]} intensity={40} color="#9fd0ff" />
         <Env />
         <Scene api={api} lite={lite} onHover={onHover} />
       </Canvas>

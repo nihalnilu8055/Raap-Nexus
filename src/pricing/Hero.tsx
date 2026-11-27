@@ -68,7 +68,7 @@ export default function Hero() {
         </div>
 
         <div className="min-w-0">
-          <div className="hero-art relative mx-auto aspect-square w-full max-w-[560px] sm:aspect-[1.05/1]" role="img" aria-label="Interactive 3D model: the RaapNexus core connected to ERP systems, databases, AI agents, dashboards, business intelligence, data sources and workflows.">
+          <div className="hero-art relative mx-auto aspect-square w-full max-w-[560px] sm:aspect-[1.05/1]" role="img" aria-label="Interactive 3D model: the RaapNexus core surrounded by orbiting holographic currency tokens: USD, INR, EUR, GBP, JPY, AED, SAR and KWD.">
             <div aria-hidden className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,rgba(47,107,255,.28),transparent 68%)]" />
             {!live && <Fallback />}
             {live && (
